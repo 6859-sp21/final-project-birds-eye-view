@@ -32,9 +32,26 @@
 
             <!-- User Choose Category -->
             <section id="section-user-choose-category" class="step">
-                <div class="card">
-                    <div class="card body">
-                        <h2 class="card-title"> Choose category to explore </h2>
+                <div class="section-container">
+                    <h2 class="section-title"> Choose category to explore </h2>
+                    <div class="btn-group" role="group">
+                        <figure>
+                            <img src="./images/category-electricity.png" onclick="chooseCategory(this.id)" id="electricity" class="icon" height="70" width="70">
+                            <figcaption> Access to Electicity </figcaption>
+                        </figure>
+                        <!-- TODO: Change icon class to non-disabled, and add onclick for below -->
+                        <figure>
+                            <img src="./images/category-internet.png" id="internet" class="disabled-icon" height="70" width="70" disabled>
+                            <figcaption> Access to Internet <br> TBA </figcaption>
+                        </figure>
+                        <figure>
+                            <img src="./images/category-school-completion.png" id="school-completion" class="disabled-icon" height="70" width="70">
+                            <figcaption> Primary School Completion <br> TBA </figcaption>
+                        </figure>
+                        <figure>
+                            <img src="./images/category-skilled-birth.png" id="skilled-birth" class="disabled-icon" height="70" width="70">
+                            <figcaption> Access to Skilled Birth Staff <br> TBA </figcaption>
+                        </figure>
                     </div>
                 </div>
             </section>
@@ -54,12 +71,17 @@
 
             </section>
 
-            
+
         </div>
     </div>
 
-    <!-- Load JS scripts -->
+    <!-- D3 related JS -->
     <script src="./javascripts/vis.js"></script>
+
+    <!-- Animation related JS -->
     <script src="./javascripts/fade-in-out.js"></script>
+
+    <!-- Other JS -->
+    <script src="./javascripts/forms.js"></script>
 </body>
 </html>

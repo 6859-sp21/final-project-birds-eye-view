@@ -35,6 +35,11 @@ section.visible {
     opacity: 1;
     transform: translate(0, 0); 
 }
+
+.section-title {
+    color: white;
+    text-align: center;
+}
 /* --------------- End of section styling -------------------- */
 
 /* --------------- Start of section-header styling -------------------- */
@@ -44,3 +49,38 @@ section.visible {
     text-align: center;
 }
 /* --------------- End of section-header styling -------------------- */
+
+/* --------------- Start of section-user-choose-category styling -------------------- */
+.section-container {
+    align-items: center;
+    display:flex;
+    flex-flow: column;
+}
+
+figure {
+    margin: 40px;
+    text-align: center;
+}
+
+figcaption {
+    color: white;
+    margin: 16px;
+}
+
+.icon {
+    opacity: 0.5;
+    transition: .5s ease;
+    backface-visibility: hidden;
+    vertical-align: middle;
+}
+
+.icon:hover {
+    cursor: pointer;
+    opacity: 1.0;
+}
+
+.disabled-icon {
+    cursor: default;
+    opacity: 0.5;
+}
+/* --------------- End of section-user-choose-category styling -------------------- */
