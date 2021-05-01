@@ -99,3 +99,11 @@ figcaption {
     color: white;
 }
 /* --------------- End of section-user-choose-decade styling -------------------- */
+
+/* --------------- Start of section-transition-before-color-map styling -------------------- */
+#warning-category-decade {
+    font-size: 32px;
+    color: lightcoral;
+    text-align: center;
+}
+/* --------------- End of section-transition-before-color-map styling -------------------- */

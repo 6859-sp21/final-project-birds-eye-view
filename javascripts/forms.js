@@ -24,3 +24,4 @@ function chooseDecade(decadeId) {
 
     document.getElementById(chosenDecade).style = "color: white; transition: .5s ease; backface-visibility: hidden; vertical-align: middle;"
 }
+

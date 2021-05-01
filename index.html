@@ -19,7 +19,6 @@
     
     <!-- CSS -->
     <link rel="stylesheet" href="./styles.css">
-    <link rel="stylesheet" href="./slider.css">
     <script src="https://cdn.lordicon.com//libs/frhvbuzj/lord-icon-2.0.2.js"></script>
 </head>
 
@@ -32,7 +31,7 @@
                     <lord-icon
                         src="https://cdn.lordicon.com//tyounuzx.json"
                         trigger="loop"
-                        delay="1000"
+                        delay="900"
                         colors="primary:#ffffff,secondary:#16a9c7"
                         stroke="71"
                         style="width:250px;height:250px">
@@ -84,6 +83,12 @@
                 </div>
             </section>
 
+            <!-- Some transition stories before coloring map -->
+            <section id="section-transition-before-color-map" class="step">
+                <p id="warning-category-decade"></p>
+                <h1 id="transition-question-before-color"></h1>
+            </section>
+
             <!-- User color map -->
             <section id="section-user-color-map" class="step">
                 <!-- TODO: insert map visualization + coloring interaction here! -->
@@ -97,12 +102,11 @@
 
         </div>
     </div>
+    <!-- Animation related JS -->
+    <script src="./javascripts/fade-in-out.js"></script>
 
     <!-- D3 related JS -->
     <script src="./javascripts/vis.js"></script>
-
-    <!-- Animation related JS -->
-    <script src="./javascripts/fade-in-out.js"></script>
 
     <!-- Other JS -->
     <script src="./javascripts/forms.js"></script>
