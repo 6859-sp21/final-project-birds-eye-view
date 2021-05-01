@@ -19,6 +19,7 @@
     
     <!-- CSS -->
     <link rel="stylesheet" href="./styles.css">
+    <script src="https://cdn.lordicon.com//libs/frhvbuzj/lord-icon-2.0.2.js"></script>
 </head>
 
 <body>
@@ -26,14 +27,22 @@
         <div id="sections">
             <!-- Page Headers -->
             <section id="section-header" class="step visible">
-                <h1 id="page-title"> Bird's Eye View </h1>
-                <p class="scroll-instruction"> Scroll down </p>
+                <h1 id="page-title"> Bird's 
+                    <lord-icon
+                        src="https://cdn.lordicon.com//tyounuzx.json"
+                        trigger="loop"
+                        delay="1000"
+                        colors="primary:#ffffff,secondary:#16a9c7"
+                        stroke="71"
+                        style="width:250px;height:250px">
+                    </lord-icon>
+                    View </h1>
             </section>
 
             <!-- User Choose Category -->
             <section id="section-user-choose-category" class="step">
                 <div class="section-container">
-                    <h2 class="section-title"> Choose category to explore </h2>
+                    <h2 class="section-title"> Choose a category to explore </h2>
                     <div class="btn-group" role="group">
                         <figure>
                             <img src="./images/category-electricity.png" onclick="chooseCategory(this.id)" id="electricity" class="icon" height="70" width="70">
@@ -58,7 +67,20 @@
 
             <!-- User Choose Decade -->
             <section id="section-user-choose-decade" class="step">
-
+                <div class="section-container">
+                    <h2 class="section-title"> Choose a decade to explore </h2>
+                    <!-- adapted from https://codepen.io/trevanhetzel/pen/rOVrGK -->
+                    <div class="slider">
+                        <div class="range">
+                            <input type="range" min="1" max="3" steps="1" value="10">
+                        </div>
+                        <ul class="range-labels">
+                            <li>1990</li>
+                            <li>2000</li>
+                            <li>2010</li>
+                        </ul>
+                    </div>
+                </div>
             </section>
 
             <!-- User color map -->
