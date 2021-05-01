@@ -138,13 +138,18 @@ figcaption {
     text-align: center;
 }
 
+#reflection-carousel {
+    align-items: center;
+    display: flex;
+    flex-flow: column;
+}
+
 .carousel-inner {
     height: 300px;
 }
 
 .carousel-item {
     margin: 32px;
-    width: 100%;
 }
 
 .reflection-container {
@@ -152,7 +157,8 @@ figcaption {
     align-items: center;
     display: flex;
     flex-flow: column;
-    margin: 32px;
+    margin-bottom: 32px;
+    margin-top: 32px;
 }
 
 .reflection-question {
@@ -160,3 +166,15 @@ figcaption {
     margin-bottom: 20px;
 }
 /* --------------- End of section-user-answer-reflection styling -------------------- */
+
+/* --------------- Start of section-interesting-dataset styling -------------------- */
+#interesting-dataset-title {
+    color: white;
+    text-align: center;
+}
+
+#interesting-dataset-description {
+    color: white;
+    text-align: center;
+}
+/* --------------- End of section-interesting-dataset styling -------------------- */
