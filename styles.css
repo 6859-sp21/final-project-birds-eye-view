@@ -1,0 +1,46 @@
+html {
+    scroll-behavior: smooth;
+}
+
+body {
+    background-color: black;
+}
+
+.scroll-instruction {
+    color: white;
+    text-align: center;
+}
+
+/* -------------- Start of section styling ------------------- */
+#sections {
+    position: relative;
+}
+
+.step {
+    margin-bottom: 100px;
+    height: 700px;
+    font-family: "Domine";
+    font-weight: 400;
+    line-height: 1.4em;
+    text-align: justify;
+}
+
+section {
+    opacity: 0;
+    transform: translate(0, 20px);
+    transition: all 1s;
+}
+    
+section.visible {
+    opacity: 1;
+    transform: translate(0, 0); 
+}
+/* --------------- End of section styling -------------------- */
+
+/* --------------- Start of section-header styling -------------------- */
+#page-title {
+    color: white;
+    line-height: 600px;
+    text-align: center;
+}
+/* --------------- End of section-header styling -------------------- */
