@@ -19,6 +19,7 @@
     
     <!-- CSS -->
     <link rel="stylesheet" href="./styles.css">
+    <link rel="stylesheet" href="./slider.css">
     <script src="https://cdn.lordicon.com//libs/frhvbuzj/lord-icon-2.0.2.js"></script>
 </head>
 
@@ -42,23 +43,23 @@
             <!-- User Choose Category -->
             <section id="section-user-choose-category" class="step">
                 <div class="section-container">
-                    <h2 class="section-title"> Choose a category to explore </h2>
+                    <h2 class="section-title"> Choose a category </h2>
                     <div class="btn-group" role="group">
                         <figure>
-                            <img src="./images/category-electricity.png" onclick="chooseCategory(this.id)" id="electricity" class="icon" height="70" width="70">
+                            <img src="./images/category-electricity.png" onclick="chooseCategory(this.id)" id="electricity" class="icon" height="90" width="90">
                             <figcaption> Access to Electicity </figcaption>
                         </figure>
                         <!-- TODO: Change icon class to non-disabled, and add onclick for below -->
                         <figure>
-                            <img src="./images/category-internet.png" id="internet" class="disabled-icon" height="70" width="70" disabled>
+                            <img src="./images/category-internet.png" id="internet" class="disabled-icon" height="90" width="90" disabled>
                             <figcaption> Access to Internet <br> TBA </figcaption>
                         </figure>
                         <figure>
-                            <img src="./images/category-school-completion.png" id="school-completion" class="disabled-icon" height="70" width="70">
+                            <img src="./images/category-school-completion.png" id="school-completion" class="disabled-icon" height="90" width="90">
                             <figcaption> Primary School Completion <br> TBA </figcaption>
                         </figure>
                         <figure>
-                            <img src="./images/category-skilled-birth.png" id="skilled-birth" class="disabled-icon" height="70" width="70">
+                            <img src="./images/category-skilled-birth.png" id="skilled-birth" class="disabled-icon" height="90" width="90">
                             <figcaption> Access to Skilled Birth Staff <br> TBA </figcaption>
                         </figure>
                     </div>
@@ -68,17 +69,17 @@
             <!-- User Choose Decade -->
             <section id="section-user-choose-decade" class="step">
                 <div class="section-container">
-                    <h2 class="section-title"> Choose a decade to explore </h2>
-                    <!-- adapted from https://codepen.io/trevanhetzel/pen/rOVrGK -->
-                    <div class="slider">
-                        <div class="range">
-                            <input type="range" min="1" max="3" steps="1" value="10">
-                        </div>
-                        <ul class="range-labels">
-                            <li>1990</li>
-                            <li>2000</li>
-                            <li>2010</li>
-                        </ul>
+                    <h2 class="section-title"> Choose a decade </h2>
+                    <div class="btn-group" role="group">
+                        <figure>
+                            <h1 onclick="chooseDecade(this.id)" id="1990" class="decade-button"> 1990 </h1>
+                        </figure>
+                        <figure>
+                            <h1 onclick="chooseDecade(this.id)" id="2000" class="decade-button"> 2000 </h1>
+                        </figure>
+                        <figure>
+                            <h1 onclick="chooseDecade(this.id)" id="2010" class="decade-button"> 2010 </h1>
+                        </figure>
                     </div>
                 </div>
             </section>

@@ -84,3 +84,18 @@ figcaption {
     opacity: 0.5;
 }
 /* --------------- End of section-user-choose-category styling -------------------- */
+
+/* --------------- Start of section-user-choose-decade styling -------------------- */
+.decade-button {
+    color: lightslategray;
+    font-size: 72px;
+    transition: .5s ease;
+    backface-visibility: hidden;
+    vertical-align: middle;
+}
+
+.decade-button:hover {
+    cursor: pointer;
+    color: white;
+}
+/* --------------- End of section-user-choose-decade styling -------------------- */
