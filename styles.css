@@ -130,3 +130,33 @@ figcaption {
     width: 80%;
 }
 /* --------------- End of section-transition-before-color-map styling -------------------- */
+
+/* --------------- Start of section-user-answer-reflection styling -------------------- */
+#reflection-title {
+    color: white;
+    font-size: 36px;
+    text-align: center;
+}
+
+.carousel-inner {
+    height: 300px;
+}
+
+.carousel-item {
+    margin: 32px;
+    width: 100%;
+}
+
+.reflection-container {
+    align-self: center;
+    align-items: center;
+    display: flex;
+    flex-flow: column;
+    margin: 32px;
+}
+
+.reflection-question {
+    color: white;
+    margin-bottom: 20px;
+}
+/* --------------- End of section-user-answer-reflection styling -------------------- */
