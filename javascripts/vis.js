@@ -3,7 +3,7 @@
 
 let width = 800, height = 400, centered; // TODO: change these to fit the screen
 let projection = d3.geoEquirectangular();
-projection.fitSize([width, height], electricity_decade);
+projection.fitSize([width, height], electricity_decade_fin);
 let geoGenerator = d3.geoPath().projection(projection);
 
 var colorScale = d3.scaleLog()
@@ -57,7 +57,7 @@ var tip = d3.tip()
 svg.call(tip);
 
 let map_svg = svg.append("g");
-const newData = electricity_decade.features
+const newData = electricity_decade_fin.features
 .filter(function(data) {
     return (data.properties.year == 2010);
 })
@@ -183,7 +183,7 @@ function updateMap() {
     console.log(chosenCategory, " chosenCategory")
     console.log(chosenDecade, " chosenDecade")
     // Filter and get new data
-    const newData = electricity_decade.features
+    const newData = electricity_decade_fin.features
                          .filter(function(data) {
                              return (data.properties.year == 2010);
                          })
