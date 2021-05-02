@@ -3,13 +3,13 @@
 
 let width = 800, height = 400, centered; // TODO: change these to fit the screen
 let projection = d3.geoEquirectangular();
-projection.fitSize([width, height], small_data);
+projection.fitSize([width, height], electricity_decade);
 let geoGenerator = d3.geoPath().projection(projection);
 
 var colorScale = d3.scaleLog()
-// log scale, base 4
-.domain([1, 4, 16, 64, 256, 1024, 4096])
-.range(d3.schemeBlues[7]);
+// linear scale
+.domain([1, 20, 40, 60, 80, 100])
+.range(d3.schemeBlues[6]);
 
 let svg = d3.select("#map-placeholder").append('svg')
             .style("width", width).style("height", height);
@@ -24,15 +24,15 @@ let rect_svg = svg.append("rect")
     .attr("transform", "translate(0,200)")
     .attr("fill", "white");
     
-    var legendLog = d3.legendColor()
+    var legendLinear = d3.legendColor()
     .shapeWidth(30)
-    .cells([0, 4, 16, 64, 256, 1024, 4096])
+    .cells([1, 20, 40, 60, 80, 100])
     .orient('vertical')
     .scale(colorScale)
     .title("Number of Tweets")
     
     svg.select(".legendQuant")
-    .call(legendLog);
+    .call(legendLinear);
 
 const WORLDWIDE = "Worldwide";
 // ---  Default values
@@ -57,19 +57,20 @@ var tip = d3.tip()
 svg.call(tip);
 
 let map_svg = svg.append("g");
-var tweetsByCountry = d3.rollup(small_data.features, v => v.length, d => d.properties.country);
+var tweetsByCountry = d3.rollup(electricity_decade.features, v => v.length, d => d.properties.country);
 
 map_svg.selectAll("path")
         .data(world_map_json.features)
         .enter()
         .append("path")
-        .attr( "fill", function (d) {
-            d.total = tweetsByCountry.get(d.properties.name) || 0;
-            if (d.properties.name == "United States" & ! includeUS) {
-                return "#808080";
-            }
-            return colorScale(d.total);
-        })
+        // .attr( "fill", function (d) {
+        //     console.log()
+        //     d.total = tweetsByCountry.get(d.properties.value) || 0;
+        //     // if (d.properties.name == "United States" & ! includeUS) {
+        //     //     return "#808080";
+        //     // }
+        //     return colorScale(d.total);
+        // })
         .style('cursor', 'pointer')
         .on('mouseover', tip.show)
         .on('mouseout', tip.hide)
@@ -81,113 +82,113 @@ updateMap();
 // ------------------------- SLIDER CODE -------------------------
 // adapted from https://codepen.io/trevanhetzel/pen/rOVrGK
 
-var sheet = document.createElement('style'),  
-  $rangeInput = $('.range input'),
-  prefs = ['webkit-slider-runnable-track', 'moz-range-track', 'ms-track'];
+// var sheet = document.createElement('style'),  
+//   $rangeInput = $('.range input'),
+//   prefs = ['webkit-slider-runnable-track', 'moz-range-track', 'ms-track'];
 
-document.body.appendChild(sheet);
+// document.body.appendChild(sheet);
 
-var getTrackStyle = function (el) {  
-  var curVal = el.value,
-      val = (curVal - 1) * 4.16666666667,
-      style = '';
+// var getTrackStyle = function (el) {  
+//   var curVal = el.value,
+//       val = (curVal - 1) * 4.16666666667,
+//       style = '';
   
-  // Set active label
-  $('.range-labels li').removeClass('active selected');
+//   // Set active label
+//   $('.range-labels li').removeClass('active selected');
   
-  var curLabel = $('.range-labels').find('li:nth-child(' + curVal + ')');
+//   var curLabel = $('.range-labels').find('li:nth-child(' + curVal + ')');
   
-  curLabel.addClass('active selected');
-  return style;
-}
+//   curLabel.addClass('active selected');
+//   return style;
+// }
 
-$rangeInput.on('input', function () {
-  sheet.textContent = getTrackStyle(this);
-});
+// $rangeInput.on('input', function () {
+//   sheet.textContent = getTrackStyle(this);
+// });
 
-// Change input value on label click
-$('.range-labels li').on('click', function () {
-  var index = $(this).index();
+// // Change input value on label click
+// $('.range-labels li').on('click', function () {
+//   var index = $(this).index();
   
-  $rangeInput.val(index + 1).trigger('input');
-  updateTime(index + 1);
-});
+//   $rangeInput.val(index + 1).trigger('input');
+//   updateTime(index + 1);
+// });
 
 
 
-var testDates = ['10/15/20', '10/16/20', '10/17/20', '10/18/20', '10/19/20',
-                 '10/20/20', '10/21/20', '10/22/20', '10/23/20', '10/24/20',
-                 '10/25/20', '10/26/20', '10/27/20', '10/28/20', '10/29/20',
-                 '10/30/20', '10/31/20', '11/1/20', '11/2/20', '11/3/20',
-                 '11/4/20', '11/5/20', '11/6/20', '11/7/20', '11/8/20'];
+// var testDates = ['10/15/20', '10/16/20', '10/17/20', '10/18/20', '10/19/20',
+//                  '10/20/20', '10/21/20', '10/22/20', '10/23/20', '10/24/20',
+//                  '10/25/20', '10/26/20', '10/27/20', '10/28/20', '10/29/20',
+//                  '10/30/20', '10/31/20', '11/1/20', '11/2/20', '11/3/20',
+//                  '11/4/20', '11/5/20', '11/6/20', '11/7/20', '11/8/20'];
 
-// when the input range changes update the value 
-d3.select(".range input").on("input", function() {
-    updateTime(+this.value);
-});
+// // when the input range changes update the value 
+// d3.select(".range input").on("input", function() {
+//     updateTime(+this.value);
+// });
 
-// update with value
-function updateTime(value) {
-    currentDate = testDates[value - 1];
-    updateMap();
-    updateWordCloud(currentCountry);
-};
+// // update with value
+// function updateTime(value) {
+//     currentDate = testDates[value - 1];
+//     updateMap();
+//     updateWordCloud(currentCountry);
+// };
 
 // ------------------------- END SLIDER CODE -------------------------
 
-const radioButtonInput = document.getElementById("btn-group");
-radioButtonInput.addEventListener('input', updateIncludeUS);
+// const radioButtonInput = document.getElementById("btn-group");
+// radioButtonInput.addEventListener('input', updateIncludeUS);
 
-function updateIncludeUS(e) {
-    var buttonPushed = e.target.value;
-    if (buttonPushed == "includeUS") {
-        if (includeUS) return;
-        includeUS = true;
-    }
-    else {
-        if (!includeUS) return;
-        includeUS = false;
-    }
-    updateMap();
-    updateWordCloud(currentCountry);
-}
+// function updateIncludeUS(e) {
+//     var buttonPushed = e.target.value;
+//     if (buttonPushed == "includeUS") {
+//         if (includeUS) return;
+//         includeUS = true;
+//     }
+//     else {
+//         if (!includeUS) return;
+//         includeUS = false;
+//     }
+//     updateMap();
+//     updateWordCloud(currentCountry);
+// }
 
-const searchBoxInput = document.getElementById("hashtag-search-box");
-searchBoxInput.addEventListener('input', updateSearch);
+// const searchBoxInput = document.getElementById("hashtag-search-box");
+// searchBoxInput.addEventListener('input', updateSearch);
 
-function updateSearch(e) {
-    var searchedHashtag = e.target.value.toLowerCase();
-    currentHashtag = searchedHashtag;
-    updateMap();
-}
+// function updateSearch(e) {
+//     var searchedHashtag = e.target.value.toLowerCase();
+//     currentHashtag = searchedHashtag;
+//     updateMap();
+// }
 
-function updateSearchWOListener(newText) {
-    currentHashtag = newText;
-    updateMap();
-}
+// function updateSearchWOListener(newText) {
+//     currentHashtag = newText;
+//     updateMap();
+// }
 
-const buttonSearchBar = document.getElementById("button-searchbar");
-buttonSearchBar.addEventListener('click', clearSearch);
+// const buttonSearchBar = document.getElementById("button-searchbar");
+// buttonSearchBar.addEventListener('click', clearSearch);
 
-function clearSearch() {
-    textInput.value = "";
-    updateSearchWOListener("");
-}
+// function clearSearch() {
+//     textInput.value = "";
+//     updateSearchWOListener("");
+// }
 
 function updateMap() {
 
     // Filter and get new data
-    const newData = small_data.features
-                         .filter(function(data) {
-                             if (includeUS) return true;
-                             return data.properties.country != "United States";
-                         })
-                         .filter(function(data) {
-                            var dataHashtags = data.properties.hashtags.toLowerCase();
-                            var isDataHasHashtag = dataHashtags.includes(currentHashtag);
-                            var isDataCreatedAt = data.properties.created_at.includes(currentDate);
-                            return isDataCreatedAt && isDataHasHashtag; 
-                         });
+    const newData = electricity_decade.features
+                        //  .filter(function(data) {
+                        //      if (includeUS) return true;
+                        //      return data.properties.country != "United States";
+                        //  })
+                        //  .filter(function(data) {
+                        //     var dataHashtags = data.properties.hashtags.toLowerCase();
+                        //     var isDataHasHashtag = dataHashtags.includes(currentHashtag);
+                        //     var isDataCreatedAt = data.properties.created_at.includes(currentDate);
+                        //     return isDataCreatedAt && isDataHasHashtag; 
+                        //  });
 
     var tweetsByCountry = d3.rollup(newData, v => v.length, d => d.properties.country);
 
@@ -201,22 +202,22 @@ function updateMap() {
                 }
               })
             .html(function(d) {
-                var totalTweet = tweetsByCountry.get(d.properties.name) || 0;
-                if (totalTweet === 0) return d.properties.name + ": " + "No tweets"
-                else return d.properties.name + ": " + totalTweet + " tweets";
+                var totalTweet = tweetsByCountry.get(d.properties.value) || 0;
+                if (totalTweet === 0) return d.properties.value + ": " + "No tweets"
+                else return d.properties.value + ": " + totalTweet + " tweets";
             });
     svg.call(tip);
 
     map_svg.selectAll("path")
     .data(world_map_json.features)
     .join("path")
-    .attr( "fill", function (d) {
-        d.total = tweetsByCountry.get(d.properties.name) || 0;
-        if (d.properties.name == "United States" & ! includeUS) {
-            return "#808080";
-        }
-        return colorScale(d.total);
-      })
+    // .attr( "fill", function (d) {
+    //     d.total = tweetsByCountry.get(d.properties.value) || 0;
+    //     // if (d.properties.name == "United States" & ! includeUS) {
+    //     //     return "#808080";
+    //     // }
+    //     return colorScale(d.total);
+    //   })
     .on('mouseover', tip.show)
     .on('mouseout', tip.hide)
     .attr("stroke", "black")
@@ -259,15 +260,15 @@ function clicked(d) {
         .attr("transform", "translate(0,200)")
         .attr("fill", "white");
         
-        var legendLog = d3.legendColor()
+        var legendLinear = d3.legendColor()
         .shapeWidth(30)
-        .cells([0, 4, 16, 64, 256, 1024, 4096])
+        .cells([1, 20, 40, 60, 80, 100])
         .orient('vertical')
         .scale(colorScale)
         .title("Number of Tweets");
         
         svg.select(".legendQuant")
-        .call(legendLog);
+        .call(legendLinear);
     } 
     
     updateWordCloud(currentCountry);
@@ -298,88 +299,71 @@ function updateWordCloudTitle(country, numOfHashtagShowed) {
     }
 }
 
-function updateWordCloud(country) {
-    // Pre-process: get all the hashtags
-    // Filter by country
-    var rowsByCountry;
-    if (country === WORLDWIDE) { 
-        rowsByCountry = small_data.features
-                            .filter(function(data) {
-                                if (includeUS) return true;
-                                return data.properties.country !== "United States";
-                            });
-    }
-    else { // other country
-         rowsByCountry = small_data.features
-                                .filter(function(data) {
-                                    return data.properties.country === country;
-                                })
-                                .filter(function(data) {
-                                    if (includeUS) return true;
-                                    return data.properties.country !== "United States";
-                                });
-    }
-    // Filter by date
-    rowsByCountry = rowsByCountry.filter(function(data) {
-                        var isDataCreatedAt = data.properties.created_at.includes(currentDate);
-                        return isDataCreatedAt; 
-                    });
+// function updateWordCloud(country) {
+//     // Pre-process: get all the hashtags
+//     // Filter by country
+//     var rowsByCountry;
+//     if (country === WORLDWIDE) { 
+//         rowsByCountry = small_data.features
+//                             .filter(function(data) {
+//                                 if (includeUS) return true;
+//                                 return data.properties.country !== "United States";
+//                             });
+//     }
+//     else { // other country
+//          rowsByCountry = small_data.features
+//                                 .filter(function(data) {
+//                                     return data.properties.country === country;
+//                                 })
+//                                 .filter(function(data) {
+//                                     if (includeUS) return true;
+//                                     return data.properties.country !== "United States";
+//                                 });
+//     }
+//     // Filter by date
+//     rowsByCountry = rowsByCountry.filter(function(data) {
+//                         var isDataCreatedAt = data.properties.created_at.includes(currentDate);
+//                         return isDataCreatedAt; 
+//                     });
 
-    var allHashtagsNotFlattened = rowsByCountry
-                                  .map(function(d) {
-                                    const hashtagList = d.properties.hashtags.substring(1, d.properties.hashtags.length-1).split(",");
-                                    const hashtags = hashtagList.map(function(h) {
-                                                                        let trimmedHash = "";
-                                                                        for (let i=0;i<h.length;i++) {
-                                                                            if (h[i] === "'" || h[i] === " ") continue;
-                                                                            trimmedHash = trimmedHash + h[i];
-                                                                        }
-                                                                        return trimmedHash.toLowerCase();
-                                                                    });
+    // var allHashtagsNotFlattened = rowsByCountry
+    //                               .map(function(d) {
+    //                                 const hashtagList = d.properties.hashtags.substring(1, d.properties.hashtags.length-1).split(",");
+    //                                 const hashtags = hashtagList.map(function(h) {
+    //                                                                     let trimmedHash = "";
+    //                                                                     for (let i=0;i<h.length;i++) {
+    //                                                                         if (h[i] === "'" || h[i] === " ") continue;
+    //                                                                         trimmedHash = trimmedHash + h[i];
+    //                                                                     }
+    //                                                                     return trimmedHash.toLowerCase();
+    //                                                                 });
                                     
-                                    return hashtags;
-                                });
-    var allHashtags = [].concat.apply([], allHashtagsNotFlattened);
-    const numOfHashtagShowed = Math.min(allHashtags.length, 15);
-    // convert all same hashtags to count
-    var allHashtagsCount = d3.rollups(allHashtags, group => group.length, w => w)
-                            .sort(([, a], [, b]) => d3.descending(a, b))
-                            .slice(0, numOfHashtagShowed)
-                            .map(([text, value]) => ({text, value}));
+    //                                 return hashtags;
+    //                             });
+    // var allHashtags = [].concat.apply([], allHashtagsNotFlattened);
+    // const numOfHashtagShowed = Math.min(allHashtags.length, 15);
+    // // convert all same hashtags to count
+    // var allHashtagsCount = d3.rollups(allHashtags, group => group.length, w => w)
+    //                         .sort(([, a], [, b]) => d3.descending(a, b))
+    //                         .slice(0, numOfHashtagShowed)
+    //                         .map(([text, value]) => ({text, value}));
     
-    // Change title
-    updateWordCloudTitle(country, numOfHashtagShowed);
-    
-    // Generate wordcloud
-    // below code is adapted from: https://observablehq.com/@contervis/clickable-word-cloud
-    // and http://plnkr.co/edit/B20h2bNRkyTtfs4SxE0v?p=preview&preview
-    let s = d3.scaleSqrt()
-            .domain([1, d3.max(allHashtagsCount.map(d => d.value))])
-            .range([12, 32]);
-    
-    d3.layout.cloud()
-            .size([word_width, word_height])
-            .words(allHashtagsCount)
-            .padding(1)
-            .rotate(0)
-            .font(fontFamily)
-            .fontSize(d => s(d.value))
-            .on("end", draw)
-            .start();
+    // // Change title
+    // updateWordCloudTitle(country, numOfHashtagShowed);
 
-    function draw(words) {
-        const newVis = word_svg.selectAll("text").data(words);
-        newVis.join("text")
-        .attr("font-size", function(d) { return s(d.value); })
-        .attr("transform", function(d) { return `translate(${d.x},${d.y}) rotate(${d.rotate})`; })
-        .text(function(d) { return d.text; })
-        .style('cursor', 'pointer')
-        .on("click", (d, i) => {
-            textInput.value = d.text;
-            updateSearchWOListener(d.text);
-        });
-    }
-}
+    // function draw(words) {
+    //     const newVis = word_svg.selectAll("text").data(words);
+    //     newVis.join("text")
+    //     .attr("font-size", function(d) { return s(d.value); })
+    //     .attr("transform", function(d) { return `translate(${d.x},${d.y}) rotate(${d.rotate})`; })
+    //     .text(function(d) { return d.text; })
+    //     .style('cursor', 'pointer')
+    //     .on("click", (d, i) => {
+    //         textInput.value = d.text;
+    //         updateSearchWOListener(d.text);
+    //     });
+    // }
+// }
 
 
-updateWordCloud(WORLDWIDE);
+// updateWordCloud(WORLDWIDE);
