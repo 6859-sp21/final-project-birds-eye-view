@@ -61,7 +61,7 @@ const newData = electricity_decade_fin.features
 .filter(function(data) {
     return (data.properties.year == 2010);
 })
-var tweetsByCountry = d3.rollup(newData.features, v => v.length, d => d.properties.country);
+var tweetsByCountry = d3.rollup(newData, v => v.length, d => d.properties.country);
 
 map_svg.selectAll("path")
         .data(world_map_json.features)
