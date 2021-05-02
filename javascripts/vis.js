@@ -52,7 +52,7 @@ var tip = d3.tip()
               }) 
             .html(function(d) {
                 var totalTweet = newData.get(d.properties.name) || 0;
-                return d.properties.name + ": " + totalTweet + " %";
+                return d.properties.name + ": " + totalTweet.toFixed(1) + " %";
             });
 svg.call(tip);
 
@@ -209,7 +209,7 @@ function updateMap() {
             .html(function(d) {
                 var totalTweet = tweetsByCountry.get(d.properties.name) || 0;
                 if (totalTweet === 0) return d.properties.name + ": " + "0%"
-                else return d.properties.name + ": " + totalTweet + " %";
+                else return d.properties.name + ": " + totalTweet.toFixed(1) + " %";
             });
     svg.call(tip);
 
@@ -271,7 +271,7 @@ function clicked(d) {
         .cells([1, 20, 40, 60, 80, 100])
         .orient('vertical')
         .scale(colorScale)
-        .title("Number of Tweets");
+        .title("% of People with Electricity");
         
         svg.select(".legendQuant")
         .call(legendLinear);
