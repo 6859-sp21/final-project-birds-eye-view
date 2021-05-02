@@ -61,15 +61,16 @@ const newData = electricity_decade_fin.features
 .filter(function(data) {
     return (data.properties.year == 2010);
 })
-var tweetsByCountry = d3.rollup(newData, v => v.length, d => d.properties.country);
+var tweetsByCountry = d3.rollup(newData, v => d3.sum(v, d => d.properties.value), d => d.properties.country);
+console.log(tweetsByCountry);
 
 map_svg.selectAll("path")
         .data(world_map_json.features)
         .enter()
         .append("path")
         .attr( "fill", function (d) {
-            console.log(d.properties);
-            d.total = tweetsByCountry.get(d.properties.value) || 0;
+            console.log(tweetsByCountry.get(d.properties.name));
+            d.total = tweetsByCountry.get(d.properties.name) || 0;
             // if (d.properties.name == "United States" & ! includeUS) {
             //     return "#808080";
             // }
@@ -194,7 +195,7 @@ function updateMap() {
                         //     return isDataCreatedAt && isDataHasHashtag; 
                         //  });
 
-    var tweetsByCountry = d3.rollup(newData, v => v.length, d => d.properties.country);
+    var tweetsByCountry = d3.rollup(newData, v => d3.sum(v, d => d.properties.value), d => d.properties.country);
 
     tip = d3.tip()
             .attr('class', 'd3-tip')
@@ -206,8 +207,8 @@ function updateMap() {
                 }
               })
             .html(function(d) {
-                var totalTweet = tweetsByCountry.get(d.properties.value) || 0;
-                if (totalTweet === 0) return d.properties.value + ": " + "0%"
+                var totalTweet = tweetsByCountry.get(d.properties.name) || 0;
+                if (totalTweet === 0) return d.properties.name + ": " + "0%"
                 else return d.properties.name + ": " + totalTweet + " %";
             });
     svg.call(tip);
@@ -216,7 +217,8 @@ function updateMap() {
     .data(world_map_json.features)
     .join("path")
     .attr( "fill", function (d) {
-        d.total =  tweetsByCountry.get(d.properties.value) || 0;
+        console.log(d.properties)
+        d.total =  tweetsByCountry.get(d.properties.name) || 0;
         // if (d.properties.name == "United States" & ! includeUS) {
         //     return "#808080";
         // }
