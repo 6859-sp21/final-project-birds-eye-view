@@ -51,26 +51,30 @@ var tip = d3.tip()
                 }
               }) 
             .html(function(d) {
-                var totalTweet = tweetsByCountry.get(d.properties.name) || 0;
-                return d.properties.name + ": " + totalTweet + " tweets";
+                var totalTweet = newData.get(d.properties.name) || 0;
+                return d.properties.name + ": " + totalTweet + " %";
             });
 svg.call(tip);
 
 let map_svg = svg.append("g");
-var tweetsByCountry = d3.rollup(electricity_decade.features, v => v.length, d => d.properties.country);
+const newData = electricity_decade.features
+.filter(function(data) {
+    return (data.properties.year == 2010);
+})
+var tweetsByCountry = d3.rollup(newData.features, v => v.length, d => d.properties.country);
 
 map_svg.selectAll("path")
         .data(world_map_json.features)
         .enter()
         .append("path")
-        // .attr( "fill", function (d) {
-        //     console.log()
-        //     d.total = tweetsByCountry.get(d.properties.value) || 0;
-        //     // if (d.properties.name == "United States" & ! includeUS) {
-        //     //     return "#808080";
-        //     // }
-        //     return colorScale(d.total);
-        // })
+        .attr( "fill", function (d) {
+            console.log(d.properties);
+            d.total = tweetsByCountry.get(d.properties.value) || 0;
+            // if (d.properties.name == "United States" & ! includeUS) {
+            //     return "#808080";
+            // }
+            return colorScale(d.total);
+        })
         .style('cursor', 'pointer')
         .on('mouseover', tip.show)
         .on('mouseout', tip.hide)
@@ -176,13 +180,13 @@ updateMap();
 // }
 
 function updateMap() {
-
+    console.log(chosenCategory, " chosenCategory")
+    console.log(chosenDecade, " chosenDecade")
     // Filter and get new data
     const newData = electricity_decade.features
-                        //  .filter(function(data) {
-                        //      if (includeUS) return true;
-                        //      return data.properties.country != "United States";
-                        //  })
+                         .filter(function(data) {
+                             return (data.properties.year == 2010);
+                         })
                         //  .filter(function(data) {
                         //     var dataHashtags = data.properties.hashtags.toLowerCase();
                         //     var isDataHasHashtag = dataHashtags.includes(currentHashtag);
@@ -203,21 +207,21 @@ function updateMap() {
               })
             .html(function(d) {
                 var totalTweet = tweetsByCountry.get(d.properties.value) || 0;
-                if (totalTweet === 0) return d.properties.value + ": " + "No tweets"
-                else return d.properties.value + ": " + totalTweet + " tweets";
+                if (totalTweet === 0) return d.properties.value + ": " + "0%"
+                else return d.properties.name + ": " + totalTweet + " %";
             });
     svg.call(tip);
 
     map_svg.selectAll("path")
     .data(world_map_json.features)
     .join("path")
-    // .attr( "fill", function (d) {
-    //     d.total = tweetsByCountry.get(d.properties.value) || 0;
-    //     // if (d.properties.name == "United States" & ! includeUS) {
-    //     //     return "#808080";
-    //     // }
-    //     return colorScale(d.total);
-    //   })
+    .attr( "fill", function (d) {
+        d.total =  tweetsByCountry.get(d.properties.value) || 0;
+        // if (d.properties.name == "United States" & ! includeUS) {
+        //     return "#808080";
+        // }
+        return colorScale(d.total);
+      })
     .on('mouseover', tip.show)
     .on('mouseout', tip.hide)
     .attr("stroke", "black")
@@ -271,33 +275,33 @@ function clicked(d) {
         .call(legendLinear);
     } 
     
-    updateWordCloud(currentCountry);
+    // updateWordCloud(currentCountry);
 }
 
 // ------------------------ code for wordcloud -------------------------------
-var textInput = document.getElementById('hashtag-search-box');
-const word_width = 300; // TODO: change this
-const word_height = 250;
-const fontFamily = "Verdana, Arial, Helvetica, sans-serif";
-let word_svg = d3.select("#wordcloud-placeholder").append('svg')
-                .style("width", word_width)
-                .style("height", word_height)
-                .style('fill', 'white')
-                .attr("font-family", fontFamily)
-                .attr("text-anchor", "middle")
-                .append("g")
-                .attr("transform", "translate(" + (word_width / 2) + "," + (word_height / 2) + ")");
+// var textInput = document.getElementById('hashtag-search-box');
+// const word_width = 300; // TODO: change this
+// const word_height = 250;
+// const fontFamily = "Verdana, Arial, Helvetica, sans-serif";
+// let word_svg = d3.select("#wordcloud-placeholder").append('svg')
+//                 .style("width", word_width)
+//                 .style("height", word_height)
+//                 .style('fill', 'white')
+//                 .attr("font-family", fontFamily)
+//                 .attr("text-anchor", "middle")
+//                 .append("g")
+//                 .attr("transform", "translate(" + (word_width / 2) + "," + (word_height / 2) + ")");
 
-function updateWordCloudTitle(country, numOfHashtagShowed) {
-    var textInput = document.getElementById('wordcloud-title');
-    if (numOfHashtagShowed === 0) {
-        textInput.innerText = "No hashtags available for " + country + ".\n" + "Please choose other country or date.\n";
-        if (country === "United States") textInput.innerText += "Also, please don't forget to click 'Include US' button."
-    }
-    else {
-        textInput.innerText = "Top " + numOfHashtagShowed + " Hashtags: " + country;
-    }
-}
+// function updateWordCloudTitle(country, numOfHashtagShowed) {
+//     var textInput = document.getElementById('wordcloud-title');
+//     if (numOfHashtagShowed === 0) {
+//         textInput.innerText = "No hashtags available for " + country + ".\n" + "Please choose other country or date.\n";
+//         if (country === "United States") textInput.innerText += "Also, please don't forget to click 'Include US' button."
+//     }
+//     else {
+//         textInput.innerText = "Top " + numOfHashtagShowed + " Hashtags: " + country;
+//     }
+// }
 
 // function updateWordCloud(country) {
 //     // Pre-process: get all the hashtags
