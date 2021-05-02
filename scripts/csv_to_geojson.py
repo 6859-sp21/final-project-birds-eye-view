@@ -2,13 +2,14 @@ import csv, json
 from geojson import Feature, FeatureCollection, Point
 
 features = []
-with open('../data/electricity_decade.csv', newline='') as csvfile:
+with open('../data/electricity_decade_fin.csv', newline='') as csvfile:
     reader = csv.reader(csvfile, delimiter=',')
-    for country,country_code,year,value in reader:
+    for country, latitude, longitude, country_code,year,value in reader:
         try:
+            latitude, longitude = map(float, (latitude, longitude))
             features.append(
                 Feature(
-                    geometry = Point((0, 0)),
+                    geometry = Point((longitude, latitude)),
                     properties = {
                         'country' : country,
                         'country_code' : country_code,
@@ -21,7 +22,7 @@ with open('../data/electricity_decade.csv', newline='') as csvfile:
             pass
 
 collection = FeatureCollection(features)
-with open("../data/electricity_decade.geojson", "w") as f:
+with open("../data/electricity_decade_fin.geojson", "w") as f:
     f.write('%s' % collection)
     
     
