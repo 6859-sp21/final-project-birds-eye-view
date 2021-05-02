@@ -178,3 +178,262 @@ figcaption {
     text-align: center;
 }
 /* --------------- End of section-interesting-dataset styling -------------------- */
+
+/* --------------- A4 CSS -------------------- */
+  .title {
+    color: #1DA1F2;
+    font-size: 40px;
+    margin: 60 20 36 20;
+    padding-top: 40px;
+    text-align: center;
+    width: 100%;
+  }
+
+  .description {
+    color: white;
+    margin: 20 40 36 40;
+    text-align: center;
+    padding: 20px;
+    width: 100%;
+  }
+
+  .map-and-sidebar {
+    /*border: 5px solid green;*/
+    display: flex;
+    width: 100%;
+  }
+
+  .map {
+    /*border: 5px solid blue;*/
+    display: flex;
+    flex-flow: column;
+    padding: 20px;
+    width: 100%;
+  }
+
+  .legendQuant {
+    font-size: 11px;
+  }
+
+  .map-direction {
+    align-self: center;
+    color: #aeaaaa;
+    font-size: 14px;
+    margin-top: 8px;
+    text-align: center;
+  }
+
+  .btn-group {
+    align-self: center;
+    margin-top: 20px;
+    margin-bottom: 20px;
+    width: 80%;
+  }
+
+  .btn {
+    color: #1DA1F2;
+  }
+
+  .sidebar {
+    /*border: 5px solid red;*/
+    display: flex;
+    flex-flow: column;
+    height: 100%;
+    margin: 20px;
+    width: 100%;
+  }
+
+  .wordcloud-group {
+    align-self: center;
+    margin: 12px;
+    padding: 2px 10px 5px 10px;
+  }
+
+  #wordcloud-title {
+    align-self: center;
+    border-bottom: 3px solid #1DA1F2;
+    margin-top: 0px;
+    padding-bottom: 6px;
+    text-align: center;
+    width: 100%;
+  }
+
+  #wordcloud-placeholder {
+    align-self: center;
+    margin-top: 0px;
+    width: 100%;
+  }
+
+  .d3-tip {
+    line-height: 1;
+    padding: 6px;
+    background: white;
+    color: black;
+    border-radius: 4px;
+    font-size: 12px;
+  }
+
+  .input-group {
+    align-self: center;
+    border-right: hidden;
+    width: 80%;
+  }
+
+  .btn-x {
+    background-color: white;
+    border: hidden;
+    border-top-right-radius: 4px;
+    border-bottom-right-radius: 4px;
+    color: black;
+    height: 100%;
+  }
+
+  .twitter-bg {
+      background-color: #1DA1F2;
+  }
+
+  .text-twitter {
+      color: #1DA1F2;
+  }
+
+  .active {
+      stroke: white;
+      stroke-width: 1.5px;
+      stroke-linejoin: round;
+      stroke-linecap: round;
+  }
+
+  .help-button {
+    bottom: 10px;
+    left: 10px;
+    height: 30px;
+    position: fixed;
+    width: 30px;
+  }
+
+  .help-button:focus {
+    outline:0;
+  }
+
+  .footer {
+    color: #aeaaaa;
+    font-size: 12px;
+    text-align: center;
+    width: 100%;
+  }
+
+  /* Word cloud */
+  #wordcloud-title {
+    color: white;
+  }
+
+  /* Slider css */
+  .slider {
+    margin: 40px;
+    width: 100%;
+  }
+
+  .range {
+	 position: relative;
+	 width: 1200px;
+	 height: 5px;
+  }
+  .range input {
+	 width: 100%;
+	 position: absolute;
+	 top: 2px;
+	 height: 0;
+	 -webkit-appearance: none;
+  }
+  .range input::-webkit-slider-thumb {
+	 -webkit-appearance: none;
+	 width: 18px;
+	 height: 18px;
+	 margin: -8px 0 0;
+	 border-radius: 50%;
+	 background: #37adbf;
+	 cursor: pointer;
+	 border: 0 !important;
+  }
+ .range input::-moz-range-thumb {
+	 width: 18px;
+	 height: 18px;
+	 margin: -8px 0 0;
+	 border-radius: 50%;
+	 background: #37adbf;
+	 cursor: pointer;
+	 border: 0 !important;
+}
+ .range input::-ms-thumb {
+	 width: 18px;
+	 height: 18px;
+	 margin: -8px 0 0;
+	 border-radius: 50%;
+	 background: #37adbf;
+	 cursor: pointer;
+	 border: 0 !important;
+}
+ .range input::-webkit-slider-runnable-track {
+	 width: 100%;
+	 height: 2px;
+	 cursor: pointer;
+	 background: #b2b2b2;
+}
+ .range input::-moz-range-track {
+	 width: 100%;
+	 height: 2px;
+	 cursor: pointer;
+	 background: #b2b2b2;
+}
+ .range input::-ms-track {
+	 width: 100%;
+	 height: 2px;
+	 cursor: pointer;
+	 background: #b2b2b2;
+}
+ .range input:focus {
+	 background: none;
+	 outline: none;
+}
+ .range input::-ms-track {
+	 width: 100%;
+	 cursor: pointer;
+	 background: transparent;
+	 border-color: transparent;
+	 color: transparent;
+}
+ .range-labels {
+	 margin: 18px -24px 0;
+	 padding: 0;
+	 list-style: none;
+}
+ .range-labels li {
+	 position: relative;
+	 float: left;
+	 width: 50px;
+	 text-align: center;
+	 color: #b2b2b2;
+	 font-size: 14px;
+	 cursor: pointer;
+}
+ .range-labels li::before {
+	 position: absolute;
+	 top: -25px;
+	 right: 0;
+	 left: 0;
+	 content: "";
+	 margin: 0 auto;
+	 width: 9px;
+	 height: 9px;
+	 background: #b2b2b2;
+	 border-radius: 50%;
+}
+ .range-labels .active {
+	 color: #37adbf;
+}
+ .range-labels .selected::before {
+	 background: #37adbf;
+}
+ .range-labels .active.selected::before {
+	 display: none;
+}

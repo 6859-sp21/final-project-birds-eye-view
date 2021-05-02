@@ -7,6 +7,7 @@
     <!-- d3.js related imports -->
     <script src="https://d3js.org/d3.v5.min.js"></script>
     <script src="https://d3js.org/d3-array.v2.min.js"></script>
+    <script src="javascripts/d3-tip.js"></script>
 
     <!-- d3 legend -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/d3-legend/2.25.6/d3-legend.min.js"></script>
@@ -21,6 +22,10 @@
     <!-- CSS -->
     <link rel="stylesheet" href="./styles.css">
     <script src="https://cdn.lordicon.com//libs/frhvbuzj/lord-icon-2.0.2.js"></script>
+
+    <!-- data -->
+    <script src="data/world.json"></script>
+    <script src="data/combined_data_small.geojson"></script>
 </head>
 
 <body>
@@ -93,7 +98,58 @@
 
             <!-- User color map -->
             <section id="section-user-color-map" class="step">
-                <!-- TODO: insert map visualization + coloring interaction here! -->
+                <div class="map-and-sidebar">
+                    <div class='map'>
+                        <div id="map-placeholder"></div>
+                        <div class="map-direction"> Click on any country to zoom in, and click on the same country to zoom out.</div>
+                        <input class="help-button" type="image" src="images/help.png"
+                        id="help" 
+                        data-bs-container="body" 
+                        data-bs-toggle="popover" 
+                        data-bs-placement="right" 
+                        title="How to explore the data"
+                        data-bs-content="
+                        <ul>
+                        <li> <b> Map exploration </b>: On the map, click on any country to zoom in, 
+                        and click on the same country to zoom out. <br>
+                        Notice how the wordcloud also change based on the country you clicked!
+                        <li> <b> Hashtag search </b>: Type in a hashtag (without the '#') on the search bar on the right side.
+                        <li> <b> Timeline </b>: Drag the blue button to explore how the number of election-related tweets changed 
+                        in the days before the 2020 U.S. Election.<br>
+                        <li> <b> Hashtag Wordcloud </b>: Click on any of the words to directly search the hashtag
+                        </ul>
+                        "/>
+                
+                        <script>
+                            $(function () {
+                            $('#help').popover({ html: true});
+                            })
+                        </script>
+                    </div>
+
+                    <div class='sidebar'>
+                        <div class="btn-group" id="btn-group" role="group" aria-label="Basic radio toggle button group">
+                        <input type="radio" class="btn-check" name="btnradio" id="btnradio1" value="excludeUS" checked>
+                        <label class="btn btn-outline-primary" for="btnradio1">Exclude US</label>
+                        
+                        <input type="radio" class="btn-check" name="btnradio" id="btnradio2" value="includeUS">
+                        <label class="btn btn-outline-primary" for="btnradio2">Include US</label>
+                        </div>
+                
+                        <div class="input-group" class="m-2 p-2">
+                        <span class="input-group-text" id="basic-addon1">#</span>
+                        <input type="text " class="form-control" id="hashtag-search-box" placeholder="Search a hashtag">
+                        <div class="input-group-append">
+                            <input class="btn-x btn-outline-secondary" type="button" id="button-searchbar" value="x"></input>
+                        </div>
+                        </div>
+                
+                        <div class="wordcloud-group">
+                        <h4 id="wordcloud-title"> Top 15 Hashtags: Worldwide </h4>
+                        <div id="wordcloud-placeholder"></div>
+                        </div>
+                    </div>
+                </div>
             </section>
 
             <!-- User answer reflection -->
