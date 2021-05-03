@@ -292,6 +292,7 @@ function showGuessingTools(currentCountry, show) {
                 guessButton.style.visibility = "visible";
         }
     } else {
+        console.log("hidden");
         var GuessTitle = document.getElementById('wordcloud-title');
         GuessTitle.style.visibility = 'hidden';
         var guessEntryBox = document.getElementById('hashtag-search-box');
