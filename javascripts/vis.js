@@ -75,7 +75,6 @@ const newData = electricity_decade_fin.features
     return (data.properties.year == 2010);
 })
 var tweetsByCountry = d3.rollup(newData, v => d3.sum(v, d => d.properties.value), d => d.properties.country);
-console.log(tweetsByCountry);
 
 map_svg.selectAll("path")
         .data(world_map_json.features)
@@ -199,7 +198,7 @@ $('#guess-button').on('click', function () {
     guessButton.style.visibility = "hidden";
     var sidebarStats = document.getElementById('sidebar-stats');
     var guessedValue = document.getElementById('hashtag-search-box').value;
-    sidebarStats.innerHTML += "<br> <b> For " + currentCountry + "</b> <br> You guessed: " + guessedValue + " <br> Correct answer: <br>";
+    sidebarStats.innerHTML += "<br> <b> For " + currentCountry + "</b> <br> You guessed: " + guessedValue + " <br> Correct answer: " +  tweetsByCountry.get(currentCountry) +  "<br>";
     sidebarStats.style.color = "#ffffff";
     guessedCountries.add(currentCountry);
     console.log(guessedCountries);
