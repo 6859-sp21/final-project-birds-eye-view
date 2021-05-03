@@ -302,3 +302,7 @@ figcaption {
     max-height: 350px;
     overflow-y: scroll;
   }
+
+  #map-title {
+    align-self: center;
+  }
