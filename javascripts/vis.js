@@ -276,11 +276,11 @@ function showGuessingTools(currentCountry, show) {
         if (!guessedCountries.has(currentCountry)) {
             var GuessTitle = document.getElementById('wordcloud-title');
             GuessTitle.style.visibility = 'visible';
-            var decadeToDisplay
+            var decadeToDisplay;
             if (! chosenDecade) {
-                chosenDecade = "2010"
+                decadeToDisplay = "2010";
             }
-            GuessTitle.innerText = "What % of people in " + currentCountry + " do you think had access to electricity in the " + chosenDecade + "s?";
+            GuessTitle.innerText = "What % of people in " + currentCountry + " do you think had access to electricity in the " + decadeToDisplay + "s?";
             var guessEntryBox = document.getElementById('hashtag-search-box');
             guessEntryBox.style.visibility = 'visible';
             var percentAddOn = document.getElementById('basic-addon1');
