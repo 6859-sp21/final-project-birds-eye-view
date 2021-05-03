@@ -294,3 +294,7 @@ figcaption {
   #wordcloud-title {
     color: white;
   }
+
+  #sidebar-stats {
+    color: white!important;
+  }
