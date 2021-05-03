@@ -217,6 +217,15 @@ $('#guess-button').on('click', function () {
 function updateMap() {
     console.log(chosenCategory, " chosenCategory")
     console.log(chosenDecade, " chosenDecade")
+    var mapTitle = document.getElementById('map-title');
+    var decadeToDisplay;
+    if (chosenDecade == undefined) {
+        decadeToDisplay = "2010"
+    } else {
+        decadeToDisplay = chosenDecade
+    }
+    mapTitle.innerHTML = "<h4> Percentage of people with access to electricity in the "+ decadeToDisplay + "s </h4>";
+    mapTitle.style.color = "#ffffff";
     // Filter and get new data
     const newData = electricity_decade_fin.features
         .filter(function(data) {
