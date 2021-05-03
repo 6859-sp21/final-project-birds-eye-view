@@ -201,7 +201,8 @@ $('#guess-button').on('click', function () {
     guessButton.style.visibility = "hidden";
     var sidebarStats = document.getElementById('sidebar-stats');
     var guessedValue = document.getElementById('hashtag-search-box').value;
-    sidebarStats.innerHTML += "<br> <b> For " + currentCountry + "</b> <br> You guessed: " + guessedValue + " <br> Correct answer: " +  tweetsByCountry.get(currentCountry) +  "<br>";
+    var updatedInnerHTML = "<br> <b> For " + currentCountry + "</b> <br> You guessed: " + guessedValue + " <br> Correct answer: " +  tweetsByCountry.get(currentCountry) +  "<br>" + sidebarStats.innerHTML; 
+    sidebarStats.innerHTML = updatedInnerHTML;
     sidebarStats.style.color = "#ffffff";
     guessedCountries.add(currentCountry);
     console.log(guessedCountries);
@@ -267,16 +268,20 @@ function updateMap() {
 
 function showGuessingTools(currentCountry, show) {
     if (show) {
-        var GuessTitle = document.getElementById('wordcloud-title');
-        GuessTitle.style.visibility = 'visible';
-        GuessTitle.innerText = "What % of people in " + currentCountry + " do you think have access to electricity?" ;
-        var guessEntryBox = document.getElementById('hashtag-search-box');
-        guessEntryBox.style.visibility = 'visible';
-        var percentAddOn = document.getElementById('basic-addon1');
-        percentAddOn.style.visibility = "visible";
         if (!guessedCountries.has(currentCountry)) {
-            var guessButton = document.getElementById('guess-button');
-            guessButton.style.visibility = "visible";
+            var GuessTitle = document.getElementById('wordcloud-title');
+            GuessTitle.style.visibility = 'visible';
+            var decadeToDisplay
+            if (! chosenDecade) {
+                chosenDecade = "2010"
+            }
+            GuessTitle.innerText = "What % of people in " + currentCountry + " do you think had access to electricity in the " + chosenDecade + "s?";
+            var guessEntryBox = document.getElementById('hashtag-search-box');
+            guessEntryBox.style.visibility = 'visible';
+            var percentAddOn = document.getElementById('basic-addon1');
+            percentAddOn.style.visibility = "visible";
+                var guessButton = document.getElementById('guess-button');
+                guessButton.style.visibility = "visible";
         }
     } else {
         var GuessTitle = document.getElementById('wordcloud-title');
