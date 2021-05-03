@@ -17,6 +17,8 @@ var guessEntryBox = document.getElementById('hashtag-search-box');
 guessEntryBox.style.visibility = "hidden";
 var percentAddOn = document.getElementById('basic-addon1');
 percentAddOn.style.visibility = "hidden";
+var guessButton = document.getElementById('guess-button');
+guessButton.style.visibility = "hidden";
 
 let svg = d3.select("#map-placeholder").append('svg')
             .style("width", width).style("height", height);
@@ -192,6 +194,16 @@ updateMap();
 //     updateSearchWOListener("");
 // }
 
+$('#guess-button').on('click', function () {
+    var guessButton = document.getElementById('guess-button');
+    guessButton.style.visibility = "hidden";
+    var sidebarStats = document.getElementById('sidebar-stats');
+    sidebarStats.innerHTML = "You guessed: " + " <br> Correct answer:";
+    guessedCountries.add(currentCountry);
+    console.log(guessedCountries);
+    updateMap();
+})
+
 function updateMap() {
     console.log(chosenCategory, " chosenCategory")
     console.log(chosenDecade, " chosenDecade")
@@ -258,6 +270,8 @@ function showGuessingTools(currentCountry, show) {
         guessEntryBox.style.visibility = 'visible';
         var percentAddOn = document.getElementById('basic-addon1');
         percentAddOn.style.visibility = "visible";
+        var guessButton = document.getElementById('guess-button');
+        guessButton.style.visibility = "visible";
     } else {
         var GuessTitle = document.getElementById('wordcloud-title');
         GuessTitle.style.visibility = 'hidden';
@@ -265,6 +279,8 @@ function showGuessingTools(currentCountry, show) {
         guessEntryBox.style.visibility = 'hidden';
         var percentAddOn = document.getElementById('basic-addon1');
         percentAddOn.style.visibility = "hidden";
+        var guessButton = document.getElementById('guess-button');
+        guessButton.style.visibility = "hidden";
     }
 }
 
