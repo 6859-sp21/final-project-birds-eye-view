@@ -1,6 +1,11 @@
 // TODO: please put any d3 function here
 // you can use 'chosenCategory' and 'chosenDecade' to get the user-chosen category and decade
 
+function changedDecadeValue() {
+    console.log("chosen decade: " + chosenDecade);
+    updateMap();
+}
+
 let width = 800, height = 400, centered; // TODO: change these to fit the screen
 let projection = d3.geoEquirectangular();
 projection.fitSize([width, height], electricity_decade_fin);
@@ -84,7 +89,7 @@ map_svg.selectAll("path")
         .enter()
         .append("path")
         .attr( "fill", function (d) {
-            console.log(tweetsByCountry.get(d.properties.name));
+            //console.log(tweetsByCountry.get(d.properties.name));
             d.total = tweetsByCountry.get(d.properties.name) || 0;
             if (! guessedCountries.has(d.properties.name)) {
                 return "#808080";
@@ -205,7 +210,7 @@ $('#guess-button').on('click', function () {
     sidebarStats.innerHTML = updatedInnerHTML;
     sidebarStats.style.color = "#ffffff";
     guessedCountries.add(currentCountry);
-    console.log(guessedCountries);
+    //console.log(guessedCountries);
     updateMap();
 })
 
@@ -215,7 +220,7 @@ function updateMap() {
     // Filter and get new data
     const newData = electricity_decade_fin.features
                          .filter(function(data) {
-                             return (data.properties.year == 2010);
+                             return (data.properties.year == chosenDecade);
                          })
                         //  .filter(function(data) {
                         //     var dataHashtags = data.properties.hashtags.toLowerCase();
@@ -224,7 +229,7 @@ function updateMap() {
                         //     return isDataCreatedAt && isDataHasHashtag; 
                         //  });
 
-    var tweetsByCountry = d3.rollup(newData, v => d3.sum(v, d => d.properties.value), d => d.properties.country);
+    tweetsByCountry = d3.rollup(newData, v => d3.sum(v, d => d.properties.value), d => d.properties.country);
 
     tip = d3.tip()
             .attr('class', 'd3-tip')
@@ -250,7 +255,7 @@ function updateMap() {
     .data(world_map_json.features)
     .join("path")
     .attr( "fill", function (d) {
-        console.log(d.properties)
+        //console.log(d.properties)
         d.total =  tweetsByCountry.get(d.properties.name) || 0;
         if (! guessedCountries.has(d.properties.name)) {
             return "#808080";
