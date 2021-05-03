@@ -219,9 +219,12 @@ function updateMap() {
     console.log(chosenDecade, " chosenDecade")
     // Filter and get new data
     const newData = electricity_decade_fin.features
-                         .filter(function(data) {
-                             return (data.properties.year == chosenDecade);
-                         })
+        .filter(function(data) {
+            if (!chosenDecade) {
+                return data.properties.year == 2010
+            }
+            return data.properties.year == chosenDecade;
+        })
                         //  .filter(function(data) {
                         //     var dataHashtags = data.properties.hashtags.toLowerCase();
                         //     var isDataHasHashtag = dataHashtags.includes(currentHashtag);
