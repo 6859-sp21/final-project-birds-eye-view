@@ -299,4 +299,6 @@ figcaption {
 
   #sidebar-stats {
     color: white!important;
+    max-height: 350px;
+    overflow-y: scroll;
   }
