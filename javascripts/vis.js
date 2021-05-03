@@ -292,6 +292,7 @@ function showGuessingTools(currentCountry, show) {
             if (! chosenDecade) {
                 decadeToDisplay = "2010";
             }
+            decadeToDisplay = chosenDecade;
             GuessTitle.innerText = "What % of people in " + currentCountry + " do you think had access to electricity in the " + decadeToDisplay + "s?";
             var guessEntryBox = document.getElementById('hashtag-search-box');
             guessEntryBox.style.visibility = 'visible';
