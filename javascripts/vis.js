@@ -206,7 +206,7 @@ $('#guess-button').on('click', function () {
     guessButton.style.visibility = "hidden";
     var sidebarStats = document.getElementById('sidebar-stats');
     var guessedValue = document.getElementById('hashtag-search-box').value;
-    var updatedInnerHTML = "<br> <b> For " + currentCountry + "</b> <br> You guessed: " + guessedValue + " <br> Correct answer: " +  tweetsByCountry.get(currentCountry) +  "<br>" + sidebarStats.innerHTML; 
+    var updatedInnerHTML = "<br> <b> For " + currentCountry + "</b> <br> You guessed: " + guessedValue + " <br> Correct answer: " +  tweetsByCountry.get(currentCountry).toFixed(1) +  "<br>" + sidebarStats.innerHTML; 
     sidebarStats.innerHTML = updatedInnerHTML;
     sidebarStats.style.color = "#ffffff";
     guessedCountries.add(currentCountry);
