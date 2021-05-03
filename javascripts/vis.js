@@ -38,7 +38,7 @@ let rect_svg = svg.append("rect")
     .cells([1, 20, 40, 60, 80, 100])
     .orient('vertical')
     .scale(colorScale)
-    .title("Number of Tweets")
+    .title("% of People with Electricity")
     
     svg.select(".legendQuant")
     .call(legendLinear);
@@ -72,7 +72,10 @@ svg.call(tip);
 let map_svg = svg.append("g");
 const newData = electricity_decade_fin.features
 .filter(function(data) {
-    return (data.properties.year == 2010);
+    if (!chosenDecade) {
+        return data.properties.year == 2010
+    }
+    return data.properties.year == chosenDecade;
 })
 var tweetsByCountry = d3.rollup(newData, v => d3.sum(v, d => d.properties.value), d => d.properties.country);
 
