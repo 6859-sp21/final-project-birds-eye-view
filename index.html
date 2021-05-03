@@ -101,7 +101,7 @@
                 <div class="map-and-sidebar">
                     <div class='map'>
                         <div id="map-placeholder"></div>
-                        <div class="map-direction"> Click on any country to zoom in, and click on the same country to zoom out.</div>
+                        <div class="map-direction"> Click on any country to zoom in and guess a value! Click on the same country to zoom out.</div>
                         <input class="help-button" type="image" src="images/help.png"
                         id="help" 
                         data-bs-container="body" 
@@ -128,26 +128,13 @@
                     </div>
 
                     <div class='sidebar'>
-                        <div class="btn-group" id="btn-group" role="group" aria-label="Basic radio toggle button group">
-                        <input type="radio" class="btn-check" name="btnradio" id="btnradio1" value="excludeUS" checked>
-                        <label class="btn btn-outline-primary" for="btnradio1">Exclude US</label>
-                        
-                        <input type="radio" class="btn-check" name="btnradio" id="btnradio2" value="includeUS">
-                        <label class="btn btn-outline-primary" for="btnradio2">Include US</label>
-                        </div>
                 
                         <div class="input-group" class="m-2 p-2">
-                        <span class="input-group-text" id="basic-addon1">#</span>
-                        <input type="text " class="form-control" id="hashtag-search-box" placeholder="Search a hashtag">
-                        <div class="input-group-append">
-                            <input class="btn-x btn-outline-secondary" type="button" id="button-searchbar" value="x"></input>
-                        </div>
+                        <h6 id="wordcloud-title"> </h6>
+                        <input type="text " class="form-control" id="hashtag-search-box" placeholder="Enter a number between 0 and 100">
+                        <span class="input-group-text" id="basic-addon1">%</span>
                         </div>
                 
-                        <div class="wordcloud-group">
-                        <h4 id="wordcloud-title"> Top 15 Hashtags: Worldwide </h4>
-                        <div id="wordcloud-placeholder"></div>
-                        </div>
                     </div>
                 </div>
             </section>

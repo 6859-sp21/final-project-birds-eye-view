@@ -6,10 +6,17 @@ let projection = d3.geoEquirectangular();
 projection.fitSize([width, height], electricity_decade_fin);
 let geoGenerator = d3.geoPath().projection(projection);
 
+const guessedCountries = new Set()
+
 var colorScale = d3.scaleLog()
 // linear scale
 .domain([1, 20, 40, 60, 80, 100])
 .range(d3.schemeBlues[6]);
+
+var guessEntryBox = document.getElementById('hashtag-search-box');
+guessEntryBox.style.visibility = "hidden";
+var percentAddOn = document.getElementById('basic-addon1');
+percentAddOn.style.visibility = "hidden";
 
 let svg = d3.select("#map-placeholder").append('svg')
             .style("width", width).style("height", height);
@@ -51,8 +58,12 @@ var tip = d3.tip()
                 }
               }) 
             .html(function(d) {
-                var totalTweet = newData.get(d.properties.name) || 0;
-                return d.properties.name + ": " + totalTweet.toFixed(1) + " %";
+                if (guessedCountries.has(d.properties.name)) {
+                    var totalTweet = newData.get(d.properties.name) || 0;
+                    return d.properties.name + ": " + totalTweet.toFixed(1) + " %";
+                } else {
+                    return d.properties.name;
+                }
             });
 svg.call(tip);
 
@@ -207,9 +218,13 @@ function updateMap() {
                 }
               })
             .html(function(d) {
-                var totalTweet = tweetsByCountry.get(d.properties.name) || 0;
-                if (totalTweet === 0) return d.properties.name + ": " + "0%"
-                else return d.properties.name + ": " + totalTweet.toFixed(1) + " %";
+                if (guessedCountries.has(d.properties.name)) {
+                    var totalTweet = tweetsByCountry.get(d.properties.name) || 0;
+                    if (totalTweet === 0) return d.properties.name + ": " + "0%"
+                    else return d.properties.name + ": " + totalTweet.toFixed(1) + " %";
+                } else {
+                    return d.properties.name;
+                }
             });
     svg.call(tip);
 
@@ -232,6 +247,25 @@ function updateMap() {
     .on("click", clicked);
 }
 
+function showGuessingTools(currentCountry, show) {
+    if (show) {
+        var GuessTitle = document.getElementById('wordcloud-title');
+        GuessTitle.style.visibility = 'visible';
+        GuessTitle.innerText = "What % of people in " + currentCountry + " do you think have access to electricity?" ;
+        var guessEntryBox = document.getElementById('hashtag-search-box');
+        guessEntryBox.style.visibility = 'visible';
+        var percentAddOn = document.getElementById('basic-addon1');
+        percentAddOn.style.visibility = "visible";
+    } else {
+        var GuessTitle = document.getElementById('wordcloud-title');
+        GuessTitle.style.visibility = 'hidden';
+        var guessEntryBox = document.getElementById('hashtag-search-box');
+        guessEntryBox.style.visibility = 'hidden';
+        var percentAddOn = document.getElementById('basic-addon1');
+        percentAddOn.style.visibility = "hidden";
+    }
+}
+
 function clicked(d) {
     var x, y, k;
   
@@ -242,12 +276,16 @@ function clicked(d) {
         y = centroid[1];
         k = 4;
         centered = d;
+        // show % selector and guesser
+        showGuessingTools(currentCountry, true)
     } else {
         currentCountry = WORLDWIDE;
         x = width / 2;
         y = height / 2;
         k = 1;
         centered = null;
+        // hide % selector and guesser
+        showGuessingTools(currentCountry, false)
     }
   
     map_svg.selectAll("path")
