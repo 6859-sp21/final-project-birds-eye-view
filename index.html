@@ -75,7 +75,7 @@
             <section id="section-user-choose-decade" class="step">
                 <div class="section-container">
                     <h2 class="section-title"> Choose a decade </h2>
-                    <div class="btn-group" role="group">
+                    <div class="btn-group decade-choice" role="group">
                         <figure>
                             <h1 onclick="chooseDecade(this.id)" id="1990" class="decade-button"> 1990 </h1>
                         </figure>
@@ -102,29 +102,6 @@
                     <div class='map'>
                         <div id="map-placeholder"></div>
                         <div class="map-direction"> Click on any country to zoom in and guess a value! Click on the same country to zoom out.</div>
-                        <input class="help-button" type="image" src="images/help.png"
-                        id="help" 
-                        data-bs-container="body" 
-                        data-bs-toggle="popover" 
-                        data-bs-placement="right" 
-                        title="How to explore the data"
-                        data-bs-content="
-                        <ul>
-                        <li> <b> Map exploration </b>: On the map, click on any country to zoom in, 
-                        and click on the same country to zoom out. <br>
-                        Notice how the wordcloud also change based on the country you clicked!
-                        <li> <b> Hashtag search </b>: Type in a hashtag (without the '#') on the search bar on the right side.
-                        <li> <b> Timeline </b>: Drag the blue button to explore how the number of election-related tweets changed 
-                        in the days before the 2020 U.S. Election.<br>
-                        <li> <b> Hashtag Wordcloud </b>: Click on any of the words to directly search the hashtag
-                        </ul>
-                        "/>
-                
-                        <script>
-                            $(function () {
-                            $('#help').popover({ html: true});
-                            })
-                        </script>
                     </div>
 
                     <div class='sidebar'>
