@@ -82,10 +82,11 @@ map_svg.selectAll("path")
         .attr( "fill", function (d) {
             console.log(tweetsByCountry.get(d.properties.name));
             d.total = tweetsByCountry.get(d.properties.name) || 0;
-            // if (d.properties.name == "United States" & ! includeUS) {
-            //     return "#808080";
-            // }
-            return colorScale(d.total);
+            if (! guessedCountries.has(d.properties.name)) {
+                return "#808080";
+            } else {
+                return colorScale(d.total);
+            }
         })
         .style('cursor', 'pointer')
         .on('mouseover', tip.show)
@@ -234,10 +235,11 @@ function updateMap() {
     .attr( "fill", function (d) {
         console.log(d.properties)
         d.total =  tweetsByCountry.get(d.properties.name) || 0;
-        // if (d.properties.name == "United States" & ! includeUS) {
-        //     return "#808080";
-        // }
-        return colorScale(d.total);
+        if (! guessedCountries.has(d.properties.name)) {
+            return "#808080";
+        } else {
+            return colorScale(d.total);
+        }
       })
     .on('mouseover', tip.show)
     .on('mouseout', tip.hide)
