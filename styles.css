@@ -54,7 +54,7 @@ section.visible {
 /* --------------- Start of section-header styling -------------------- */
 #page-title {
     color: white;
-    line-height: 480px;
+    line-height: 490px;
     text-align: center;
 }
 
@@ -69,7 +69,7 @@ section.visible {
 
 /*Referenced from https://codepen.io/nxworld/pen/OyRrGy*/
 #section-header-footer div {
-  padding-top: 5px;
+  padding-top: 0px;
 }
 #section-header-footer div span {
   position: absolute;
