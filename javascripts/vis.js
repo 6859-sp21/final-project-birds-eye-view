@@ -106,12 +106,12 @@ updateMap();
 // Map region -> [total point, number of country]
 // value = totalPoint / cntOfCountry
 var pointPerRegionMap = [
-    {region: "Asia", totalPoint: 0, cntOfCountry: 0, value: 5 },
-    {region: "Europe", totalPoint: 0, cntOfCountry: 0, value: 10 },
-    {region: "Africa", totalPoint: 0, cntOfCountry: 0, value: 20 },
-    {region: "Oceania", totalPoint: 0, cntOfCountry: 0, value: 15 },
-    {region: "North America", totalPoint: 0, cntOfCountry: 0, value: 3 },
-    {region: "South America", totalPoint: 0, cntOfCountry: 0, value: 10 }
+    {region: "Asia", totalPoint: 0, cntOfCountry: 0, value: 0 },
+    {region: "Europe", totalPoint: 0, cntOfCountry: 0, value: 0 },
+    {region: "Africa", totalPoint: 0, cntOfCountry: 0, value: 0 },
+    {region: "Oceania", totalPoint: 0, cntOfCountry: 0, value: 0 },
+    {region: "North America", totalPoint: 0, cntOfCountry: 0, value: 0 },
+    {region: "South America", totalPoint: 0, cntOfCountry: 0, value: 0 }
 ];
 const barchartMargin = 30;
 const barchartWidth = 400 - 2 * barchartMargin;
@@ -209,7 +209,7 @@ barGroups
     .attr('x', (a) => barXScale(a.region) + barXScale.bandwidth() / 2)
     .attr('y', (a) => barYScale(a.value) + 20)
     .attr('text-anchor', 'middle')
-    .text((a) => `${a.value}`);
+    .text((a) => a.value > 0 ? `${a.value}` : "");
 // Add labels
 barSvg.append('text')
     .attr('class', 'label')
