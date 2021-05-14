@@ -23,8 +23,8 @@ var colorScale = d3.scaleLog()
 // percentAddOn.style.visibility = "hidden";
 // var guessButton = document.getElementById('guess-button');
 // guessButton.style.visibility = "hidden";
-var guessButtonGroups = document.getElementById('button-answer-group');
-guessButtonGroups.style.visibility = "hidden";
+var guessAnswerGroups = document.getElementById('guess-answer-groups');
+guessAnswerGroups.style.visibility = "hidden";
 
 let svg = d3.select("#map-placeholder").append('svg')
             .style("width", width).style("height", height);
@@ -203,10 +203,10 @@ function showGuessingTools(currentCountry, show) {
             // guessEntryBox.style.visibility = 'visible';
             // var percentAddOn = document.getElementById('basic-addon1');
             // percentAddOn.style.visibility = "visible";
-            //     var guessButton = document.getElementById('guess-button');
-            //     guessButton.style.visibility = "visible";
-            var guessButtonGroups = document.getElementById('button-answer-group');
-            guessButtonGroups.style.visibility = "visible";
+            // var guessButton = document.getElementById('guess-button');
+            // guessButton.style.visibility = "visible";
+            var guessAnswerGroups = document.getElementById('guess-answer-groups');
+            guessAnswerGroups.style.visibility = "visible";
         }
     } else {
         var GuessTitle = document.getElementById('wordcloud-title');
@@ -217,8 +217,8 @@ function showGuessingTools(currentCountry, show) {
         // percentAddOn.style.visibility = "hidden";
         // var guessButton = document.getElementById('guess-button');
         // guessButton.style.visibility = "hidden";
-        var guessButtonGroups = document.getElementById('button-answer-group');
-        guessButtonGroups.style.visibility = "hidden";
+        var guessAnswerGroups = document.getElementById('guess-answer-groups');
+        guessAnswerGroups.style.visibility = "hidden";
     }
 }
 
