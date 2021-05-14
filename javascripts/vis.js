@@ -217,7 +217,7 @@ barSvg.append('text')
     .attr('y', barchartMargin / 3)
     .attr('transform', 'rotate(-90)')
     .attr('text-anchor', 'middle')
-    .text('Average point gained');
+    .text('Average points gained');
 barSvg.append('text')
     .attr('class', 'label')
     .attr('x', barchartWidth / 2 + barchartMargin)
@@ -225,7 +225,11 @@ barSvg.append('text')
     .attr('text-anchor', 'middle')
     .text('Regions');
 
-// ----------------------- End of bar-chart initialization -----------------------
+function updateBarChart(countryName, newPoints) {
+    console.log(countryName + " " + countryToRegionMap.get(countryName));
+}
+
+// ----------------------- End of bar-chart related stuff -----------------------
 
 var guessedValueToRangeStringMap = new Map([
     ["0", "[0, 10)"],
@@ -259,14 +263,16 @@ $('#guess-button').on('click', function () {
     var guessedValue = document.getElementById("inputGroupSelect").value;
     var sidebarStats = document.getElementById('sidebar-stats');
     var expectedAnswer = tweetsByCountry.get(currentCountry).toFixed(1);
+    var pointsGained = getPointOfAnswer(guessedValue, expectedAnswer);
     var updatedInnerHTML = "<br> <b> For " + currentCountry + 
                             "</b> <br> You guessed: " + guessedValueToRangeStringMap.get(guessedValue) + 
                             " <br> Correct answer: " + expectedAnswer  + 
-                            "<br> Points gained: " +  getPointOfAnswer(guessedValue, expectedAnswer) +
-                            "<br>" + sidebarStats.innerHTML; 
+                            "<br> Points gained: " +  pointsGained +
+                            "<br>"; 
     sidebarStats.innerHTML = updatedInnerHTML;
     sidebarStats.style.color = "#ffffff";
     guessedCountries.add(currentCountry);
+    updateBarChart(currentCountry, pointsGained);
     updateMap();
 });
 
