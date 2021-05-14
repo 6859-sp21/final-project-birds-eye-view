@@ -102,17 +102,28 @@ map_svg.selectAll("path")
         .on("click", clicked);
 updateMap();
 
+var guessedValueToRangeMap = new Map([
+    ["0", "[0, 10)"],
+    ["1", "[10, 20)"],
+    ["2", "[20, 30)"],
+    ["3", "[30, 40)"],
+    ["4", "[40, 50)"],
+    ["5", "[50, 60)"],
+    ["6", "[60, 70)"],
+    ["7", "[70, 80)"],
+    ["8", "[80, 90)"],
+    ["9", "[90, 100]"],
+]);
+
 $('#guess-button').on('click', function () {
     var guessButton = document.getElementById('guess-button');
     guessButton.style.visibility = "hidden";
     var guessedValue = document.getElementById("inputGroupSelect").value;
     var sidebarStats = document.getElementById('sidebar-stats');
-    // var guessedValue = document.getElementById('hashtag-search-box').value;
-    var updatedInnerHTML = "<br> <b> For " + currentCountry + "</b> <br> You guessed: " + guessedValue + " <br> Correct answer: " +  tweetsByCountry.get(currentCountry).toFixed(1) +  "<br>" + sidebarStats.innerHTML; 
+    var updatedInnerHTML = "<br> <b> For " + currentCountry + "</b> <br> You guessed: " + guessedValueToRangeMap.get(guessedValue) + " <br> Correct answer: " +  tweetsByCountry.get(currentCountry).toFixed(1) +  "<br>" + sidebarStats.innerHTML; 
     sidebarStats.innerHTML = updatedInnerHTML;
     sidebarStats.style.color = "#ffffff";
     guessedCountries.add(currentCountry);
-    //console.log(guessedCountries);
     updateMap();
 })
 
