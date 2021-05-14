@@ -17,12 +17,8 @@ var colorScale = d3.scaleLog()
 .domain([1, 20, 40, 60, 80, 100])
 .range(d3.schemeBlues[6]);
 
-// var guessEntryBox = document.getElementById('hashtag-search-box');
-// guessEntryBox.style.visibility = "hidden";
-// var percentAddOn = document.getElementById('basic-addon1');
-// percentAddOn.style.visibility = "hidden";
-// var guessButton = document.getElementById('guess-button');
-// guessButton.style.visibility = "hidden";
+var guessButton = document.getElementById('guess-button');
+guessButton.style.visibility = "hidden";
 var guessAnswerGroups = document.getElementById('guess-answer-groups');
 guessAnswerGroups.style.visibility = "hidden";
 
@@ -109,8 +105,9 @@ updateMap();
 $('#guess-button').on('click', function () {
     var guessButton = document.getElementById('guess-button');
     guessButton.style.visibility = "hidden";
+    var guessedValue = document.getElementById("inputGroupSelect").value;
     var sidebarStats = document.getElementById('sidebar-stats');
-    var guessedValue = document.getElementById('hashtag-search-box').value;
+    // var guessedValue = document.getElementById('hashtag-search-box').value;
     var updatedInnerHTML = "<br> <b> For " + currentCountry + "</b> <br> You guessed: " + guessedValue + " <br> Correct answer: " +  tweetsByCountry.get(currentCountry).toFixed(1) +  "<br>" + sidebarStats.innerHTML; 
     sidebarStats.innerHTML = updatedInnerHTML;
     sidebarStats.style.color = "#ffffff";
@@ -199,24 +196,16 @@ function showGuessingTools(currentCountry, show) {
             }
             else decadeToDisplay = chosenDecade;
             GuessTitle.innerText = "What % of people in " + currentCountry + " do you think had access to electricity?";
-            // var guessEntryBox = document.getElementById('hashtag-search-box');
-            // guessEntryBox.style.visibility = 'visible';
-            // var percentAddOn = document.getElementById('basic-addon1');
-            // percentAddOn.style.visibility = "visible";
-            // var guessButton = document.getElementById('guess-button');
-            // guessButton.style.visibility = "visible";
+            var guessButton = document.getElementById('guess-button');
+            guessButton.style.visibility = "visible";
             var guessAnswerGroups = document.getElementById('guess-answer-groups');
             guessAnswerGroups.style.visibility = "visible";
         }
     } else {
         var GuessTitle = document.getElementById('wordcloud-title');
         GuessTitle.style.visibility = 'hidden';
-        // var guessEntryBox = document.getElementById('hashtag-search-box');
-        // guessEntryBox.style.visibility = 'hidden';
-        // var percentAddOn = document.getElementById('basic-addon1');
-        // percentAddOn.style.visibility = "hidden";
-        // var guessButton = document.getElementById('guess-button');
-        // guessButton.style.visibility = "hidden";
+        var guessButton = document.getElementById('guess-button');
+        guessButton.style.visibility = "hidden";
         var guessAnswerGroups = document.getElementById('guess-answer-groups');
         guessAnswerGroups.style.visibility = "hidden";
     }
