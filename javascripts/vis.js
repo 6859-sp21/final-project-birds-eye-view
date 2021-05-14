@@ -102,7 +102,7 @@ map_svg.selectAll("path")
         .on("click", clicked);
 updateMap();
 
-var guessedValueToRangeMap = new Map([
+var guessedValueToRangeStringMap = new Map([
     ["0", "[0, 10)"],
     ["1", "[10, 20)"],
     ["2", "[20, 30)"],
@@ -115,17 +115,52 @@ var guessedValueToRangeMap = new Map([
     ["9", "[90, 100]"],
 ]);
 
+var guessedValueToRangeMap = new Map([
+    [0, [0, 10]],
+    [1, [10, 20]],
+    [2, [20, 30]],
+    [3, [30, 40]],
+    [4, [40, 50]],
+    [5, [50, 60]],
+    [6, [60, 70]],
+    [7, [70, 80]],
+    [8, [80, 90]],
+    [9, [90, 100]],
+]);
+
 $('#guess-button').on('click', function () {
     var guessButton = document.getElementById('guess-button');
     guessButton.style.visibility = "hidden";
     var guessedValue = document.getElementById("inputGroupSelect").value;
     var sidebarStats = document.getElementById('sidebar-stats');
-    var updatedInnerHTML = "<br> <b> For " + currentCountry + "</b> <br> You guessed: " + guessedValueToRangeMap.get(guessedValue) + " <br> Correct answer: " +  tweetsByCountry.get(currentCountry).toFixed(1) +  "<br>" + sidebarStats.innerHTML; 
+    var expectedAnswer = tweetsByCountry.get(currentCountry).toFixed(1);
+    var updatedInnerHTML = "<br> <b> For " + currentCountry + 
+                            "</b> <br> You guessed: " + guessedValueToRangeStringMap.get(guessedValue) + 
+                            " <br> Correct answer: " + expectedAnswer  + 
+                            "<br> Points gained: " +  getPointOfAnswer(guessedValue, expectedAnswer) +
+                            "<br>" + sidebarStats.innerHTML; 
     sidebarStats.innerHTML = updatedInnerHTML;
     sidebarStats.style.color = "#ffffff";
     guessedCountries.add(currentCountry);
     updateMap();
-})
+});
+
+/**
+ * same range = 20 points
+ * within 10 (1 category off) = 10 point
+ * within 20 (2 categories off) = 5 point
+ * others = 0 point
+ */
+function getPointOfAnswer(userAnswer, expectedAnswer) {
+    let userAnswerInNumber = parseInt(userAnswer);
+    let expectedAnswerInNumber = parseFloat(expectedAnswer);
+    let expectedCategory = Math.floor(expectedAnswerInNumber / 10.0);
+    let rangeDifference = Math.abs(userAnswerInNumber - expectedCategory);
+    if (rangeDifference === 0) return 20;
+    else if (rangeDifference === 1) return 10;
+    else if (rangeDifference === 2) return 5;
+    else return 0;
+}
 
 function updateMap() {
     console.log(chosenCategory, " chosenCategory")
