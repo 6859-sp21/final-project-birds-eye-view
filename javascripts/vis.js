@@ -17,12 +17,14 @@ var colorScale = d3.scaleLog()
 .domain([1, 20, 40, 60, 80, 100])
 .range(d3.schemeBlues[6]);
 
-var guessEntryBox = document.getElementById('hashtag-search-box');
-guessEntryBox.style.visibility = "hidden";
-var percentAddOn = document.getElementById('basic-addon1');
-percentAddOn.style.visibility = "hidden";
-var guessButton = document.getElementById('guess-button');
-guessButton.style.visibility = "hidden";
+// var guessEntryBox = document.getElementById('hashtag-search-box');
+// guessEntryBox.style.visibility = "hidden";
+// var percentAddOn = document.getElementById('basic-addon1');
+// percentAddOn.style.visibility = "hidden";
+// var guessButton = document.getElementById('guess-button');
+// guessButton.style.visibility = "hidden";
+var guessButtonGroups = document.getElementById('button-answer-group');
+guessButtonGroups.style.visibility = "hidden";
 
 let svg = d3.select("#map-placeholder").append('svg')
             .style("width", width).style("height", height);
@@ -197,23 +199,26 @@ function showGuessingTools(currentCountry, show) {
             }
             else decadeToDisplay = chosenDecade;
             GuessTitle.innerText = "What % of people in " + currentCountry + " do you think had access to electricity?";
-            var guessEntryBox = document.getElementById('hashtag-search-box');
-            guessEntryBox.style.visibility = 'visible';
-            var percentAddOn = document.getElementById('basic-addon1');
-            percentAddOn.style.visibility = "visible";
-                var guessButton = document.getElementById('guess-button');
-                guessButton.style.visibility = "visible";
+            // var guessEntryBox = document.getElementById('hashtag-search-box');
+            // guessEntryBox.style.visibility = 'visible';
+            // var percentAddOn = document.getElementById('basic-addon1');
+            // percentAddOn.style.visibility = "visible";
+            //     var guessButton = document.getElementById('guess-button');
+            //     guessButton.style.visibility = "visible";
+            var guessButtonGroups = document.getElementById('button-answer-group');
+            guessButtonGroups.style.visibility = "visible";
         }
     } else {
-        console.log("hidden");
         var GuessTitle = document.getElementById('wordcloud-title');
         GuessTitle.style.visibility = 'hidden';
-        var guessEntryBox = document.getElementById('hashtag-search-box');
-        guessEntryBox.style.visibility = 'hidden';
-        var percentAddOn = document.getElementById('basic-addon1');
-        percentAddOn.style.visibility = "hidden";
-        var guessButton = document.getElementById('guess-button');
-        guessButton.style.visibility = "hidden";
+        // var guessEntryBox = document.getElementById('hashtag-search-box');
+        // guessEntryBox.style.visibility = 'hidden';
+        // var percentAddOn = document.getElementById('basic-addon1');
+        // percentAddOn.style.visibility = "hidden";
+        // var guessButton = document.getElementById('guess-button');
+        // guessButton.style.visibility = "hidden";
+        var guessButtonGroups = document.getElementById('button-answer-group');
+        guessButtonGroups.style.visibility = "hidden";
     }
 }
 
