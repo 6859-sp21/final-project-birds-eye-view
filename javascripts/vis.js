@@ -180,17 +180,19 @@ function updateBarChart(countryName, newPoints) {
                     .selectAll("rect")
                     .data(pointPerRegionMap)
                     .join("rect")
+                    .transition()
+                    .duration(800)
                     .attr('class', 'bar')
                     .attr('x', (g) => barXScale(g.region))
                     .attr('y', (g) => barYScale(g.value))
                     .attr('height', (g) => barchartHeight - barYScale(g.value))
                     .attr('width', barXScale.bandwidth());
-    barchart//.append('g')
-        //.append('text')
+    barchart
         .selectAll("text.value")
         .data(pointPerRegionMap)
         .join("text")
-        //.enter().append("text")
+        .transition()
+        .duration(800)
         .attr('class', 'value')
         .attr('x', (a) => barXScale(a.region) + barXScale.bandwidth() / 2)
         .attr('y', (a) => barYScale(a.value) + 20)
@@ -249,6 +251,13 @@ function updateBarChart(countryName, newPoints) {
         //     barchart.selectAll('.divergence').remove()
         // });
 }
+// Initialize all region to 0 so bar chart transition is not weird
+updateBarChart("Rusia", 0);
+updateBarChart("Japan", 0);
+updateBarChart("United States", 0);
+updateBarChart("Argentina", 0);
+updateBarChart("Australia", 0);
+updateBarChart("Algeria", 0);
 
 // ----------------------- End of bar-chart related stuff -----------------------
 
