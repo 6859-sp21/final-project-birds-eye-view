@@ -113,103 +113,36 @@ var pointPerRegionMap = [
     {region: "North America", totalPoint: 0, cntOfCountry: 0, value: 0 },
     {region: "South America", totalPoint: 0, cntOfCountry: 0, value: 0 }
 ];
+
 const barchartMargin = 30;
 const barchartWidth = 400 - 2 * barchartMargin;
 const barchartHeight = 300 - 2 * barchartMargin;
 let barSvg = d3.select("#barchart-placeholder").append('svg')
-               .attr('id', 'barsvg');
+            .attr('id', 'barsvg');
 let barchart = barSvg.append("g")
-                 .attr('transform', `translate(${barchartMargin+15}, ${barchartMargin})`);
+            .attr('transform', `translate(${barchartMargin+15}, ${barchartMargin})`);
 const barXScale = d3.scaleBand()
-                    .range([0, barchartWidth])
-                    .domain(pointPerRegionMap.map((data) => data.region))
-                    .padding(0.4);
+                .range([0, barchartWidth])
+                .domain(pointPerRegionMap.map((data) => data.region))
+                .padding(0.4);
 const barYScale = d3.scaleLinear()
-                    .range([barchartHeight, 0])
-                    .domain([0, 20]);
+                .range([barchartHeight, 0])
+                .domain([0, 20]);
 const makeYLines = () => d3.axisLeft().scale(barYScale);
 
 barchart.append('g')
-      .attr('transform', `translate(5, ${barchartHeight+10})`)
-      .call(d3.axisBottom(barXScale))
-      .selectAll("text")
-      .attr("transform", "rotate(20)");
+    .attr('transform', `translate(5, ${barchartHeight+10})`)
+    .call(d3.axisBottom(barXScale))
+    .selectAll("text")
+    .attr("transform", "rotate(20)");
 barchart.append('g')
-      .call(d3.axisLeft(barYScale));
+    .call(d3.axisLeft(barYScale));
 barchart.append('g')
-      .attr('class', 'grid')
-      .call(makeYLines()
+    .attr('class', 'grid')
+    .call(makeYLines()
             .tickSize(-barchartWidth, 0, 0)
             .tickFormat(''));
-let barGroups = barchart.selectAll()
-                    .data(pointPerRegionMap)
-                    .enter()
-                    .append('g');
 
-barGroups.append('rect')
-         .attr('class', 'bar')
-         .attr('x', (g) => barXScale(g.region))
-         .attr('y', (g) => barYScale(g.value))
-         .attr('height', (g) => barchartHeight - barYScale(g.value))
-         .attr('width', barXScale.bandwidth())
-         .on('mouseenter', function(actual, i) {
-            d3.selectAll('.value')
-              .attr('opacity', 0)
-
-            d3.select(this)
-              .transition()
-              .duration(100)
-              .attr('opacity', 0.6)
-              .attr('x', (a) => barXScale(a.region) - 5)
-              .attr('width', barXScale.bandwidth() + 5)
-
-            const y = barYScale(actual.value)
-
-            line = barchart.append('line')
-                .attr('id', 'limit')
-                .attr('x1', 0)
-                .attr('y1', y)
-                .attr('x2', barchartWidth)
-                .attr('y2', y)
-
-            barGroups.append('text')
-                .attr('class', 'divergence')
-                .attr('x', (a) => barXScale(a.region) + barXScale.bandwidth() / 2)
-                .attr('y', (a) => barYScale(a.value) + 20)
-                .attr('fill', 'white')
-                .attr('text-anchor', 'middle')
-                .text((a, idx) => {
-                    const divergence = (a.value - actual.value).toFixed(1)
-
-                    let text = ''
-                    if (divergence > 0) text += '+'
-                    text += `${divergence}`
-
-                    return idx !== i ? text : '';
-                })
-         })
-        .on('mouseleave', function() {
-            d3.selectAll('.value')
-                .attr('opacity', 1)
-
-            d3.select(this)
-                .transition()
-                .duration(100)
-                .attr('opacity', 1)
-                .attr('x', (a) => barXScale(a.region))
-                .attr('width', barXScale.bandwidth())
-
-            barchart.selectAll('#limit').remove()
-            barchart.selectAll('.divergence').remove()
-        });
-
-barGroups
-    .append('text')
-    .attr('class', 'value')
-    .attr('x', (a) => barXScale(a.region) + barXScale.bandwidth() / 2)
-    .attr('y', (a) => barYScale(a.value) + 20)
-    .attr('text-anchor', 'middle')
-    .text((a) => a.value > 0 ? `${a.value}` : "");
 // Add labels
 barSvg.append('text')
     .attr('class', 'label')
@@ -225,9 +158,93 @@ barSvg.append('text')
     .attr('text-anchor', 'middle')
     .text('Regions');
 
+let barGroups = barchart
+    .selectAll()
+    .data(pointPerRegionMap)
+    .enter()
+
 function updateBarChart(countryName, newPoints) {
-    console.log(countryName + " " + countryToRegionMap.get(countryName));
+    // Update the mapping from region to average points
+    let currentRegion = countryToRegionMap.get(countryName);
+    for (const regionData of pointPerRegionMap) {
+        if (regionData.region === currentRegion) {
+            regionData.cntOfCountry += 1;
+            regionData.totalPoint += newPoints;
+            regionData.value = regionData.totalPoint / regionData.cntOfCountry;
+            break;
+        }
+    }
+
+    // Updating the visualization
+    barGroups = barchart
+                    .selectAll("rect")
+                    .data(pointPerRegionMap)
+                    .join("rect")
+                    .attr('class', 'bar')
+                    .attr('x', (g) => barXScale(g.region))
+                    .attr('y', (g) => barYScale(g.value))
+                    .attr('height', (g) => barchartHeight - barYScale(g.value))
+                    .attr('width', barXScale.bandwidth());
+        //  .on('mouseenter', function(actual, i) {
+        //     d3.selectAll('.value')
+        //       .attr('opacity', 0)
+
+        //     d3.select(this)
+        //       .transition()
+        //       .duration(100)
+        //       .attr('opacity', 0.6)
+        //       .attr('x', (a) => barXScale(a.region) - 5)
+        //       .attr('width', barXScale.bandwidth() + 5)
+
+        //     const y = barYScale(actual.value)
+
+        //     line = barchart.append('line')
+        //         .attr('id', 'limit')
+        //         .attr('x1', 0)
+        //         .attr('y1', y)
+        //         .attr('x2', barchartWidth)
+        //         .attr('y2', y)
+
+        //     barGroups.append('text')
+        //         .attr('class', 'divergence')
+        //         .attr('x', (a) => barXScale(a.region) + barXScale.bandwidth() / 2)
+        //         .attr('y', (a) => barYScale(a.value) + 20)
+        //         .attr('fill', 'white')
+        //         .attr('text-anchor', 'middle')
+        //         .text((a, idx) => {
+        //             const divergence = (a.value - actual.value).toFixed(1)
+
+        //             let text = ''
+        //             if (divergence > 0) text += '+'
+        //             text += `${divergence}`
+
+        //             return idx !== i ? text : '';
+        //         })
+        //  })
+        // .on('mouseleave', function() {
+        //     d3.selectAll('.value')
+        //         .attr('opacity', 1)
+
+        //     d3.select(this)
+        //         .transition()
+        //         .duration(100)
+        //         .attr('opacity', 1)
+        //         .attr('x', (a) => barXScale(a.region))
+        //         .attr('width', barXScale.bandwidth())
+
+        //     barchart.selectAll('#limit').remove()
+        //     barchart.selectAll('.divergence').remove()
+        // });
+
+    // barGroups
+    //     .append('text')
+    //     .attr('class', 'value')
+    //     .attr('x', (a) => barXScale(a.region) + barXScale.bandwidth() / 2)
+    //     .attr('y', (a) => barYScale(a.value) + 20)
+    //     .attr('text-anchor', 'middle')
+    //     .text((a) => a.value > 0 ? `${a.value}` : "");
 }
+//updateBarChart("United States", 0);
 
 // ----------------------- End of bar-chart related stuff -----------------------
 
@@ -286,6 +303,7 @@ function getPointOfAnswer(userAnswer, expectedAnswer) {
     let userAnswerInNumber = parseInt(userAnswer);
     let expectedAnswerInNumber = parseFloat(expectedAnswer);
     let expectedCategory = Math.floor(expectedAnswerInNumber / 10.0);
+    if (expectedCategory === 10) expectedCategory -= 1;
     let rangeDifference = Math.abs(userAnswerInNumber - expectedCategory);
     if (rangeDifference === 0) return 20;
     else if (rangeDifference === 1) return 10;
@@ -294,8 +312,6 @@ function getPointOfAnswer(userAnswer, expectedAnswer) {
 }
 
 function updateMap() {
-    console.log(chosenCategory, " chosenCategory")
-    console.log(chosenDecade, " chosenDecade")
     var mapTitle = document.getElementById('map-title');
     var decadeToDisplay;
     if (chosenDecade == undefined) {
