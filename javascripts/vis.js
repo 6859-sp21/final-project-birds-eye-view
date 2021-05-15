@@ -187,6 +187,7 @@ function updateBarChart(countryName, newPoints) {
                     .attr('y', (g) => barYScale(g.value))
                     .attr('height', (g) => barchartHeight - barYScale(g.value))
                     .attr('width', barXScale.bandwidth());
+
     barchart
         .selectAll("text.value")
         .data(pointPerRegionMap)
@@ -200,56 +201,6 @@ function updateBarChart(countryName, newPoints) {
         .text((a) => { 
             let temp = a.value > 0 ? `${a.value.toFixed(1)}` : ""; 
             return temp;});
-        //  .on('mouseenter', function(actual, i) {
-        //     d3.selectAll('.value')
-        //       .attr('opacity', 0)
-
-        //     d3.select(this)
-        //       .transition()
-        //       .duration(100)
-        //       .attr('opacity', 0.6)
-        //       .attr('x', (a) => barXScale(a.region) - 5)
-        //       .attr('width', barXScale.bandwidth() + 5)
-
-        //     const y = barYScale(actual.value)
-
-        //     line = barchart.append('line')
-        //         .attr('id', 'limit')
-        //         .attr('x1', 0)
-        //         .attr('y1', y)
-        //         .attr('x2', barchartWidth)
-        //         .attr('y2', y)
-
-        //     barGroups.append('text')
-        //         .attr('class', 'divergence')
-        //         .attr('x', (a) => barXScale(a.region) + barXScale.bandwidth() / 2)
-        //         .attr('y', (a) => barYScale(a.value) + 20)
-        //         .attr('fill', 'white')
-        //         .attr('text-anchor', 'middle')
-        //         .text((a, idx) => {
-        //             const divergence = (a.value - actual.value).toFixed(1)
-
-        //             let text = ''
-        //             if (divergence > 0) text += '+'
-        //             text += `${divergence}`
-
-        //             return idx !== i ? text : '';
-        //         })
-        //  })
-        // .on('mouseleave', function() {
-        //     d3.selectAll('.value')
-        //         .attr('opacity', 1)
-
-        //     d3.select(this)
-        //         .transition()
-        //         .duration(100)
-        //         .attr('opacity', 1)
-        //         .attr('x', (a) => barXScale(a.region))
-        //         .attr('width', barXScale.bandwidth())
-
-        //     barchart.selectAll('#limit').remove()
-        //     barchart.selectAll('.divergence').remove()
-        // });
 }
 // Initialize all region to 0 so bar chart transition is not weird
 updateBarChart("Rusia", 0);
