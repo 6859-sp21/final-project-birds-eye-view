@@ -161,7 +161,7 @@ barSvg.append('text')
 let barGroups = barchart
     .selectAll()
     .data(pointPerRegionMap)
-    .enter()
+    .enter();
 
 function updateBarChart(countryName, newPoints) {
     // Update the mapping from region to average points
@@ -185,6 +185,19 @@ function updateBarChart(countryName, newPoints) {
                     .attr('y', (g) => barYScale(g.value))
                     .attr('height', (g) => barchartHeight - barYScale(g.value))
                     .attr('width', barXScale.bandwidth());
+    barchart//.append('g')
+        //.append('text')
+        .selectAll("text.value")
+        .data(pointPerRegionMap)
+        .join("text")
+        //.enter().append("text")
+        .attr('class', 'value')
+        .attr('x', (a) => barXScale(a.region) + barXScale.bandwidth() / 2)
+        .attr('y', (a) => barYScale(a.value) + 20)
+        .attr('text-anchor', 'middle')
+        .text((a) => { 
+            let temp = a.value > 0 ? `${a.value.toFixed(1)}` : ""; 
+            return temp;});
         //  .on('mouseenter', function(actual, i) {
         //     d3.selectAll('.value')
         //       .attr('opacity', 0)
@@ -235,16 +248,7 @@ function updateBarChart(countryName, newPoints) {
         //     barchart.selectAll('#limit').remove()
         //     barchart.selectAll('.divergence').remove()
         // });
-
-    // barGroups
-    //     .append('text')
-    //     .attr('class', 'value')
-    //     .attr('x', (a) => barXScale(a.region) + barXScale.bandwidth() / 2)
-    //     .attr('y', (a) => barYScale(a.value) + 20)
-    //     .attr('text-anchor', 'middle')
-    //     .text((a) => a.value > 0 ? `${a.value}` : "");
 }
-//updateBarChart("United States", 0);
 
 // ----------------------- End of bar-chart related stuff -----------------------
 
