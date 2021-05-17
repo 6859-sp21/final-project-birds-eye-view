@@ -26,6 +26,8 @@
     <!-- data -->
     <script src="data/world.json"></script>
     <script src="data/electricity_decade_fin.geojson"></script>
+    <script src="data/urban-fin.geojson"></script>
+    <script src="data/birth-fin.geojson"></script>
 </head>
 
 <body>
@@ -55,16 +57,16 @@
                     <h2 class="section-title"> Choose a category </h2>
                     <div class="btn-group" role="group">
                         <figure>
-                            <img src="./images/category-electricity.png" onclick="chooseCategory(this.id)" id="electricity" class="icon" height="90" width="90">
+                            <img src="./images/category-electricity.png" onclick="chooseCategory(this.id);changedCategoryValue();" id="electricity" class="icon" height="90" width="90">
                             <figcaption> Access to Electricity </figcaption>
                         </figure>
                         <!-- TODO: Change icon class to non-disabled, and add onclick for below -->
                         <figure>
-                            <img src="./images/category-skilled-birth.png" onclick="chooseCategory(this.id)" id="skilled-birth" class="icon" height="90" width="90">
+                            <img src="./images/category-skilled-birth.png" onclick="chooseCategory(this.id);changedCategoryValue();" id="skilled-birth" class="icon" height="90" width="90">
                             <figcaption> Access to Skilled Birth Staff </figcaption>
                         </figure>
                         <figure>
-                            <img src="./images/category-urban.png" onclick="chooseCategory(this.id)" id="urban-agglomerate" class="icon" height="90" width="90">
+                            <img src="./images/category-urban.png" onclick="chooseCategory(this.id);changedCategoryValue();" id="urban-agglomerate" class="icon" height="90" width="90">
                             <figcaption> Urban Agglomerations </figcaption>
                         </figure>
                     </div>

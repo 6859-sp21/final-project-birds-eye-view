@@ -1,4 +1,19 @@
 // 'chosenCategory' and 'chosenDecade' variables can be used here directly to get the user-chosen category and decade
+var chosen_geojson = electricity_decade_fin;
+
+function changedCategoryValue() {
+    console.log("chosen category: " + chosenCategory);
+    if (chosenCategory === "electricity") {
+        chosen_geojson = electricity_decade_fin;
+    }
+    else if (chosenCategory === "skilled-birth") {
+        chosen_geojson = birth_fin;
+    }
+    else if (chosenCategory === "urban-agglomerate") {
+        chosen_geojson = urban_fin;
+    }
+    updateMap();
+}
 
 function changedDecadeValue() {
     console.log("chosen decade: " + chosenDecade);
@@ -7,7 +22,7 @@ function changedDecadeValue() {
 
 let width = 800, height = 400, centered; // TODO: change these to fit the screen
 let projection = d3.geoEquirectangular();
-projection.fitSize([width, height], electricity_decade_fin);
+projection.fitSize([width, height], chosen_geojson);
 let geoGenerator = d3.geoPath().projection(projection);
 
 const guessedCountries = new Set()
@@ -40,7 +55,7 @@ let rect_svg = svg.append("rect")
     .cells([1, 20, 40, 60, 80, 100])
     .orient('vertical')
     .scale(colorScale)
-    .title("% of People with Electricity")
+    .title("% of Population")
     
     svg.select(".legendQuant")
     .call(legendLinear);
@@ -72,7 +87,7 @@ var tip = d3.tip()
 svg.call(tip);
 
 let map_svg = svg.append("g");
-const newData = electricity_decade_fin.features
+const newData = chosen_geojson.features
 .filter(function(data) {
     if (!chosenDecade) {
         return data.properties.year == 2010
@@ -322,10 +337,13 @@ function updateMap() {
     } else {
         decadeToDisplay = chosenDecade
     }
-    mapTitle.innerHTML = "<h4> Percentage of people with access to electricity in the "+ decadeToDisplay + "s </h4>";
+    let categoryString = "with access to electricity";
+    if (chosenCategory === "skilled-birth") categoryString = "with access to skilled birth staff";
+    else if (chosenCategory === "urban-agglomerate") categoryString = "living in urban agglomerations";
+    mapTitle.innerHTML = "<h4> Percentage of people " + categoryString + " in the "+ decadeToDisplay + "s </h4>";
     mapTitle.style.color = "#ffffff";
     // Filter and get new data
-    const newData = electricity_decade_fin.features
+    const newData = chosen_geojson.features
         .filter(function(data) {
             if (!chosenDecade) {
                 return data.properties.year == 2010
@@ -391,7 +409,10 @@ function showGuessingTools(currentCountry, show) {
                 decadeToDisplay = "2010";
             }
             else decadeToDisplay = chosenDecade;
-            GuessTitle.innerText = "What % of people in " + currentCountry + " do you think had access to electricity?";
+            let categoryString = "had access to electricity?";
+            if (chosenCategory === "skilled-birth") categoryString = "had access to skilled birth staff?";
+             else if (chosenCategory === "urban-agglomerate") categoryString = "is living in urban agglomerations?";
+            GuessTitle.innerText = "What % of people in " + currentCountry + " do you think " + categoryString;
             var guessButton = document.getElementById('guess-button');
             guessButton.style.visibility = "visible";
             var guessAnswerGroups = document.getElementById('guess-answer-groups');
@@ -450,7 +471,7 @@ function clicked(d) {
         .cells([1, 20, 40, 60, 80, 100])
         .orient('vertical')
         .scale(colorScale)
-        .title("% of People with Electricity");
+        .title("% of Population");
         
         svg.select(".legendQuant")
         .call(legendLinear);
