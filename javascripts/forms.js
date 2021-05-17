@@ -7,12 +7,13 @@ var chosenDecade;
  */
 function chooseCategory(categoryId) {
     if (chosenCategory !== undefined) { // reset prev category
-        document.getElementById(chosenCategory).style = "opacity:0.5"
+        document.getElementById(chosenCategory).style = "opacity:0.5";
     }
 
     chosenCategory = categoryId;
-
-    document.getElementById(chosenCategory).style = "opacity:1.0"
+    document.getElementById(chosenCategory).style = "opacity:1.0";
+    document.getElementById("category-warning").innerText = "";
+    document.getElementById("section-category-footer").style.visibility = "visible";
 }
 
 function chooseDecade(decadeId) {
@@ -22,6 +23,8 @@ function chooseDecade(decadeId) {
 
     chosenDecade = decadeId;
 
-    document.getElementById(chosenDecade).style = "color: white; transition: .5s ease; backface-visibility: hidden; vertical-align: middle;"
+    document.getElementById(chosenDecade).style = "color: white; transition: .5s ease; backface-visibility: hidden; vertical-align: middle;";
+    document.getElementById("decade-warning").innerText = "";
+    document.getElementById("section-decade-footer").style.visibility = "visible";
 }
 

@@ -60,13 +60,18 @@
                         </figure>
                         <!-- TODO: Change icon class to non-disabled, and add onclick for below -->
                         <figure>
-                            <img src="./images/category-skilled-birth.png" id="skilled-birth" class="disabled-icon" height="90" width="90">
-                            <figcaption> Access to Skilled Birth Staff <br> TBA </figcaption>
+                            <img src="./images/category-skilled-birth.png" onclick="chooseCategory(this.id)" id="skilled-birth" class="icon" height="90" width="90">
+                            <figcaption> Access to Skilled Birth Staff </figcaption>
                         </figure>
                         <figure>
-                            <img src="./images/category-urban.png" id="urban-agglomerate" class="disabled-icon" height="90" width="90">
-                            <figcaption> Urban Agglomerations <br> TBA </figcaption>
+                            <img src="./images/category-urban.png" onclick="chooseCategory(this.id)" id="urban-agglomerate" class="icon" height="90" width="90">
+                            <figcaption> Urban Agglomerations </figcaption>
                         </figure>
+                    </div>
+                    <p class="warning-form-empty" id="category-warning"> Please choose a category before continuing. </p>
+                    <div id="section-category-footer">
+                        Scroll down to continue...
+                        <div><span></span></div>
                     </div>
                 </div>
             </section>
@@ -85,6 +90,11 @@
                         <figure>
                             <h1 onclick="chooseDecade(this.id);changedDecadeValue();" id="2010" class="decade-button"> 2010 </h1>
                         </figure>
+                    </div>
+                    <p class="warning-form-empty" id="decade-warning"> Please choose a decade before continuing. </p>
+                    <div id="section-decade-footer">
+                        Scroll down to continue...
+                        <div><span></span></div>
                     </div>
                 </div>
             </section>
