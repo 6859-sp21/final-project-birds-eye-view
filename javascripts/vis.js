@@ -25,6 +25,29 @@ guessAnswerGroups.style.visibility = "hidden";
 let svg = d3.select("#map-placeholder").append('svg')
             .style("width", width).style("height", height);
 
+let point_svg = d3.select("#point-map-placeholder").append('svg')
+            .style("width", width).style("height", height);
+
+let point_map_rect_svg = point_svg.append("rect")
+.attr("width", "100%")
+.attr("height", "100%")
+.attr("fill", "black");
+
+// let point_map_legend_svg = point_map_svg.append("g")
+// .attr("class", "legendQuant")
+// .attr("transform", "translate(0,200)")
+// .attr("fill", "white");
+
+// var point_map_legendLinear = d3.legendColor()
+// .shapeWidth(30)
+// .cells([1, 20, 40, 60, 80, 100])
+// .orient('vertical')
+// .scale(colorScale)
+// .title("Points Earned")
+
+// point_map_svg.select(".legendQuant")
+// .call(legendLinear);
+
 let rect_svg = svg.append("rect")
     .attr("width", "100%")
     .attr("height", "100%")
@@ -80,6 +103,9 @@ const newData = electricity_decade_fin.features
     return data.properties.year == chosenDecade;
 })
 var tweetsByCountry = d3.rollup(newData, v => d3.sum(v, d => d.properties.value), d => d.properties.country);
+
+let point_map_svg = point_svg.append("g");
+var pointsByCountry = {}
 
 map_svg.selectAll("path")
         .data(world_map_json.features)
