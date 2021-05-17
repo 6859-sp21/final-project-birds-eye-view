@@ -165,13 +165,16 @@ let barGroups = barchart
 
 function updateBarChart(countryName, newPoints) {
     // Update the mapping from region to average points
-    let currentRegion = countryToRegionMap.get(countryName);
-    for (const regionData of pointPerRegionMap) {
-        if (regionData.region === currentRegion) {
-            regionData.cntOfCountry += 1;
-            regionData.totalPoint += newPoints;
-            regionData.value = regionData.totalPoint / regionData.cntOfCountry;
-            break;
+    if (newPoints >= 0) {
+        let currentRegion = countryToRegionMap.get(countryName);
+        for (const regionData of pointPerRegionMap) {
+            if (regionData.region === currentRegion) {
+                regionData.cntOfCountry += 1;
+                regionData.totalPoint += newPoints;
+                regionData.value = regionData.totalPoint / regionData.cntOfCountry;
+                if (regionData.cntOfCountry === 1) colorKey(currentRegion);
+                break;
+            }
         }
     }
 
@@ -203,12 +206,40 @@ function updateBarChart(countryName, newPoints) {
             return temp;});
 }
 // Initialize all region to 0 so bar chart transition is not weird
-updateBarChart("Rusia", 0);
-updateBarChart("Japan", 0);
-updateBarChart("United States", 0);
-updateBarChart("Argentina", 0);
-updateBarChart("Australia", 0);
-updateBarChart("Algeria", 0);
+updateBarChart("Rusia", -1);
+updateBarChart("Japan", -1);
+updateBarChart("United States", -1);
+updateBarChart("Argentina", -1);
+updateBarChart("Australia", -1);
+updateBarChart("Algeria", -1);
+
+// Fill key color
+function colorKey(regionName) {
+    if (regionName === "Asia") {
+        let curKey = document.getElementById("key-asia");
+        curKey.innerHTML = `<img src="./images/key-asia.png" class="key" width="20px" height="20px">`;
+    }
+    else if (regionName === "Europe") {
+        let curKey = document.getElementById("key-europe");
+        curKey.innerHTML = `<img src="./images/key-europe.png" class="key" width="20px" height="20px">`;
+    }
+    else if (regionName === "Africa") {
+        let curKey = document.getElementById("key-africa");
+        curKey.innerHTML = `<img src="./images/key-africa.png" class="key" width="20px" height="20px">`;
+    }
+    else if (regionName === "Oceania") {
+        let curKey = document.getElementById("key-oceania");
+        curKey.innerHTML = `<img src="./images/key-oceania.png" class="key" width="20px" height="20px">`;
+    }
+    else if (regionName === "North America") {
+        let curKey = document.getElementById("key-na");
+        curKey.innerHTML = `<img src="./images/key-NA.png" class="key" width="20px" height="20px">`;
+    }
+    else if (regionName === "South America") {
+        let curKey = document.getElementById("key-sa");
+        curKey.innerHTML = `<img src="./images/key-SA.png" class="key" width="20px" height="20px">`;
+    }
+}
 
 // ----------------------- End of bar-chart related stuff -----------------------
 
