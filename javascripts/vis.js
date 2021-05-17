@@ -134,7 +134,15 @@ barchart.append('g')
     .attr('transform', `translate(5, ${barchartHeight+10})`)
     .call(d3.axisBottom(barXScale))
     .selectAll("text")
-    .attr("transform", "rotate(20)");
+    .attr("transform", "rotate(20)")
+    .attr('class', function (d) {
+        if (d === "Asia") return "key-asia";
+        else if (d === "Europe") return "key-europe";
+        else if (d === "Africa") return "key-africa";
+        else if (d === "Oceania") return "key-oceania";
+        else if (d === "North America") return "key-na";
+        else if (d === "South America") return "key-sa";
+    });
 barchart.append('g')
     .call(d3.axisLeft(barYScale));
 barchart.append('g')

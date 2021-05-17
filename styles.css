@@ -260,6 +260,36 @@ text.source {
   display: flex;
   flex-flow: row;
 }
+
+.key-asia {
+  stroke: lightcoral;
+  fill: lightcoral;
+}
+
+.key-europe {
+  stroke: yellow;
+  fill: yellow;
+}
+
+.key-africa {
+  stroke: lightgreen;
+  fill: lightgreen;
+}
+
+.key-oceania {
+  stroke: cyan;
+  fill: cyan;
+}
+
+.key-na {
+  stroke: rgb(255, 0, 255);
+  fill: rgb(255, 0, 255);
+}
+
+.key-sa {
+  stroke: #c8a2c8;
+  fill: #c8a2c8;
+}
 /* --------------- End of keys styling -------------------- */
 
 /* --------------- Start of section-user-answer-reflection styling -------------------- */
