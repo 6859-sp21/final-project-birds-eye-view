@@ -295,6 +295,21 @@ figcaption {
     text-align: center;
     width: 80%;
 }
+
+#story-electricity-1990,  #story-electricity-2000, #story-electricity-2010 {
+  color: white;
+  visibility: hidden;
+}
+
+#story-birth-1990,  #story-birth-2000, #story-birth-2010 {
+  color: white;
+  visibility: hidden;
+}
+
+#story-urban-1990,  #story-urban-2000, #story-urban-2010 {
+  color: white;
+  visibility: hidden;
+}
 /* --------------- End of section-transition-before-color-map styling -------------------- */
 
 /* --------------- Start of bar chart styling -------------------- */
