@@ -298,17 +298,17 @@ figcaption {
 
 #story-electricity-1990,  #story-electricity-2000, #story-electricity-2010 {
   color: white;
-  visibility: hidden;
+  display: none;
 }
 
 #story-birth-1990,  #story-birth-2000, #story-birth-2010 {
   color: white;
-  visibility: hidden;
+  display: none;
 }
 
 #story-urban-1990,  #story-urban-2000, #story-urban-2010 {
   color: white;
-  visibility: hidden;
+  display: none;
 }
 /* --------------- End of section-transition-before-color-map styling -------------------- */
 

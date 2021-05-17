@@ -21,6 +21,10 @@ $(document).on("scroll", function () {
     }
 });
 
+let elementIds = ["story-electricity-1990", "story-electricity-2000", "story-electricity-2010",
+                    "story-birth-1990", "story-birth-2000", "story-birth-2010",
+                    "story-urban-1990", "story-urban-2000", "story-urban-2010"];
+
 function checkCategoryDecadeValidity() {
     var warningDiv = document.getElementById('warning-category-decade');
     if (chosenCategory == undefined) {
@@ -51,36 +55,52 @@ function checkCategoryDecadeValidity() {
 
     if (chosenCategory === "electricity") {
         if (chosenDecade === "1990") {
-            document.getElementById("story-electricity-1990").style.visibility = "visible";
+            document.getElementById("story-electricity-1990").style.display = "block";
+            hideOtherElements("story-electricity-1990");
         }
         else if (chosenDecade === "2000") {
-            document.getElementById("story-electricity-2000").style.visibility = "visible";
+            document.getElementById("story-electricity-2000").style.display = "block";
+            hideOtherElements("story-electricity-2000");
         }
         else if (chosenDecade === "2010") {
-            document.getElementById("story-electricity-2010").style.visibility = "visible";
+            document.getElementById("story-electricity-2010").style.display = "block";
+            hideOtherElements("story-electricity-2010");
         }
     }
     else if (chosenCategory === "skilled-birth") {
         if (chosenDecade === "1990") {
-            document.getElementById("story-birth-1990").style.visibility = "visible";
+            document.getElementById("story-birth-1990").style.display = "block";
+            hideOtherElements("story-birth-1990");
         }
         else if (chosenDecade === "2000") {
-            document.getElementById("story-birth-2000").style.visibility = "visible";
+            document.getElementById("story-birth-2000").style.display = "block";
+            hideOtherElements("story-birth-2000");
         }
         else if (chosenDecade === "2010") {
-            document.getElementById("story-birth-2010").style.visibility = "visible";
+            document.getElementById("story-birth-2010").style.display = "block";
+            hideOtherElements("story-birth-2010");
         }
     }
     else if (chosenCategory === "urban-agglomerate") {
         if (chosenDecade === "1990") {
-            document.getElementById("story-urban-1990").style.visibility = "visible";
+            document.getElementById("story-urban-1990").style.display = "block";
+            hideOtherElements("story-urban-1990");
         }
         else if (chosenDecade === "2000") {
-            document.getElementById("story-urban-2000").style.visibility = "visible";
+            document.getElementById("story-urban-2000").style.display = "block";
+            hideOtherElements("story-urban-2000");
         }
         else if (chosenDecade === "2010") {
-            document.getElementById("story-urban-2010").style.visibility = "visible";
+            document.getElementById("story-urban-2010").style.display = "block";
+            hideOtherElements("story-urban-2010");
         }
     }
     return;
+}
+
+function hideOtherElements(curElement) {
+    for (const cat of elementIds) {
+        if (cat === curElement) continue;
+        document.getElementById(cat).style.display = "none";
+    }
 }
