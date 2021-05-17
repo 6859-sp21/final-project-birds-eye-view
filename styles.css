@@ -255,6 +255,13 @@ text.source {
 }
 /* --------------- End of bar chart styling -------------------- */
 
+/* --------------- start of keys styling -------------------- */
+#keys-sidebar {
+  display: flex;
+  flex-flow: row;
+}
+/* --------------- End of keys styling -------------------- */
+
 /* --------------- Start of section-user-answer-reflection styling -------------------- */
 #reflection-title {
     color: white;
