@@ -26,6 +26,8 @@
     <!-- data -->
     <script src="data/world.json"></script>
     <script src="data/electricity_decade_fin.geojson"></script>
+    <script src="data/urban-fin.geojson"></script>
+    <script src="data/birth-fin.geojson"></script>
 </head>
 
 <body>
@@ -55,18 +57,23 @@
                     <h2 class="section-title"> Choose a category </h2>
                     <div class="btn-group" role="group">
                         <figure>
-                            <img src="./images/category-electricity.png" onclick="chooseCategory(this.id)" id="electricity" class="icon" height="90" width="90">
+                            <img src="./images/category-electricity.png" onclick="chooseCategory(this.id);changedCategoryValue();" id="electricity" class="icon" height="90" width="90">
                             <figcaption> Access to Electricity </figcaption>
                         </figure>
                         <!-- TODO: Change icon class to non-disabled, and add onclick for below -->
                         <figure>
-                            <img src="./images/category-skilled-birth.png" id="skilled-birth" class="disabled-icon" height="90" width="90">
-                            <figcaption> Access to Skilled Birth Staff <br> TBA </figcaption>
+                            <img src="./images/category-skilled-birth.png" onclick="chooseCategory(this.id);changedCategoryValue();" id="skilled-birth" class="icon" height="90" width="90">
+                            <figcaption> Access to Skilled Birth Staff </figcaption>
                         </figure>
                         <figure>
-                            <img src="./images/category-urban.png" id="urban-agglomerate" class="disabled-icon" height="90" width="90">
-                            <figcaption> Urban Agglomerations <br> TBA </figcaption>
+                            <img src="./images/category-urban.png" onclick="chooseCategory(this.id);changedCategoryValue();" id="urban-agglomerate" class="icon" height="90" width="90">
+                            <figcaption> Urban Agglomerations </figcaption>
                         </figure>
+                    </div>
+                    <p class="warning-form-empty" id="category-warning"> Please choose a category before continuing. </p>
+                    <div id="section-category-footer">
+                        Scroll down to continue...
+                        <div><span></span></div>
                     </div>
                 </div>
             </section>
@@ -86,12 +93,44 @@
                             <h1 onclick="chooseDecade(this.id);changedDecadeValue();" id="2010" class="decade-button"> 2010 </h1>
                         </figure>
                     </div>
+                    <p class="warning-form-empty" id="decade-warning"> Please choose a decade before continuing. </p>
+                    <div id="section-decade-footer">
+                        Scroll down to continue...
+                        <div><span></span></div>
+                    </div>
                 </div>
             </section>
 
             <!-- Some transition stories before coloring map -->
             <section id="section-transition-before-color-map" class="step section-transition-container">
                 <p id="warning-category-decade"></p>
+                <div id="story-electricity-1990">
+                    <!-- @Eesam: put story about electricity at 1990 here -->
+                </div>
+                <div id="story-electricity-2000">
+                    <!-- @Eesam: put story about electricity at 2000 here -->
+                </div>
+                <div id="story-electricity-2010">
+                    <!-- @Eesam: put story about electricity at 2010 here -->
+                </div>
+                <div id="story-birth-1990">
+                    <!-- @Eesam: put story about healthcare at 1990 here -->
+                </div>
+                <div id="story-birth-2000">
+                    <!-- @Eesam: put story about healthcare at 2000 here -->
+                </div>
+                <div id="story-birth-2010">
+                    <!-- @Eesam: put story about healthcare at 2010 here -->
+                </div>
+                <div id="story-urban-1990">
+                    <!-- @Eesam: put story about urban agglomerate at 1990 here -->
+                </div>
+                <div id="story-urban-2000">
+                    <!-- @Eesam: put story about urban agglomerate at 2000 here -->
+                </div>
+                <div id="story-urban-2010">
+                    <!-- @Eesam: put story about urban agglomerate at 2010 here -->
+                </div>
                 <h2 id="question-before-color"></h2>
                 <p id="question-description-before-color"></p>
             </section>
@@ -202,20 +241,23 @@
                     <div class="carousel-inner">
                       <div class="carousel-item active">
                         <div class="reflection-container">
-                            <h3 class="reflection-question"> To what extent did your guesses for different countries match their true values? Did you notice any trends based on region? </h3>
-                            <textarea id="reflection-answer-1" placeholder="Type your thoughts here..." rows="4" cols="100"></textarea>
+                            <!-- <h3 class="reflection-question"> To what extent did your guesses for different countries match their true values? Did you notice any trends based on region? </h3> -->
+                            <iframe src="https://docs.google.com/forms/d/e/1FAIpQLSchgUHfN4Gxmv4srOdHlYjfkTylBEposOk0-Amy0S_eH2Q1DA/viewform?embedded=true;headers=false" width="640" height="500" frameborder="0" marginheight="0" marginwidth="0">Loading…</iframe>
+                            <iframe src="https://docs.google.com/spreadsheets/d/e/2PACX-1vTzI4_B626HoWuCagg89BM_3tMepJFbL-jEdvLkpy7vNpDUDamUE8CUH-nwhGL7vBf8AyOwwm50kyzG/pubhtml?widget=true&amp;headers=false" width="640" height="300"></iframe>
                         </div>
                       </div>
                       <div class="carousel-item">
                         <div class="reflection-container">
-                            <h3 class="reflection-question"> How might the access to electricity rates of different countries tell a story about global development over time? </h3>
-                            <textarea id="reflection-answer-2" placeholder="Type your thoughts here..." rows="4" cols="100"></textarea>
+                            <!-- <h3 class="reflection-question"> How might the access to electricity rates of different countries tell a story about global development over time? </h3> -->
+                            <iframe src="https://docs.google.com/forms/d/e/1FAIpQLSe_7IeW9P2VUp2fMyanV75-zsctdLpxXMVgVEwYvDXO1G_vkw/viewform?embedded=true" width="640" height="500" frameborder="0" marginheight="0" marginwidth="0">Loading…</iframe>
+                            <iframe src="https://docs.google.com/spreadsheets/d/e/2PACX-1vQl0AuihoIKR6VdayHbnHvenfon-D8BT5x5QKAuzWCe2cixgjq8G6t07vC6pqPzN4xjS_23w5owFRzo/pubhtml?widget=true&amp;headers=false" width="640" height="300"></iframe>
                         </div>
                       </div>
                       <div class="carousel-item">
                         <div class="reflection-container">
-                            <h3 class="reflection-question"> To what extent do the true values challenge existing stereotypes about different parts of the world? </h3>
-                            <textarea id="reflection-answer-3" placeholder="Type your thoughts here..." rows="4" cols="100"></textarea>
+                            <!-- <h3 class="reflection-question"> To what extent do the true values challenge existing stereotypes about different parts of the world? </h3> -->
+                            <iframe src="https://docs.google.com/forms/d/e/1FAIpQLScFj5tqOr5UAsuKw7yepyQ3E_DuxtpE-sCIrE_BMJVBoJjPUg/viewform?embedded=true" width="640" height="500" frameborder="0" marginheight="0" marginwidth="0">Loading…</iframe>
+                            <iframe src="https://docs.google.com/spreadsheets/d/e/2PACX-1vT7LGL_eT5BAsNytDccBL73NVxerCeSka_pTUXnbRQGoD9-HDQ42iFD-U3gBV6jo7EpyPLRf05Lp0L_/pubhtml?widget=true&amp;headers=false" width="640" height="300"></iframe>
                         </div>
                       </div>
                     </div>

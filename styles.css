@@ -136,6 +136,62 @@ figcaption {
     cursor: default;
     opacity: 0.5;
 }
+
+.warning-form-empty {
+  font-size: 24px;
+  color: lightcoral;
+  text-align: center;
+}
+
+#section-category-footer {
+  align-self: center;
+  color: white;
+  display: flex;
+  font-size: 16px;
+  flex-flow: column;
+  text-align: center;
+  visibility: hidden;
+}
+
+#section-category-footer div {
+  padding-top: 0px;
+}
+#section-category-footer div span {
+  position: absolute;
+  left: 50%;
+  width: 24px;
+  height: 24px;
+  margin-left: -12px;
+  border-left: 3px solid #fff;
+  border-bottom: 3px solid #fff;
+  -webkit-transform: rotate(-45deg);
+  transform: rotate(-45deg);
+  -webkit-animation: sdb04 2s infinite;
+  animation: sdb04 2s infinite;
+  box-sizing: border-box;
+}
+@-webkit-keyframes sdb04 {
+  0% {
+    -webkit-transform: rotate(-45deg) translate(0, 0);
+  }
+  20% {
+    -webkit-transform: rotate(-45deg) translate(-10px, 10px);
+  }
+  40% {
+    -webkit-transform: rotate(-45deg) translate(0, 0);
+  }
+}
+@keyframes sdb04 {
+  0% {
+    transform: rotate(-45deg) translate(0, 0);
+  }
+  20% {
+    transform: rotate(-45deg) translate(-10px, 10px);
+  }
+  40% {
+    transform: rotate(-45deg) translate(0, 0);
+  }
+}
 /* --------------- End of section-user-choose-category styling -------------------- */
 
 /* --------------- Start of section-user-choose-decade styling -------------------- */
@@ -156,6 +212,56 @@ figcaption {
   align-self: center;
   justify-content: center;
   width: 100%;
+}
+
+#section-decade-footer {
+  align-self: center;
+  color: white;
+  display: flex;
+  font-size: 16px;
+  flex-flow: column;
+  text-align: center;
+  visibility: hidden;
+}
+
+#section-decade-footer div {
+  padding-top: 0px;
+}
+#section-decade-footer div span {
+  position: absolute;
+  left: 50%;
+  width: 24px;
+  height: 24px;
+  margin-left: -12px;
+  border-left: 3px solid #fff;
+  border-bottom: 3px solid #fff;
+  -webkit-transform: rotate(-45deg);
+  transform: rotate(-45deg);
+  -webkit-animation: sdb04 2s infinite;
+  animation: sdb04 2s infinite;
+  box-sizing: border-box;
+}
+@-webkit-keyframes sdb04 {
+  0% {
+    -webkit-transform: rotate(-45deg) translate(0, 0);
+  }
+  20% {
+    -webkit-transform: rotate(-45deg) translate(-10px, 10px);
+  }
+  40% {
+    -webkit-transform: rotate(-45deg) translate(0, 0);
+  }
+}
+@keyframes sdb04 {
+  0% {
+    transform: rotate(-45deg) translate(0, 0);
+  }
+  20% {
+    transform: rotate(-45deg) translate(-10px, 10px);
+  }
+  40% {
+    transform: rotate(-45deg) translate(0, 0);
+  }
 }
 
 /* --------------- End of section-user-choose-decade styling -------------------- */
@@ -188,6 +294,21 @@ figcaption {
     margin-top: 14px;
     text-align: center;
     width: 80%;
+}
+
+#story-electricity-1990,  #story-electricity-2000, #story-electricity-2010 {
+  color: white;
+  display: none;
+}
+
+#story-birth-1990,  #story-birth-2000, #story-birth-2010 {
+  color: white;
+  display: none;
+}
+
+#story-urban-1990,  #story-urban-2000, #story-urban-2010 {
+  color: white;
+  display: none;
 }
 /* --------------- End of section-transition-before-color-map styling -------------------- */
 
@@ -306,7 +427,7 @@ text.source {
 }
 
 .carousel-inner {
-    height: 300px;
+    height: 1200px;
 }
 
 .carousel-item {

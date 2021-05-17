@@ -21,6 +21,10 @@ $(document).on("scroll", function () {
     }
 });
 
+let elementIds = ["story-electricity-1990", "story-electricity-2000", "story-electricity-2010",
+                    "story-birth-1990", "story-birth-2000", "story-birth-2010",
+                    "story-urban-1990", "story-urban-2000", "story-urban-2010"];
+
 function checkCategoryDecadeValidity() {
     var warningDiv = document.getElementById('warning-category-decade');
     if (chosenCategory == undefined) {
@@ -32,16 +36,13 @@ function checkCategoryDecadeValidity() {
         return;
     }
     warningDiv.innerText = "";
-    var questionDiv = document.getElementById('question-before-color');
+    /*var questionDiv = document.getElementById('question-before-color');
     var questionDescDiv = document.getElementById('question-description-before-color');
     if (chosenCategory === "electricity") {
         questionDiv.innerText = "How well do you know about the world's access to electricity in " + chosenDecade + "s?";
     }
-    else if (chosenCategory === "internet") {
-        questionDiv.innerText = "How well do you know about the world's access to Internet in " + chosenDecade + "s?";
-    }
-    else if (chosenCategory === "school-completion") {
-        questionDiv.innerText = "How well do you know about the world's primary school completion in " + chosenDecade + "s?";
+    else if (chosenCategory === "urban-agglomerate") {
+        questionDiv.innerText = "How well do you know about the world's state of urban agglomeration in " + chosenDecade + "s?";
     }
     else if (chosenCategory === "skilled-birth") {
         questionDiv.innerText = "How well do you know about the world's access to skilled health staff during birth in " + chosenDecade + "s?";
@@ -50,6 +51,56 @@ function checkCategoryDecadeValidity() {
     We all live different lifestyles of varying levels of abundance and access to different kinds of resources. 
     <br>
     While we are familiar with the resources available in our surroundings in this decade, 
-    it is time to see in bird's eye view on other countries' or other decades' access to different resources.`;
+    it is time to see in bird's eye view on other countries' or other decades' access to different resources.`;*/
+
+    if (chosenCategory === "electricity") {
+        if (chosenDecade === "1990") {
+            document.getElementById("story-electricity-1990").style.display = "block";
+            hideOtherElements("story-electricity-1990");
+        }
+        else if (chosenDecade === "2000") {
+            document.getElementById("story-electricity-2000").style.display = "block";
+            hideOtherElements("story-electricity-2000");
+        }
+        else if (chosenDecade === "2010") {
+            document.getElementById("story-electricity-2010").style.display = "block";
+            hideOtherElements("story-electricity-2010");
+        }
+    }
+    else if (chosenCategory === "skilled-birth") {
+        if (chosenDecade === "1990") {
+            document.getElementById("story-birth-1990").style.display = "block";
+            hideOtherElements("story-birth-1990");
+        }
+        else if (chosenDecade === "2000") {
+            document.getElementById("story-birth-2000").style.display = "block";
+            hideOtherElements("story-birth-2000");
+        }
+        else if (chosenDecade === "2010") {
+            document.getElementById("story-birth-2010").style.display = "block";
+            hideOtherElements("story-birth-2010");
+        }
+    }
+    else if (chosenCategory === "urban-agglomerate") {
+        if (chosenDecade === "1990") {
+            document.getElementById("story-urban-1990").style.display = "block";
+            hideOtherElements("story-urban-1990");
+        }
+        else if (chosenDecade === "2000") {
+            document.getElementById("story-urban-2000").style.display = "block";
+            hideOtherElements("story-urban-2000");
+        }
+        else if (chosenDecade === "2010") {
+            document.getElementById("story-urban-2010").style.display = "block";
+            hideOtherElements("story-urban-2010");
+        }
+    }
     return;
+}
+
+function hideOtherElements(curElement) {
+    for (const cat of elementIds) {
+        if (cat === curElement) continue;
+        document.getElementById(cat).style.display = "none";
+    }
 }
