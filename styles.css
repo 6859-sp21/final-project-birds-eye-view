@@ -326,15 +326,15 @@ figcaption {
 }
 
 .bar-europe {
-  fill: yellow;
+  fill: darkgoldenrod;
 }
 
 .bar-africa {
-  fill: lightgreen;
+  fill: green;
 }
 
 .bar-oceania {
-  fill: cyan;
+  fill: darkcyan;
 }
 
 .bar-na {
@@ -342,12 +342,12 @@ figcaption {
 }
 
 .bar-sa {
-  fill: #2572B3;
+  fill: #c8a2c8;
 }
 
 text {
   font-size: 12px;
-  fill: black;
+  fill: white;
 }
 
 
@@ -376,6 +376,7 @@ text.divergence {
 }
 
 text.value {
+  color: black !important;
   font-size: 14px;
 }
 
