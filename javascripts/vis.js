@@ -15,6 +15,7 @@ function changedCategoryValue() {
     }
     pointsByCountry = {};
     updateMap();
+    updatePointMap();
     resetBarChart();
     resetKey();
 }
@@ -23,6 +24,7 @@ function changedDecadeValue() {
     console.log("chosen decade: " + chosenDecade);
     pointsByCountry = {};
     updateMap();
+    updatePointMap();
     resetBarChart();
     resetKey();
 }
@@ -34,10 +36,15 @@ let geoGenerator = d3.geoPath().projection(projection);
 
 const guessedCountries = new Set()
 
-var colorScale = d3.scaleLog()
+var colorScale = d3.scaleLinear()
 // linear scale
 .domain([1, 20, 40, 60, 80, 100])
 .range(d3.schemeBlues[6]);
+
+var pointMapColorScale = d3.scaleLinear()
+// linear scale
+.domain([0, 5, 10, 15, 20])
+.range(d3.schemeGreens[5]);
 
 var guessButton = document.getElementById('guess-button');
 guessButton.style.visibility = "hidden";
@@ -55,20 +62,20 @@ let point_rect_svg = point_svg.append("rect")
 .attr("height", "100%")
 .attr("fill", "black");
 
-// let point_map_legend_svg = point_map_svg.append("g")
-// .attr("class", "legendQuant")
-// .attr("transform", "translate(0,200)")
-// .attr("fill", "white");
+let point_legend_svg = point_svg.append("g")
+.attr("class", "legendQuant")
+.attr("transform", "translate(0,200)")
+.attr("fill", "white");
 
-// var point_map_legendLinear = d3.legendColor()
-// .shapeWidth(30)
-// .cells([1, 20, 40, 60, 80, 100])
-// .orient('vertical')
-// .scale(colorScale)
-// .title("Points Earned")
+var point_legendLinear = d3.legendColor()
+.shapeWidth(30)
+.cells([0, 5, 10, 15, 20])
+.orient('vertical')
+.scale(pointMapColorScale)
+.title("Points Earned")
 
-// point_map_svg.select(".legendQuant")
-// .call(legendLinear);
+point_svg.select(".legendQuant")
+.call(point_legendLinear);
 
 let rect_svg = svg.append("rect")
     .attr("width", "100%")
@@ -135,7 +142,11 @@ point_map_svg.selectAll("path")
         .attr( "fill", function (d) {
             //console.log(tweetsByCountry.get(d.properties.name));
             d.total = pointsByCountry[d.properties.name] || 0;
-            return colorScale(d.total);
+            if (! (d.properties.name in pointsByCountry)) {
+                return "#808080";
+            } else {
+                return pointMapColorScale(d.total);
+            }
         })
         .style('cursor', 'pointer')
         // .on('mouseover', tip.show)
@@ -433,7 +444,11 @@ function updatePointMap() {
     .attr( "fill", function (d) {
         //console.log(d.properties)
         d.total = pointsByCountry[d.properties.name] || 0;
-        return colorScale(d.total);
+        if (! (d.properties.name in pointsByCountry)) {
+            return "#808080";
+        } else {
+            return pointMapColorScale(d.total);
+        }
       })
     // .on('mouseover', tip.show)
     // .on('mouseout', tip.hide)
