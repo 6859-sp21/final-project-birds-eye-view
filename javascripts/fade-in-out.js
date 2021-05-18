@@ -104,3 +104,8 @@ function hideOtherElements(curElement) {
         document.getElementById(cat).style.display = "none";
     }
 }
+
+function backToCategoryForm() {
+    let categoryForm = document.getElementById("section-user-choose-category");
+    categoryForm.scrollIntoView();
+}

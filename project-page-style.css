@@ -1,0 +1,30 @@
+body {
+    background-color: black;
+    color: white;
+    font-family: "Domine";
+}
+
+#page-title {
+    font-size: 42px;
+}
+
+.header {
+    align-items: center;
+    display: flex;
+    flex-flow: column;
+    width: 100%;
+}
+
+#team-member {
+    font-size: 24px;
+}
+
+.body {
+    margin: 32px;
+}
+
+.abstract-title {
+    font-size: 24px;
+    text-align: center;
+    width: 100%;
+}
