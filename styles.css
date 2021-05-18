@@ -453,6 +453,26 @@ text.source {
 #form-electricity-1, #form-birth-1, #form-urban-1 {
   display: none;
 }
+
+#form-electricity-2, #form-birth-2, #form-urban-2 {
+  display: none;
+}
+
+#form-electricity-3, #form-birth-3, #form-urban-3 {
+  display: none;
+}
+
+#response-electricity-1, #response-birth-1, #response-urban-1 {
+  display: none;
+}
+
+#response-electricity-2, #response-birth-2, #response-urban-2 {
+  display: none;
+}
+
+#response-electricity-3, #response-birth-3, #response-urban-3 {
+  display: none;
+}
 /* --------------- End of section-user-answer-reflection styling -------------------- */
 
 /* --------------- Start of section-interesting-dataset styling -------------------- */
@@ -597,3 +617,9 @@ text.source {
     text-align: center;
     width: 100%;
   }
+
+#other-category-button {
+  margin-top: 20px;
+  margin-bottom: 20px;
+  width: 600px;
+}
