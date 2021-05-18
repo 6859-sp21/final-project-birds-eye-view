@@ -432,6 +432,8 @@ $('#reveal-button').on('click', function () {
     currentCountry == WORLDWIDE;
     clicked(null);
     showSolutionMap();
+    var pointMap = document.getElementById("point-map-placeholder");
+    pointMap.style.visibility = "visible";
     var sidebarStats = document.getElementById('sidebar-stats');
     sidebarStats.innerHTML = "";
 });
@@ -464,8 +466,6 @@ $('#guess-button').on('click', function () {
     if (checkAllKeysColored() && !solutionMapVisible) {
         var RevealButton = document.getElementById('reveal-button');
         RevealButton.style.visibility = "visible";
-        var pointMap = document.getElementById("point-map-placeholder");
-        pointMap.style.visibility = "visible";
     }
 });
 
