@@ -1,5 +1,6 @@
 // 'chosenCategory' and 'chosenDecade' variables can be used here directly to get the user-chosen category and decade
 var chosen_geojson = electricity_decade_fin;
+var pointsByCountry = {};
 
 function changedCategoryValue() {
     console.log("chosen category: " + chosenCategory);
@@ -12,11 +13,13 @@ function changedCategoryValue() {
     else if (chosenCategory === "urban-agglomerate") {
         chosen_geojson = urban_fin;
     }
+    pointsByCountry = {};
     updateMap();
 }
 
 function changedDecadeValue() {
     console.log("chosen decade: " + chosenDecade);
+    pointsByCountry = {};
     updateMap();
 }
 
@@ -43,7 +46,7 @@ let svg = d3.select("#map-placeholder").append('svg')
 let point_svg = d3.select("#point-map-placeholder").append('svg')
             .style("width", width).style("height", height);
 
-let point_map_rect_svg = point_svg.append("rect")
+let point_rect_svg = point_svg.append("rect")
 .attr("width", "100%")
 .attr("height", "100%")
 .attr("fill", "black");
@@ -120,7 +123,23 @@ const newData = chosen_geojson.features
 var tweetsByCountry = d3.rollup(newData, v => d3.sum(v, d => d.properties.value), d => d.properties.country);
 
 let point_map_svg = point_svg.append("g");
-var pointsByCountry = {}
+
+point_map_svg.selectAll("path")
+        .data(world_map_json.features)
+        .enter()
+        .append("path")
+        .attr( "fill", function (d) {
+            //console.log(tweetsByCountry.get(d.properties.name));
+            d.total = pointsByCountry[d.properties.name] || 0;
+            return colorScale(d.total);
+        })
+        .style('cursor', 'pointer')
+        // .on('mouseover', tip.show)
+        // .on('mouseout', tip.hide)
+        .attr("fill", "white")
+        .attr("d", geoGenerator )
+        .on("click", clicked);
+updatePointMap();
 
 map_svg.selectAll("path")
         .data(world_map_json.features)
@@ -333,6 +352,7 @@ $('#guess-button').on('click', function () {
     sidebarStats.innerHTML = updatedInnerHTML;
     sidebarStats.style.color = "#ffffff";
     guessedCountries.add(currentCountry);
+    pointsByCountry[currentCountry] = pointsGained;
     updateBarChart(currentCountry, pointsGained);
     updateMap();
 });
@@ -353,6 +373,44 @@ function getPointOfAnswer(userAnswer, expectedAnswer) {
     else if (rangeDifference === 1) return 10;
     else if (rangeDifference === 2) return 5;
     else return 0;
+}
+
+function updatePointMap() {
+
+    // tip = d3.tip()
+    //         .attr('class', 'd3-tip')
+    //         .direction('n').offset(function() {
+    //             if (currentCountry == WORLDWIDE) {
+    //                 return [this.getBBox().height/4, this.getBBox().width/4]
+    //             } else {
+    //                 return [this.getBBox().height, this.getBBox().width]
+    //             }
+    //           })
+    //         .html(function(d) {
+    //             if (guessedCountries.has(d.properties.name)) {
+    //                 var totalTweet = tweetsByCountry.get(d.properties.name) || 0;
+    //                 if (totalTweet === 0) return d.properties.name + ": " + "0%"
+    //                 else return d.properties.name + ": " + totalTweet.toFixed(1) + " %";
+    //             } else {
+    //                 return d.properties.name;
+    //             }
+    //         });
+    // svg.call(tip);
+
+    point_map_svg.selectAll("path")
+    .data(world_map_json.features)
+    .join("path")
+    .attr( "fill", function (d) {
+        //console.log(d.properties)
+        d.total = pointsByCountry[d.properties.name] || 0;
+        return colorScale(d.total);
+      })
+    // .on('mouseover', tip.show)
+    // .on('mouseout', tip.hide)
+    .attr("stroke", "black")
+    .attr("border-color", "black")
+    .attr("d", geoGenerator )
+    .on("click", clicked);
 }
 
 function updateMap() {
@@ -423,6 +481,8 @@ function updateMap() {
     .attr("border-color", "black")
     .attr("d", geoGenerator )
     .on("click", clicked);
+
+    updatePointMap();
 }
 
 function showGuessingTools(currentCountry, show) {
