@@ -35,7 +35,7 @@ function checkCategoryDecadeValidity() {
         warningDiv.innerText = "Please choose the decade for the visualization before continuing.";
         return;
     }
-    warningDiv.innerText = "";
+    warningDiv.style.display = "none";
     /*var questionDiv = document.getElementById('question-before-color');
     var questionDescDiv = document.getElementById('question-description-before-color');
     if (chosenCategory === "electricity") {
