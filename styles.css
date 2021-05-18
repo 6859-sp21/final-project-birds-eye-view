@@ -452,6 +452,13 @@ text.source {
 /* --------------- End of section-user-answer-reflection styling -------------------- */
 
 /* --------------- Start of section-interesting-dataset styling -------------------- */
+#section-interesting-dataset {
+  align-items: center;
+  display: flex;
+  flex-flow: column;
+  height: 100px !important;
+}
+
 #interesting-dataset-title {
     color: white;
     text-align: center;
@@ -459,6 +466,7 @@ text.source {
 
 #interesting-dataset-description {
     color: white;
+    font-size: 20px;
     text-align: center;
 }
 /* --------------- End of section-interesting-dataset styling -------------------- */
@@ -577,4 +585,11 @@ text.source {
 
   #map-title {
     align-self: center;
+  }
+
+  .footer {
+    color: #aeaaaa;
+    font-size: 12px;
+    text-align: center;
+    width: 100%;
   }
