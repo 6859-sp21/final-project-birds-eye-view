@@ -449,6 +449,10 @@ text.source {
     text-align: center;
     width: 1000px;
 }
+
+#form-electricity-1, #form-birth-1, #form-urban-1 {
+  display: none;
+}
 /* --------------- End of section-user-answer-reflection styling -------------------- */
 
 /* --------------- Start of section-interesting-dataset styling -------------------- */
