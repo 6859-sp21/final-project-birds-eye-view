@@ -296,20 +296,18 @@ figcaption {
     width: 80%;
 }
 
-#story-electricity-1990,  #story-electricity-2000, #story-electricity-2010 {
+#story-electricity, #story-birth, #story-urban {
   color: white;
   display: none;
+  text-align: center;
 }
 
-#story-birth-1990,  #story-birth-2000, #story-birth-2010 {
+#video-electricity, #video-birth, #video-urban {
   color: white;
   display: none;
+  text-align: center;
 }
 
-#story-urban-1990,  #story-urban-2000, #story-urban-2010 {
-  color: white;
-  display: none;
-}
 /* --------------- End of section-transition-before-color-map styling -------------------- */
 
 /* --------------- Start of bar chart styling -------------------- */
@@ -626,4 +624,15 @@ text.source {
   margin-top: 20px;
   margin-bottom: 20px;
   width: 600px;
+}
+
+/* --- Stories styling ---*/
+#section-transition-before-color-map, #section-transition-story {
+  align-content: center;
+  display: flex;
+  flex-flow: column;
+  font-size: 18px;
+  justify-content: center;
+  padding: 36px;
+  text-align: center;
 }

@@ -16,6 +16,7 @@ function chooseCategory(categoryId) {
     document.getElementById("section-category-footer").style.visibility = "visible";
     
     updateReflectionForm(chosenCategory);
+    checkCategoryDecadeValidity();
 }
 
 function updateReflectionForm(category) {
@@ -50,5 +51,6 @@ function chooseDecade(decadeId) {
     document.getElementById(chosenDecade).style = "color: white; transition: .5s ease; backface-visibility: hidden; vertical-align: middle;";
     document.getElementById("decade-warning").innerText = "";
     document.getElementById("section-decade-footer").style.visibility = "visible";
+    checkCategoryDecadeValidity();
 }
 
