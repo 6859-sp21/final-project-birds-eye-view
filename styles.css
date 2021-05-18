@@ -420,6 +420,10 @@ text.source {
     text-align: center;
 }
 
+#key-explanation {
+  color: white!important;
+}
+
 #reflection-carousel {
     align-items: center;
     display: flex;

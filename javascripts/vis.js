@@ -2,8 +2,10 @@
 var chosen_geojson = electricity_decade_fin;
 var pointsByCountry = {};
 const guessedCountries = new Set()
+var solutionMapVisible = false;
 
 function changedCategoryValue() {
+
     console.log("chosen category: " + chosenCategory);
     if (chosenCategory === "electricity") {
         chosen_geojson = electricity_decade_fin;
@@ -16,22 +18,34 @@ function changedCategoryValue() {
     }
     pointsByCountry = {};
     guessedCountries.clear();
-    
+    currentCountry == WORLDWIDE;
+    solutionMapVisible = false;
+    clicked(null);
     resetBarChart();
     resetKey();
     updateMap();
     updatePointMap();
+    let RevealButton = document.getElementById('reveal-button');
+    RevealButton.style.visibility = "hidden";
+    var pointMap = document.getElementById("point-map-placeholder");
+    pointMap.style.visibility = "hidden";
 }
 
 function changedDecadeValue() {
     console.log("chosen decade: " + chosenDecade);
     pointsByCountry = {};
     guessedCountries.clear();
-    
+    currentCountry == WORLDWIDE;
+    solutionMapVisible = false;
+    clicked(null);
     resetBarChart();
     resetKey();
     updateMap();
     updatePointMap();
+    var RevealButton = document.getElementById('reveal-button');
+    RevealButton.style.visibility = "hidden";
+    var pointMap = document.getElementById("point-map-placeholder");
+    pointMap.style.visibility = "hidden";
 }
 
 let width = 800, height = 400, centered; // TODO: change these to fit the screen
@@ -53,6 +67,10 @@ var guessButton = document.getElementById('guess-button');
 guessButton.style.visibility = "hidden";
 var guessAnswerGroups = document.getElementById('guess-answer-groups');
 guessAnswerGroups.style.visibility = "hidden";
+var RevealButton = document.getElementById('reveal-button');
+RevealButton.style.visibility = "hidden";
+var pointMap = document.getElementById("point-map-placeholder");
+pointMap.style.visibility = "hidden";
 
 let svg = d3.select("#map-placeholder").append('svg')
             .style("width", width).style("height", height);
@@ -156,7 +174,7 @@ point_map_svg.selectAll("path")
         // .on('mouseout', tip.hide)
         .attr("fill", "white")
         .attr("d", geoGenerator )
-        .on("click", clicked);
+        .on("click", clickedPointMap);
 updatePointMap();
 
 map_svg.selectAll("path")
@@ -355,6 +373,12 @@ function resetBarChart() {
 
 // ----------------------- End of bar-chart related stuff -----------------------
 
+function checkAllKeysColored() {
+    for (const regionData of pointPerRegionMap) {
+        if (regionData.cntOfCountry < 1) return false;
+    } return true;
+}
+
 var guessedValueToRangeStringMap = new Map([
     ["0", "[0, 10)"],
     ["1", "[10, 20)"],
@@ -381,6 +405,14 @@ var guessedValueToRangeMap = new Map([
     [9, [90, 100]],
 ]);
 
+$('#reveal-button').on('click', function () {
+    let RevealButton = document.getElementById('reveal-button');
+    RevealButton.style.visibility = "hidden";
+    currentCountry == WORLDWIDE;
+    clicked(null);
+    showSolutionMap();
+});
+
 $('#guess-button').on('click', function () {
     var guessButton = document.getElementById('guess-button');
     guessButton.style.visibility = "hidden";
@@ -399,6 +431,12 @@ $('#guess-button').on('click', function () {
     pointsByCountry[currentCountry] = pointsGained;
     updateBarChart(currentCountry, pointsGained);
     updateMap();
+    if (checkAllKeysColored() && !solutionMapVisible) {
+        var RevealButton = document.getElementById('reveal-button');
+        RevealButton.style.visibility = "visible";
+        var pointMap = document.getElementById("point-map-placeholder");
+        pointMap.style.visibility = "visible";
+    }
 });
 
 /**
@@ -458,7 +496,70 @@ function updatePointMap() {
     .attr("stroke", "black")
     .attr("border-color", "black")
     .attr("d", geoGenerator )
+    .on("click", clickedPointMap);
+}
+
+function showSolutionMap() {
+    solutionMapVisible = true;
+    var mapTitle = document.getElementById('map-title');
+    var decadeToDisplay;
+    if (chosenDecade == undefined) {
+        decadeToDisplay = "2010"
+    } else {
+        decadeToDisplay = chosenDecade
+    }
+    let categoryString = "with access to electricity";
+    if (chosenCategory === "skilled-birth") categoryString = "with access to skilled birth staff";
+    else if (chosenCategory === "urban-agglomerate") categoryString = "living in urban agglomerations";
+    mapTitle.innerHTML = "<h4> Percentage of people " + categoryString + " in the "+ decadeToDisplay + "s </h4>";
+    mapTitle.style.color = "#ffffff";
+    // Filter and get new data
+    const newData = chosen_geojson.features
+        .filter(function(data) {
+            if (!chosenDecade) {
+                return data.properties.year == 2010
+            }
+            return data.properties.year == chosenDecade;
+        })
+
+    tweetsByCountry = d3.rollup(newData, v => d3.sum(v, d => d.properties.value), d => d.properties.country);
+
+    tip = d3.tip()
+            .attr('class', 'd3-tip')
+            .direction('n').offset(function() {
+                if (currentCountry == WORLDWIDE) {
+                    return [this.getBBox().height/4, this.getBBox().width/4]
+                } else {
+                    return [this.getBBox().height, this.getBBox().width]
+                }
+              })
+            .html(function(d) {
+                if (guessedCountries.has(d.properties.name)) {
+                    var totalTweet = tweetsByCountry.get(d.properties.name) || 0;
+                    if (totalTweet === 0) return d.properties.name + ": " + "0%"
+                    else return d.properties.name + ": " + totalTweet.toFixed(1) + " %";
+                } else {
+                    return d.properties.name;
+                }
+            });
+    svg.call(tip);
+
+    map_svg.selectAll("path")
+    .data(world_map_json.features)
+    .join("path")
+    .attr( "fill", function (d) {
+        //console.log(d.properties)
+        d.total =  tweetsByCountry.get(d.properties.name) || 0;
+        return colorScale(d.total);
+      })
+    .on('mouseover', tip.show)
+    .on('mouseout', tip.hide)
+    .attr("stroke", "black")
+    .attr("border-color", "black")
+    .attr("d", geoGenerator )
     .on("click", clicked);
+
+    updatePointMap();
 }
 
 function updateMap() {
@@ -482,12 +583,6 @@ function updateMap() {
             }
             return data.properties.year == chosenDecade;
         })
-                        //  .filter(function(data) {
-                        //     var dataHashtags = data.properties.hashtags.toLowerCase();
-                        //     var isDataHasHashtag = dataHashtags.includes(currentHashtag);
-                        //     var isDataCreatedAt = data.properties.created_at.includes(currentDate);
-                        //     return isDataCreatedAt && isDataHasHashtag; 
-                        //  });
 
     tweetsByCountry = d3.rollup(newData, v => d3.sum(v, d => d.properties.value), d => d.properties.country);
 
@@ -535,7 +630,7 @@ function updateMap() {
 
 function showGuessingTools(currentCountry, show) {
     if (show) {
-        if (!guessedCountries.has(currentCountry)) {
+        if (!guessedCountries.has(currentCountry) && !solutionMapVisible) {
             var GuessTitle = document.getElementById('wordcloud-title');
             GuessTitle.style.visibility = 'visible';
             var decadeToDisplay;
@@ -572,27 +667,23 @@ function clickedPointMap(d) {
         y = centroid[1];
         k = 4;
         centered = d;
-        // show % selector and guesser
-        showGuessingTools(currentCountry, true)
     } else {
         currentCountry = WORLDWIDE;
         x = width / 2;
         y = height / 2;
         k = 1;
         centered = null;
-        // hide % selector and guesser
-        showGuessingTools(currentCountry, false)
     }
   
-    map_svg.selectAll("path")
+    point_map_svg.selectAll("path")
         .classed("active", centered && function(d) { return d === centered; });
   
-    map_svg.transition()
+    point_map_svg.transition()
         .duration(750)
         .attr("transform", "translate(" + width / 2 + "," + height / 2 + ")scale(" + k + ")translate(" + -x + "," + -y + ")")
         .style("stroke-width", 1.5 / k + "px");
 
-    legend_svg.selectAll('*').remove();
+    point_legend_svg.selectAll('*').remove();
 
     if (currentCountry == WORLDWIDE) {
         let legend_svg = svg.append("g")
@@ -616,8 +707,18 @@ function clickedPointMap(d) {
 
 function clicked(d) {
     var x, y, k;
-  
-    if (d && centered !== d) {
+    console.log(d);
+    if (d === null) {
+        console.log("in first case!!")
+        currentCountry = WORLDWIDE;
+        x = width / 2;
+        y = height / 2;
+        k = 1;
+        centered = null;
+        // hide % selector and guesser
+        showGuessingTools(currentCountry, false)
+    }
+    else if (d && centered !== d) {
         currentCountry = d.properties.name;
         var centroid = geoGenerator.centroid(d);
         x = centroid[0];
