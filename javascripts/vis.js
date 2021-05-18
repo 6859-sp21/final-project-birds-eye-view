@@ -2,6 +2,7 @@
 var chosen_geojson = electricity_decade_fin;
 var pointsByCountry = {};
 const guessedCountries = new Set()
+var solutionMapVisible = false;
 
 function changedCategoryValue() {
 
@@ -18,6 +19,7 @@ function changedCategoryValue() {
     pointsByCountry = {};
     guessedCountries.clear();
     currentCountry == WORLDWIDE;
+    solutionMapVisible = false;
     clicked(null);
     resetBarChart();
     resetKey();
@@ -34,6 +36,7 @@ function changedDecadeValue() {
     pointsByCountry = {};
     guessedCountries.clear();
     currentCountry == WORLDWIDE;
+    solutionMapVisible = false;
     clicked(null);
     resetBarChart();
     resetKey();
@@ -428,7 +431,7 @@ $('#guess-button').on('click', function () {
     pointsByCountry[currentCountry] = pointsGained;
     updateBarChart(currentCountry, pointsGained);
     updateMap();
-    if (checkAllKeysColored()) {
+    if (checkAllKeysColored() && !solutionMapVisible) {
         var RevealButton = document.getElementById('reveal-button');
         RevealButton.style.visibility = "visible";
         var pointMap = document.getElementById("point-map-placeholder");
@@ -497,6 +500,7 @@ function updatePointMap() {
 }
 
 function showSolutionMap() {
+    solutionMapVisible = true;
     var mapTitle = document.getElementById('map-title');
     var decadeToDisplay;
     if (chosenDecade == undefined) {
@@ -626,7 +630,7 @@ function updateMap() {
 
 function showGuessingTools(currentCountry, show) {
     if (show) {
-        if (!guessedCountries.has(currentCountry)) {
+        if (!guessedCountries.has(currentCountry) && !solutionMapVisible) {
             var GuessTitle = document.getElementById('wordcloud-title');
             GuessTitle.style.visibility = 'visible';
             var decadeToDisplay;
