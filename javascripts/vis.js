@@ -1,6 +1,7 @@
 // 'chosenCategory' and 'chosenDecade' variables can be used here directly to get the user-chosen category and decade
 var chosen_geojson = electricity_decade_fin;
 var pointsByCountry = {};
+var guessesByCountry = {};
 const guessedCountries = new Set()
 var solutionMapVisible = false;
 
@@ -17,6 +18,7 @@ function changedCategoryValue() {
         chosen_geojson = urban_fin;
     }
     pointsByCountry = {};
+    guessesByCountry = {};
     guessedCountries.clear();
     currentCountry == WORLDWIDE;
     solutionMapVisible = false;
@@ -34,6 +36,7 @@ function changedCategoryValue() {
 function changedDecadeValue() {
     console.log("chosen decade: " + chosenDecade);
     pointsByCountry = {};
+    guessesByCountry = {};
     guessedCountries.clear();
     currentCountry == WORLDWIDE;
     solutionMapVisible = false;
@@ -429,9 +432,17 @@ $('#reveal-button').on('click', function () {
     currentCountry == WORLDWIDE;
     clicked(null);
     showSolutionMap();
+    var sidebarStats = document.getElementById('sidebar-stats');
+    sidebarStats.innerHTML = "";
 });
 
 $('#guess-button').on('click', function () {
+    var GuessTitle = document.getElementById('wordcloud-title');
+    GuessTitle.style.visibility = 'hidden';
+    var guessButton = document.getElementById('guess-button');
+    guessButton.style.visibility = "hidden";
+    var guessAnswerGroups = document.getElementById('guess-answer-groups');
+    guessAnswerGroups.style.visibility = "hidden";
     var guessButton = document.getElementById('guess-button');
     guessButton.style.visibility = "hidden";
     var guessedValue = document.getElementById("inputGroupSelect").value;
@@ -447,6 +458,7 @@ $('#guess-button').on('click', function () {
     sidebarStats.style.color = "#ffffff";
     guessedCountries.add(currentCountry);
     pointsByCountry[currentCountry] = pointsGained;
+    guessesByCountry[currentCountry] = guessedValue;
     updateBarChart(currentCountry, pointsGained);
     updateMap();
     if (checkAllKeysColored() && !solutionMapVisible) {
@@ -516,6 +528,15 @@ function updatePointMap() {
 }
 
 function showSolutionMap() {
+    var sidebarStats = document.getElementById('sidebar-stats');
+    sidebarStats.innerHTML = "";
+    var GuessTitle = document.getElementById('wordcloud-title');
+    GuessTitle.style.visibility = 'hidden';
+    var guessButton = document.getElementById('guess-button');
+    guessButton.style.visibility = "hidden";
+    var guessAnswerGroups = document.getElementById('guess-answer-groups');
+    guessAnswerGroups.style.visibility = "hidden";
+
     solutionMapVisible = true;
     var mapTitle = document.getElementById('map-title');
     var decadeToDisplay;
@@ -646,6 +667,17 @@ function updateMap() {
 
 function showGuessingTools(currentCountry, show) {
     if (show) {
+        if (guessedCountries.has(currentCountry)) {
+            var sidebarStats = document.getElementById('sidebar-stats');
+            var expectedAnswer = tweetsByCountry.get(currentCountry).toFixed(1);
+            var pointsGained = getPointOfAnswer(guessesByCountry[currentCountry], expectedAnswer);
+            var updatedInnerHTML = "<br> <b> For " + currentCountry + 
+                                    "</b> <br> You guessed: " + guessedValueToRangeStringMap.get(guessesByCountry[currentCountry]) + 
+                                    " <br> Correct answer: " + expectedAnswer  + 
+                                    "<br> Points gained: " +  pointsGained +
+                                    "<br>"; 
+            sidebarStats.innerHTML = updatedInnerHTML;
+        }
         if (!guessedCountries.has(currentCountry) && !solutionMapVisible) {
             var GuessTitle = document.getElementById('wordcloud-title');
             GuessTitle.style.visibility = 'visible';
@@ -662,8 +694,8 @@ function showGuessingTools(currentCountry, show) {
             guessButton.style.visibility = "visible";
             var guessAnswerGroups = document.getElementById('guess-answer-groups');
             guessAnswerGroups.style.visibility = "visible";
-        }
-    } else {
+            return;
+        } 
         var GuessTitle = document.getElementById('wordcloud-title');
         GuessTitle.style.visibility = 'hidden';
         var guessButton = document.getElementById('guess-button');
@@ -722,6 +754,9 @@ function clickedPointMap(d) {
 }
 
 function clicked(d) {
+    var sidebarStats = document.getElementById('sidebar-stats');
+    sidebarStats.innerHTML = "";
+
     var x, y, k;
     console.log(d);
     if (d === null) {
