@@ -310,7 +310,14 @@ function updateBarChart(countryName, newPoints) {
                     .join("rect")
                     .transition()
                     .duration(800)
-                    .attr('class', 'bar')
+                    .attr('class', function (d) {
+                        if (d.region === "Asia") return "bar-asia";
+                        else if (d.region === "Europe") return "bar-europe";
+                        else if (d.region === "Africa") return "bar-africa";
+                        else if (d.region === "Oceania") return "bar-oceania";
+                        else if (d.region === "North America") return "bar-na";
+                        else if (d.region === "South America") return "bar-sa";
+                    })
                     .attr('x', (g) => barXScale(g.region))
                     .attr('y', (g) => barYScale(g.value))
                     .attr('height', (g) => barchartHeight - barYScale(g.value))
