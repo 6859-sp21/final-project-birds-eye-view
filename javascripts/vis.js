@@ -1,6 +1,7 @@
 // 'chosenCategory' and 'chosenDecade' variables can be used here directly to get the user-chosen category and decade
 var chosen_geojson = electricity_decade_fin;
 var pointsByCountry = {};
+const guessedCountries = new Set()
 
 function changedCategoryValue() {
     console.log("chosen category: " + chosenCategory);
@@ -14,27 +15,29 @@ function changedCategoryValue() {
         chosen_geojson = urban_fin;
     }
     pointsByCountry = {};
-    updateMap();
-    updatePointMap();
+    guessedCountries.clear();
+    
     resetBarChart();
     resetKey();
+    updateMap();
+    updatePointMap();
 }
 
 function changedDecadeValue() {
     console.log("chosen decade: " + chosenDecade);
     pointsByCountry = {};
-    updateMap();
-    updatePointMap();
+    guessedCountries.clear();
+    
     resetBarChart();
     resetKey();
+    updateMap();
+    updatePointMap();
 }
 
 let width = 800, height = 400, centered; // TODO: change these to fit the screen
 let projection = d3.geoEquirectangular();
 projection.fitSize([width, height], chosen_geojson);
 let geoGenerator = d3.geoPath().projection(projection);
-
-const guessedCountries = new Set()
 
 var colorScale = d3.scaleLinear()
 // linear scale
@@ -141,7 +144,7 @@ point_map_svg.selectAll("path")
         .append("path")
         .attr( "fill", function (d) {
             //console.log(tweetsByCountry.get(d.properties.name));
-            d.total = pointsByCountry[d.properties.name] || 0;
+            d.total = pointsByCountry[d.properties.name] || -1;
             if (! (d.properties.name in pointsByCountry)) {
                 return "#808080";
             } else {
@@ -162,7 +165,7 @@ map_svg.selectAll("path")
         .append("path")
         .attr( "fill", function (d) {
             //console.log(tweetsByCountry.get(d.properties.name));
-            d.total = tweetsByCountry.get(d.properties.name) || 0;
+            d.total = tweetsByCountry.get(d.properties.name) || -1;
             if (! guessedCountries.has(d.properties.name)) {
                 return "#808080";
             } else {
@@ -443,7 +446,7 @@ function updatePointMap() {
     .join("path")
     .attr( "fill", function (d) {
         //console.log(d.properties)
-        d.total = pointsByCountry[d.properties.name] || 0;
+        d.total = pointsByCountry[d.properties.name] || -1;
         if (! (d.properties.name in pointsByCountry)) {
             return "#808080";
         } else {
@@ -557,6 +560,58 @@ function showGuessingTools(currentCountry, show) {
         var guessAnswerGroups = document.getElementById('guess-answer-groups');
         guessAnswerGroups.style.visibility = "hidden";
     }
+}
+
+function clickedPointMap(d) {
+    var x, y, k;
+  
+    if (d && centered !== d) {
+        currentCountry = d.properties.name;
+        var centroid = geoGenerator.centroid(d);
+        x = centroid[0];
+        y = centroid[1];
+        k = 4;
+        centered = d;
+        // show % selector and guesser
+        showGuessingTools(currentCountry, true)
+    } else {
+        currentCountry = WORLDWIDE;
+        x = width / 2;
+        y = height / 2;
+        k = 1;
+        centered = null;
+        // hide % selector and guesser
+        showGuessingTools(currentCountry, false)
+    }
+  
+    map_svg.selectAll("path")
+        .classed("active", centered && function(d) { return d === centered; });
+  
+    map_svg.transition()
+        .duration(750)
+        .attr("transform", "translate(" + width / 2 + "," + height / 2 + ")scale(" + k + ")translate(" + -x + "," + -y + ")")
+        .style("stroke-width", 1.5 / k + "px");
+
+    legend_svg.selectAll('*').remove();
+
+    if (currentCountry == WORLDWIDE) {
+        let legend_svg = svg.append("g")
+        .attr("class", "legendQuant")
+        .attr("transform", "translate(0,200)")
+        .attr("fill", "white");
+        
+        var legendLinear = d3.legendColor()
+        .shapeWidth(30)
+        .cells([1, 20, 40, 60, 80, 100])
+        .orient('vertical')
+        .scale(colorScale)
+        .title("% of Population");
+        
+        svg.select(".legendQuant")
+        .call(legendLinear);
+    } 
+    
+    // updateWordCloud(currentCountry);
 }
 
 function clicked(d) {
