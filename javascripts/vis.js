@@ -550,7 +550,7 @@ function showSolutionMap() {
                 }
               })
             .html(function(d) {
-                if (guessedCountries.has(d.properties.name)) {
+                if (guessedCountries.has(d.properties.name) || solutionMapVisible ) {
                     var totalTweet = tweetsByCountry.get(d.properties.name) || 0;
                     if (totalTweet === 0) return d.properties.name + ": " + "0%"
                     else return d.properties.name + ": " + totalTweet.toFixed(1) + " %";
@@ -612,7 +612,7 @@ function updateMap() {
                 }
               })
             .html(function(d) {
-                if (guessedCountries.has(d.properties.name)) {
+                if (guessedCountries.has(d.properties.name) || solutionMapVisible ) {
                     var totalTweet = tweetsByCountry.get(d.properties.name) || 0;
                     if (totalTweet === 0) return d.properties.name + ": " + "0%"
                     else return d.properties.name + ": " + totalTweet.toFixed(1) + " %";
