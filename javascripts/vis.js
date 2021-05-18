@@ -13,11 +13,15 @@ function changedCategoryValue() {
         chosen_geojson = urban_fin;
     }
     updateMap();
+    resetBarChart();
+    resetKey();
 }
 
 function changedDecadeValue() {
     console.log("chosen decade: " + chosenDecade);
     updateMap();
+    resetBarChart();
+    resetKey();
 }
 
 let width = 800, height = 400, centered; // TODO: change these to fit the screen
@@ -288,6 +292,32 @@ function colorKey(regionName) {
         let curKey = document.getElementById("key-sa");
         curKey.innerHTML = `<img src="./images/key-SA.png" class="key" width="20px" height="20px">`;
     }
+}
+
+function resetKey() {
+    document.getElementById("key-asia").innerHTML = `<img src="./images/key-grey.png" class="key" width="20px" height="20px">`;
+    document.getElementById("key-europe").innerHTML = `<img src="./images/key-grey.png" class="key" width="20px" height="20px">`;
+    document.getElementById("key-africa").innerHTML = `<img src="./images/key-grey.png" class="key" width="20px" height="20px">`;
+    document.getElementById("key-oceania").innerHTML = `<img src="./images/key-grey.png" class="key" width="20px" height="20px">`;
+    document.getElementById("key-na").innerHTML = `<img src="./images/key-grey.png" class="key" width="20px" height="20px">`;
+    document.getElementById("key-sa").innerHTML = `<img src="./images/key-grey.png" class="key" width="20px" height="20px">`;
+}
+
+function resetBarChart() {
+    pointPerRegionMap = [
+        {region: "Asia", totalPoint: 0, cntOfCountry: 0, value: 0 },
+        {region: "Europe", totalPoint: 0, cntOfCountry: 0, value: 0 },
+        {region: "Africa", totalPoint: 0, cntOfCountry: 0, value: 0 },
+        {region: "Oceania", totalPoint: 0, cntOfCountry: 0, value: 0 },
+        {region: "North America", totalPoint: 0, cntOfCountry: 0, value: 0 },
+        {region: "South America", totalPoint: 0, cntOfCountry: 0, value: 0 }
+    ];
+    updateBarChart("Rusia", -1);
+    updateBarChart("Japan", -1);
+    updateBarChart("United States", -1);
+    updateBarChart("Argentina", -1);
+    updateBarChart("Australia", -1);
+    updateBarChart("Algeria", -1);
 }
 
 // ----------------------- End of bar-chart related stuff -----------------------
