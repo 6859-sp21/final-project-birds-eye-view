@@ -144,6 +144,24 @@ var tip = d3.tip()
             });
 svg.call(tip);
 
+var pointTip = d3.tip()
+            .attr('class', 'd3-tip')
+            .direction('n').offset(function() {
+                if (currentCountry == WORLDWIDE) {
+                    return [this.getBBox().height/4, this.getBBox().width/4]
+                } else {
+                    return [this.getBBox().height, this.getBBox().width]
+                }
+              }) 
+            .html(function(d) {
+                if (d.properties.name in pointsByCountry) {
+                    return d.properties.name + ": " + pointsByCountry[d.properties.name];
+                } else {
+                    return d.properties.name;
+                }
+            });
+point_svg.call(pointTip);
+
 let map_svg = svg.append("g");
 const newData = chosen_geojson.features
 .filter(function(data) {
@@ -170,8 +188,8 @@ point_map_svg.selectAll("path")
             }
         })
         .style('cursor', 'pointer')
-        // .on('mouseover', tip.show)
-        // .on('mouseout', tip.hide)
+        .on('mouseover', pointTip.show)
+        .on('mouseout', pointTip.hide)
         .attr("fill", "white")
         .attr("d", geoGenerator )
         .on("click", clickedPointMap);
@@ -459,25 +477,23 @@ function getPointOfAnswer(userAnswer, expectedAnswer) {
 
 function updatePointMap() {
 
-    // tip = d3.tip()
-    //         .attr('class', 'd3-tip')
-    //         .direction('n').offset(function() {
-    //             if (currentCountry == WORLDWIDE) {
-    //                 return [this.getBBox().height/4, this.getBBox().width/4]
-    //             } else {
-    //                 return [this.getBBox().height, this.getBBox().width]
-    //             }
-    //           })
-    //         .html(function(d) {
-    //             if (guessedCountries.has(d.properties.name)) {
-    //                 var totalTweet = tweetsByCountry.get(d.properties.name) || 0;
-    //                 if (totalTweet === 0) return d.properties.name + ": " + "0%"
-    //                 else return d.properties.name + ": " + totalTweet.toFixed(1) + " %";
-    //             } else {
-    //                 return d.properties.name;
-    //             }
-    //         });
-    // svg.call(tip);
+    var pointTip = d3.tip()
+    .attr('class', 'd3-tip')
+    .direction('n').offset(function() {
+        if (currentCountry == WORLDWIDE) {
+            return [this.getBBox().height/4, this.getBBox().width/4]
+        } else {
+            return [this.getBBox().height, this.getBBox().width]
+        }
+      }) 
+    .html(function(d) {
+        if (d.properties.name in pointsByCountry) {
+            return d.properties.name + ": " + pointsByCountry[d.properties.name];
+        } else {
+            return d.properties.name;
+        }
+    });
+    point_svg.call(pointTip);
 
     point_map_svg.selectAll("path")
     .data(world_map_json.features)
@@ -491,8 +507,8 @@ function updatePointMap() {
             return pointMapColorScale(d.total);
         }
       })
-    // .on('mouseover', tip.show)
-    // .on('mouseout', tip.hide)
+    .on('mouseover', pointTip.show)
+    .on('mouseout', pointTip.hide)
     .attr("stroke", "black")
     .attr("border-color", "black")
     .attr("d", geoGenerator )
