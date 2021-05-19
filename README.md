@@ -19,7 +19,7 @@ Go to https://6859-sp21.github.io/final-project-birds-eye-view/ and follow the i
 
 ## Work breakdown
 ### Charvi Gopal
-TODO charvi
+Map-specific logic for guessing game, point breakdown map, some manual data entry
 
 ### Eesam Hourani
 TODO Eesam
