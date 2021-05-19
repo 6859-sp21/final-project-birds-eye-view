@@ -190,11 +190,10 @@ point_map_svg.selectAll("path")
         .attr( "fill", function (d) {
             //console.log(tweetsByCountry.get(d.properties.name));
             d.total = pointsByCountry[d.properties.name] || -1;
-            if (! (d.properties.name in pointsByCountry)) {
-                return "#808080";
-            } else {
-                return pointMapColorScale(d.total);
+            if (d.total === -1) {
+                return "#303030";
             }
+            return pointMapColorScale(d.total);
         })
         .style('cursor', 'pointer')
         .on('mouseover', pointTip.show)
@@ -211,6 +210,9 @@ map_svg.selectAll("path")
         .attr( "fill", function (d) {
             //console.log(tweetsByCountry.get(d.properties.name));
             d.total = tweetsByCountry.get(d.properties.name) || -1;
+            if (d.total === -1) {
+                return "#303030";
+            }
             if (! guessedCountries.has(d.properties.name)) {
                 return "#808080";
             } else {
@@ -529,11 +531,10 @@ function updatePointMap() {
     .attr( "fill", function (d) {
         //console.log(d.properties)
         d.total = pointsByCountry[d.properties.name] || -1;
-        if (! (d.properties.name in pointsByCountry)) {
-            return "#808080";
-        } else {
-            return pointMapColorScale(d.total);
+        if (d.total === -1) {
+            return "#303030";
         }
+        return pointMapColorScale(d.total);
       })
     .on('mouseover', pointTip.show)
     .on('mouseout', pointTip.hide)
@@ -601,8 +602,10 @@ function showSolutionMap() {
     .data(world_map_json.features)
     .join("path")
     .attr( "fill", function (d) {
-        //console.log(d.properties)
-        d.total =  tweetsByCountry.get(d.properties.name) || 0;
+        d.total = tweetsByCountry.get(d.properties.name) || -1;
+        if (d.total === -1) {
+            return "#303030";
+        }
         return colorScale(d.total);
       })
     .on('mouseover', tip.show)
@@ -664,7 +667,10 @@ function updateMap() {
     .join("path")
     .attr( "fill", function (d) {
         //console.log(d.properties)
-        d.total =  tweetsByCountry.get(d.properties.name) || 0;
+        d.total = tweetsByCountry.get(d.properties.name) || -1;
+        if (d.total === -1) {
+            return "#303030";
+        }
         if (! guessedCountries.has(d.properties.name)) {
             return "#808080";
         } else {
@@ -693,6 +699,16 @@ function showGuessingTools(currentCountry, show) {
                                     "<br> Points gained: " +  pointsGained +
                                     "<br>"; 
             sidebarStats.innerHTML = updatedInnerHTML;
+        }
+        if (parseFloat(tweetsByCountry.get(currentCountry) || -1) < 0) {
+            var GuessTitle = document.getElementById('wordcloud-title');
+            GuessTitle.style.visibility = 'visible';
+            GuessTitle.innerText = 'No data for ' + currentCountry;
+            var guessButton = document.getElementById('guess-button');
+            guessButton.style.visibility = "hidden";
+            var guessAnswerGroups = document.getElementById('guess-answer-groups');
+            guessAnswerGroups.style.visibility = "hidden";
+            return;
         }
         if (!guessedCountries.has(currentCountry) && !solutionMapVisible) {
             var GuessTitle = document.getElementById('wordcloud-title');
@@ -772,6 +788,9 @@ function clickedPointMap(d) {
 function clicked(d) {
     var sidebarStats = document.getElementById('sidebar-stats');
     sidebarStats.innerHTML = "";
+    var GuessTitle = document.getElementById('wordcloud-title');
+    GuessTitle.style.visibility = 'visible';
+    GuessTitle.innerText = "";
 
     var x, y, k;
     console.log(d);
