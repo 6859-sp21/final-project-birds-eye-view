@@ -2,7 +2,7 @@
 
 Team member: Charvi Gopal (charvig), Eesam Hourani (ehourani), Stacia Johanna (staciaj)
 
-TODO: summary image here
+![Preview image for Bird's Eye View](./preview.png)
 
 ## Abstract
 TODO
@@ -12,7 +12,7 @@ Link to data visualization: https://6859-sp21.github.io/final-project-birds-eye-
 
 Link to paper: TODO
 
-Link to video trailer: TODO
+Link to video trailer: https://www.youtube.com/watch?v=1fcNEe9il_s&feature=youtu.be&ab_channel=CharviG
 
 ## Running instructions
 Go to https://6859-sp21.github.io/final-project-birds-eye-view/ and follow the instructions there. Laptop/PC recommended.
@@ -28,9 +28,8 @@ TODO Eesam
 Data cleaning, scrollytelling, all components of website story flow/logic and styling, category and decade form, styling and logic of points bar chart and region game keys.
 
 ## Project Process Commentary
-Hour spent:
+Hour spent: TODO
 
-TODO
 
 ## References
 ### Dataset
@@ -44,7 +43,12 @@ Additional geographical information:
 - Regional data: https://www.internetworldstats.com/list1.htm
 
 ### Stories
-TODO
+- Electricity: https://www.youtube.com/watch?v=xraThzKoXU8
+- Skilled Birth Staff: 
+  - https://www.youtube.com/watch?v=gIw2bJQ3_Sk
+  - https://www.who.int/news-room/fact-sheets/detail/the-top-10-causes-of-death
+  - https://www.who.int/news-room/fact-sheets/detail/maternal-mortality 
+- Urban agglomeration: https://m.youtube.com/watch?v=fKnAJCSGSdk
 
 ### Code references
 - Map:
@@ -55,5 +59,3 @@ TODO
   - https://www.superhi.com/library/posts/how-to-add-web-design-elements-that-fade-in-and-out-on-scroll
   - https://codepen.io/nxworld/pen/OyRrGy
 - Bar chart: https://blog.risingstack.com/d3-js-tutorial-bar-charts-with-javascript/
-
-TODO delete: python3 -m http.server (note to self for running the server)
