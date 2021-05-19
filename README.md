@@ -5,7 +5,7 @@ Team member: Charvi Gopal (charvig), Eesam Hourani (ehourani), Stacia Johanna (s
 ![Preview image for Bird's Eye View](./preview.png)
 
 ## Abstract
-TODO
+How can we use a visualization to build empathy with people around the world? Our project, Bird’s Eye View, is in the form of a website with scrollytelling elements to convey the stories of the world’s development. Users are able to learn about each country's access to different resources through a guessing game. Finally, they are prompted to reflect on what they just learned from the game to build empathy with other users of the visualization.  Through our project, we leverage gamification and personalized reflection to help users learn about international development. 
 
 ## Project links
 Link to data visualization: https://6859-sp21.github.io/final-project-birds-eye-view/
