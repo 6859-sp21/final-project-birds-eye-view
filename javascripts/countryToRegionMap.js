@@ -120,7 +120,7 @@ var countryToRegionMap = new Map([
     ['Marshall Islands', 'Oceania'],
     ['Mauritania', 'Africa'],
     ['Mauritius', 'Africa'],
-    ['Mexico', 'Asia'],
+    ['Mexico', 'North America'],
     ['Micronesia', 'Oceania'],
     ['Moldova', 'Europe'],
     ['Monaco', 'Europe'],
