@@ -29,8 +29,10 @@ function changedCategoryValue() {
     updatePointMap();
     let RevealButton = document.getElementById('reveal-button');
     RevealButton.style.visibility = "hidden";
-    var pointMap = document.getElementById("point-map-placeholder");
+    var pointMap = document.getElementById("point-map-and-sidebar");
     pointMap.style.visibility = "hidden";
+    let pointMapTitle = document.getElementById('point-map-title');
+    pointMapTitle.innerHTML = "<h4 class='warning-point-map'> Please collect all keys above to see the point map. </h4>";
 }
 
 function changedDecadeValue() {
@@ -47,8 +49,10 @@ function changedDecadeValue() {
     updatePointMap();
     var RevealButton = document.getElementById('reveal-button');
     RevealButton.style.visibility = "hidden";
-    var pointMap = document.getElementById("point-map-placeholder");
+    var pointMap = document.getElementById("point-map-and-sidebar");
     pointMap.style.visibility = "hidden";
+    let pointMapTitle = document.getElementById('point-map-title');
+    pointMapTitle.innerHTML = "<h4 class='warning-point-map'> Please collect all keys above to see the point map. </h4>";
 }
 
 let width = 800, height = 400, centered; // TODO: change these to fit the screen
@@ -72,8 +76,10 @@ var guessAnswerGroups = document.getElementById('guess-answer-groups');
 guessAnswerGroups.style.visibility = "hidden";
 var RevealButton = document.getElementById('reveal-button');
 RevealButton.style.visibility = "hidden";
-var pointMap = document.getElementById("point-map-placeholder");
+var pointMap = document.getElementById("point-map-and-sidebar");
 pointMap.style.visibility = "hidden";
+let pointMapTitle = document.getElementById('point-map-title');
+pointMapTitle.innerHTML = "<h4 class='warning-point-map'> Please collect all keys above to see the point map. </h4>";
 
 let svg = d3.select("#map-placeholder").append('svg')
             .style("width", width).style("height", height);
@@ -439,8 +445,11 @@ $('#reveal-button').on('click', function () {
     currentCountry == WORLDWIDE;
     clicked(null);
     showSolutionMap();
-    var pointMap = document.getElementById("point-map-placeholder");
+    var pointMap = document.getElementById("point-map-and-sidebar");
     pointMap.style.visibility = "visible";
+    let pointMapTitle = document.getElementById('point-map-title');
+    pointMapTitle.innerHTML = "<h4> Your Point Breakdown per Country </h4>";
+    pointMapTitle.style.color = "#ffffff";
     var sidebarStats = document.getElementById('sidebar-stats');
     sidebarStats.innerHTML = "";
 });
