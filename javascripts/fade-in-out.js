@@ -22,7 +22,8 @@ $(document).on("scroll", function () {
 });
 
 let elementIds = [["story-electricity", "story-birth", "story-urban"],
-                ["video-electricity", "video-birth", "video-urban"]];
+                ["video-electricity", "video-birth", "video-urban"],
+                ["instructions-electricity", "instructions-birth", "instructions-urban"]];
 
 
 function checkCategoryDecadeValidity() {
@@ -39,16 +40,19 @@ function checkCategoryDecadeValidity() {
     if (chosenCategory === "electricity") {
         document.getElementById("story-electricity").style.display = "block";
         document.getElementById("video-electricity").style.display = "block";
+        document.getElementById("instructions-electricity").style.display = "block";
         hideOtherElements(0);
     }
     else if (chosenCategory === "skilled-birth") {
         document.getElementById("story-birth").style.display = "block";
         document.getElementById("video-birth").style.display = "block";
+        document.getElementById("instructions-birth").style.display = "block";
         hideOtherElements(1);
     }
     else if (chosenCategory === "urban-agglomerate") {
         document.getElementById("story-urban").style.display = "block";
         document.getElementById("video-urban").style.display = "block";
+        document.getElementById("instructions-urban").style.display = "block";
         hideOtherElements(2);
     }
     return;
@@ -59,6 +63,7 @@ function hideOtherElements(curElement) {
         if (i === curElement) continue;
         document.getElementById(elementIds[0][i]).style.display = "none";
         document.getElementById(elementIds[1][i]).style.display = "none";
+        document.getElementById(elementIds[2][i]).style.display = "none";
     }
 }
 

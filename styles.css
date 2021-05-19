@@ -308,6 +308,12 @@ figcaption {
   text-align: center;
 }
 
+#instructions-electricity, #instructions-birth, #instructions-urban {
+  color: white;
+  display: none;
+  text-align: center;
+}
+
 /* --------------- End of section-transition-before-color-map styling -------------------- */
 
 /* --------------- Start of bar chart styling -------------------- */
