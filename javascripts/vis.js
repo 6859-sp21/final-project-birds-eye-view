@@ -29,6 +29,8 @@ function changedCategoryValue() {
     updatePointMap();
     let RevealButton = document.getElementById('reveal-button');
     RevealButton.style.visibility = "hidden";
+    var keyExplanation = document.getElementById('key-explanation');
+    keyExplanation.style.visibility = "visible";
     var pointMap = document.getElementById("point-map-and-sidebar");
     pointMap.style.visibility = "hidden";
     let pointMapTitle = document.getElementById('point-map-title');
@@ -49,6 +51,8 @@ function changedDecadeValue() {
     updatePointMap();
     var RevealButton = document.getElementById('reveal-button');
     RevealButton.style.visibility = "hidden";
+    var keyExplanation = document.getElementById('key-explanation');
+    keyExplanation.style.visibility = "visible";
     var pointMap = document.getElementById("point-map-and-sidebar");
     pointMap.style.visibility = "hidden";
     let pointMapTitle = document.getElementById('point-map-title');
@@ -76,6 +80,8 @@ var guessAnswerGroups = document.getElementById('guess-answer-groups');
 guessAnswerGroups.style.visibility = "hidden";
 var RevealButton = document.getElementById('reveal-button');
 RevealButton.style.visibility = "hidden";
+var keyExplanation = document.getElementById('key-explanation');
+keyExplanation.style.visibility = "visible";
 var pointMap = document.getElementById("point-map-and-sidebar");
 pointMap.style.visibility = "hidden";
 let pointMapTitle = document.getElementById('point-map-title');
@@ -484,6 +490,8 @@ $('#guess-button').on('click', function () {
     if (checkAllKeysColored() && !solutionMapVisible) {
         var RevealButton = document.getElementById('reveal-button');
         RevealButton.style.visibility = "visible";
+        var keyExplanation = document.getElementById('key-explanation');
+        keyExplanation.style.visibility = "hidden";
     }
 });
 
@@ -589,8 +597,8 @@ function showSolutionMap() {
               })
             .html(function(d) {
                 if (guessedCountries.has(d.properties.name) || solutionMapVisible ) {
-                    var totalTweet = tweetsByCountry.get(d.properties.name) || 0;
-                    if (totalTweet === 0) return d.properties.name + ": " + "0%"
+                    var totalTweet = tweetsByCountry.get(d.properties.name) || -1;
+                    if (parseFloat(totalTweet) < 0) return d.properties.name + ": " + "no data";
                     else return d.properties.name + ": " + totalTweet.toFixed(1) + " %";
                 } else {
                     return d.properties.name;
