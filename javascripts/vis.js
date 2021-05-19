@@ -196,7 +196,7 @@ point_map_svg.selectAll("path")
         .attr( "fill", function (d) {
             //console.log(tweetsByCountry.get(d.properties.name));
             d.total = pointsByCountry[d.properties.name] || -1;
-            if (d.total === -1) {
+            if (! (d.properties.name in pointsByCountry)) {
                 return "#303030";
             }
             return pointMapColorScale(d.total);
@@ -539,7 +539,7 @@ function updatePointMap() {
     .attr( "fill", function (d) {
         //console.log(d.properties)
         d.total = pointsByCountry[d.properties.name] || -1;
-        if (d.total === -1) {
+        if (!(d.properties.name in pointsByCountry)) {
             return "#303030";
         }
         return pointMapColorScale(d.total);
