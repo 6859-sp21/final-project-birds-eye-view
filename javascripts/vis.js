@@ -29,6 +29,8 @@ function changedCategoryValue() {
     updatePointMap();
     let RevealButton = document.getElementById('reveal-button');
     RevealButton.style.visibility = "hidden";
+    var keyExplanation = document.getElementById('key-explanation');
+    keyExplanation.style.visibility = "visible";
     var pointMap = document.getElementById("point-map-and-sidebar");
     pointMap.style.visibility = "hidden";
     let pointMapTitle = document.getElementById('point-map-title');
@@ -49,6 +51,8 @@ function changedDecadeValue() {
     updatePointMap();
     var RevealButton = document.getElementById('reveal-button');
     RevealButton.style.visibility = "hidden";
+    var keyExplanation = document.getElementById('key-explanation');
+    keyExplanation.style.visibility = "visible";
     var pointMap = document.getElementById("point-map-and-sidebar");
     pointMap.style.visibility = "hidden";
     let pointMapTitle = document.getElementById('point-map-title');
@@ -76,6 +80,8 @@ var guessAnswerGroups = document.getElementById('guess-answer-groups');
 guessAnswerGroups.style.visibility = "hidden";
 var RevealButton = document.getElementById('reveal-button');
 RevealButton.style.visibility = "hidden";
+var keyExplanation = document.getElementById('key-explanation');
+keyExplanation.style.visibility = "visible";
 var pointMap = document.getElementById("point-map-and-sidebar");
 pointMap.style.visibility = "hidden";
 let pointMapTitle = document.getElementById('point-map-title');
@@ -190,7 +196,7 @@ point_map_svg.selectAll("path")
         .attr( "fill", function (d) {
             //console.log(tweetsByCountry.get(d.properties.name));
             d.total = pointsByCountry[d.properties.name] || -1;
-            if (d.total === -1) {
+            if (! (d.properties.name in pointsByCountry)) {
                 return "#303030";
             }
             return pointMapColorScale(d.total);
@@ -484,6 +490,8 @@ $('#guess-button').on('click', function () {
     if (checkAllKeysColored() && !solutionMapVisible) {
         var RevealButton = document.getElementById('reveal-button');
         RevealButton.style.visibility = "visible";
+        var keyExplanation = document.getElementById('key-explanation');
+        keyExplanation.style.visibility = "hidden";
     }
 });
 
@@ -531,7 +539,7 @@ function updatePointMap() {
     .attr( "fill", function (d) {
         //console.log(d.properties)
         d.total = pointsByCountry[d.properties.name] || -1;
-        if (d.total === -1) {
+        if (!(d.properties.name in pointsByCountry)) {
             return "#303030";
         }
         return pointMapColorScale(d.total);
@@ -589,8 +597,8 @@ function showSolutionMap() {
               })
             .html(function(d) {
                 if (guessedCountries.has(d.properties.name) || solutionMapVisible ) {
-                    var totalTweet = tweetsByCountry.get(d.properties.name) || 0;
-                    if (totalTweet === 0) return d.properties.name + ": " + "0%"
+                    var totalTweet = tweetsByCountry.get(d.properties.name) || -1;
+                    if (parseFloat(totalTweet) < 0) return d.properties.name + ": " + "no data";
                     else return d.properties.name + ": " + totalTweet.toFixed(1) + " %";
                 } else {
                     return d.properties.name;
@@ -771,15 +779,15 @@ function clickedPointMap(d) {
         .attr("transform", "translate(0,200)")
         .attr("fill", "white");
         
-        var legendLinear = d3.legendColor()
+        var point_legendLinear = d3.legendColor()
         .shapeWidth(30)
-        .cells([1, 20, 40, 60, 80, 100])
+        .cells([0, 5, 10, 15, 20])
         .orient('vertical')
-        .scale(colorScale)
-        .title("% of Population");
+        .scale(pointMapColorScale)
+        .title("Points Earned")
         
-        svg.select(".legendQuant")
-        .call(legendLinear);
+        point_svg.select(".legendQuant")
+        .call(point_legendLinear);
     } 
     
     // updateWordCloud(currentCountry);
