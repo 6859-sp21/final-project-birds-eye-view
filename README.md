@@ -39,6 +39,10 @@ World Bank:
 - Skilled birthcare staff: https://data.worldbank.org/indicator/SH.STA.BRTC.ZS
 - Urban agglomerations: https://data.worldbank.org/indicator/EN.URB.MCTY.TL.ZS
 
+Additional geographical information:
+- Latitude and longitude: https://developers.google.com/public-data/docs/canonical/countries_csv
+- Regional data: https://www.internetworldstats.com/list1.htm
+
 ### Stories
 TODO
 

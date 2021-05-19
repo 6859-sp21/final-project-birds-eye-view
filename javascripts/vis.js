@@ -29,8 +29,10 @@ function changedCategoryValue() {
     updatePointMap();
     let RevealButton = document.getElementById('reveal-button');
     RevealButton.style.visibility = "hidden";
-    var pointMap = document.getElementById("point-map-placeholder");
+    var pointMap = document.getElementById("point-map-and-sidebar");
     pointMap.style.visibility = "hidden";
+    let pointMapTitle = document.getElementById('point-map-title');
+    pointMapTitle.innerHTML = "<h4 class='warning-point-map'> Please collect all keys above to see the point map. </h4>";
 }
 
 function changedDecadeValue() {
@@ -47,8 +49,10 @@ function changedDecadeValue() {
     updatePointMap();
     var RevealButton = document.getElementById('reveal-button');
     RevealButton.style.visibility = "hidden";
-    var pointMap = document.getElementById("point-map-placeholder");
+    var pointMap = document.getElementById("point-map-and-sidebar");
     pointMap.style.visibility = "hidden";
+    let pointMapTitle = document.getElementById('point-map-title');
+    pointMapTitle.innerHTML = "<h4 class='warning-point-map'> Please collect all keys above to see the point map. </h4>";
 }
 
 let width = 800, height = 400, centered; // TODO: change these to fit the screen
@@ -72,8 +76,10 @@ var guessAnswerGroups = document.getElementById('guess-answer-groups');
 guessAnswerGroups.style.visibility = "hidden";
 var RevealButton = document.getElementById('reveal-button');
 RevealButton.style.visibility = "hidden";
-var pointMap = document.getElementById("point-map-placeholder");
+var pointMap = document.getElementById("point-map-and-sidebar");
 pointMap.style.visibility = "hidden";
+let pointMapTitle = document.getElementById('point-map-title');
+pointMapTitle.innerHTML = "<h4 class='warning-point-map'> Please collect all keys above to see the point map. </h4>";
 
 let svg = d3.select("#map-placeholder").append('svg')
             .style("width", width).style("height", height);
@@ -184,11 +190,10 @@ point_map_svg.selectAll("path")
         .attr( "fill", function (d) {
             //console.log(tweetsByCountry.get(d.properties.name));
             d.total = pointsByCountry[d.properties.name] || -1;
-            if (! (d.properties.name in pointsByCountry)) {
-                return "#808080";
-            } else {
-                return pointMapColorScale(d.total);
+            if (d.total === -1) {
+                return "#303030";
             }
+            return pointMapColorScale(d.total);
         })
         .style('cursor', 'pointer')
         .on('mouseover', pointTip.show)
@@ -205,6 +210,9 @@ map_svg.selectAll("path")
         .attr( "fill", function (d) {
             //console.log(tweetsByCountry.get(d.properties.name));
             d.total = tweetsByCountry.get(d.properties.name) || -1;
+            if (d.total === -1) {
+                return "#303030";
+            }
             if (! guessedCountries.has(d.properties.name)) {
                 return "#808080";
             } else {
@@ -439,8 +447,11 @@ $('#reveal-button').on('click', function () {
     currentCountry == WORLDWIDE;
     clicked(null);
     showSolutionMap();
-    var pointMap = document.getElementById("point-map-placeholder");
+    var pointMap = document.getElementById("point-map-and-sidebar");
     pointMap.style.visibility = "visible";
+    let pointMapTitle = document.getElementById('point-map-title');
+    pointMapTitle.innerHTML = "<h4> Your Point Breakdown per Country </h4>";
+    pointMapTitle.style.color = "#ffffff";
     var sidebarStats = document.getElementById('sidebar-stats');
     sidebarStats.innerHTML = "";
 });
@@ -520,11 +531,10 @@ function updatePointMap() {
     .attr( "fill", function (d) {
         //console.log(d.properties)
         d.total = pointsByCountry[d.properties.name] || -1;
-        if (! (d.properties.name in pointsByCountry)) {
-            return "#808080";
-        } else {
-            return pointMapColorScale(d.total);
+        if (d.total === -1) {
+            return "#303030";
         }
+        return pointMapColorScale(d.total);
       })
     .on('mouseover', pointTip.show)
     .on('mouseout', pointTip.hide)
@@ -592,8 +602,10 @@ function showSolutionMap() {
     .data(world_map_json.features)
     .join("path")
     .attr( "fill", function (d) {
-        //console.log(d.properties)
-        d.total =  tweetsByCountry.get(d.properties.name) || 0;
+        d.total = tweetsByCountry.get(d.properties.name) || -1;
+        if (d.total === -1) {
+            return "#303030";
+        }
         return colorScale(d.total);
       })
     .on('mouseover', tip.show)
@@ -655,7 +667,10 @@ function updateMap() {
     .join("path")
     .attr( "fill", function (d) {
         //console.log(d.properties)
-        d.total =  tweetsByCountry.get(d.properties.name) || 0;
+        d.total = tweetsByCountry.get(d.properties.name) || -1;
+        if (d.total === -1) {
+            return "#303030";
+        }
         if (! guessedCountries.has(d.properties.name)) {
             return "#808080";
         } else {
@@ -684,6 +699,16 @@ function showGuessingTools(currentCountry, show) {
                                     "<br> Points gained: " +  pointsGained +
                                     "<br>"; 
             sidebarStats.innerHTML = updatedInnerHTML;
+        }
+        if (parseFloat(tweetsByCountry.get(currentCountry) || -1) < 0) {
+            var GuessTitle = document.getElementById('wordcloud-title');
+            GuessTitle.style.visibility = 'visible';
+            GuessTitle.innerText = 'No data for ' + currentCountry;
+            var guessButton = document.getElementById('guess-button');
+            guessButton.style.visibility = "hidden";
+            var guessAnswerGroups = document.getElementById('guess-answer-groups');
+            guessAnswerGroups.style.visibility = "hidden";
+            return;
         }
         if (!guessedCountries.has(currentCountry) && !solutionMapVisible) {
             var GuessTitle = document.getElementById('wordcloud-title');
@@ -763,6 +788,9 @@ function clickedPointMap(d) {
 function clicked(d) {
     var sidebarStats = document.getElementById('sidebar-stats');
     sidebarStats.innerHTML = "";
+    var GuessTitle = document.getElementById('wordcloud-title');
+    GuessTitle.style.visibility = 'visible';
+    GuessTitle.innerText = "";
 
     var x, y, k;
     console.log(d);
