@@ -30,6 +30,7 @@ Data cleaning, scrollytelling, all components of website story flow/logic and st
 ## Project Process Commentary
 Hour spent: TODO
 
+In developing the project, the most difficult part is managing the logic of the story flows between different categories and the gamification. Because we have several categories and decades for the readers to choose from, the scrollytelling and game will need to update according to that choice. Making sure that the story still flows well even if the readers change their options is necessary. Also, the main focus of our visualization is the guessing game, and because there are a lot of moving pieces within the game and the synchronization between the map and the bar chart, this is the complicated part of the project. 
 
 ## References
 ### Dataset
