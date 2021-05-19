@@ -327,13 +327,33 @@ figcaption {
   width: 100%;
 }
 
-.bar {
-  fill: #2572B3;
+.bar-asia {
+  fill: lightcoral;
+}
+
+.bar-europe {
+  fill: darkgoldenrod;
+}
+
+.bar-africa {
+  fill: green;
+}
+
+.bar-oceania {
+  fill: darkcyan;
+}
+
+.bar-na {
+  fill: rgb(255, 0, 255);
+}
+
+.bar-sa {
+  fill: #c8a2c8;
 }
 
 text {
   font-size: 12px;
-  fill: #fff;
+  fill: white;
 }
 
 
@@ -362,6 +382,7 @@ text.divergence {
 }
 
 text.value {
+  color: black !important;
   font-size: 14px;
 }
 
