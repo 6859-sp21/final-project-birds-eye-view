@@ -779,15 +779,15 @@ function clickedPointMap(d) {
         .attr("transform", "translate(0,200)")
         .attr("fill", "white");
         
-        var legendLinear = d3.legendColor()
+        var point_legendLinear = d3.legendColor()
         .shapeWidth(30)
-        .cells([1, 20, 40, 60, 80, 100])
+        .cells([0, 5, 10, 15, 20])
         .orient('vertical')
-        .scale(colorScale)
-        .title("% of Population");
+        .scale(pointMapColorScale)
+        .title("Points Earned")
         
-        svg.select(".legendQuant")
-        .call(legendLinear);
+        point_svg.select(".legendQuant")
+        .call(point_legendLinear);
     } 
     
     // updateWordCloud(currentCountry);
