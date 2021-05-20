@@ -30,7 +30,9 @@ Data cleaning, scrollytelling, all components of website story flow/logic and st
 ## Project Process Commentary
 Hour spent: 120 hours total
 
-In developing the project, the most difficult part is managing the logic of the story flows between different categories and the gamification. Because we have several categories and decades for the readers to choose from, the scrollytelling and game will need to update according to that choice. Making sure that the story still flows well even if the readers change their options is necessary. Also, the main focus of our visualization is the guessing game, and because there are a lot of moving pieces within the game and the synchronization between the map and the bar chart, this is the complicated part of the project. 
+In developing the project, the most difficult part was managing the logic of the story flows between different categories and the gamification. Because we had several categories and decades for the readers to choose from, the scrollytelling and game needed to update according to that choice. Making sure that the story still flows well even if the readers change their options was necessary. Also, the main focus of our visualization was the guessing game, and because there were a lot of moving pieces within the game and the synchronization between the map and the bar chart, this was the complicated part of the project. 
+
+We met several times over the past few weeks to brainstorm and downselect ideas, both our own and our peer reviewers'. We took notes in a Meeting Notes doc and divided work at these meetings. We also occasionally pair-programmed and helped each other debug. In a couple of the meetings, we decided the content of the presentations and even recorded them together for the MVP presentation.
 
 ## References
 ### Dataset
