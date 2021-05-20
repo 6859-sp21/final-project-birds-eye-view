@@ -10,7 +10,7 @@ How can we use a visualization to build empathy with people around the world? Ou
 ## Project links
 Link to data visualization: https://6859-sp21.github.io/final-project-birds-eye-view/
 
-Link to paper: TODO
+Link to paper: https://github.com/6859-sp21/final-project-birds-eye-view/blob/main/final/FinalPaper.pdf
 
 Link to video trailer: https://www.youtube.com/watch?v=1fcNEe9il_s&feature=youtu.be&ab_channel=CharviG
 
