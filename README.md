@@ -22,7 +22,7 @@ Go to https://6859-sp21.github.io/final-project-birds-eye-view/ and follow the i
 Map-specific logic for guessing game, point breakdown map, some manual data entry
 
 ### Eesam Hourani
-TODO Eesam
+Data selection/exploratory analysis, data cleaning, empathy-building stories/videos, instructions
 
 ### Stacia Johanna
 Data cleaning, scrollytelling, all components of website story flow/logic and styling, category and decade form, styling and logic of points bar chart and region game keys.
